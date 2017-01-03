@@ -1,12 +1,12 @@
 CODE_FAMILLE;CD_PARAMETRE;CODE_FONCTION;LB_PARAMETRE;NOM_PARAM2;CODE_FAMILLE;STATUT;METABOLITE;PARENT;NOM_PARENT;CODE_CAS;DATE_NA_USAGE;FORMULEB;NORME_DCE;Type;FONCTIONS
-;6276;no ref;Somme pesticides analyses;Pesticides totaux;;;;;;Non renseigné;;;0.5;no ref;no ref
+;6276;no ref;Somme pesticides analyses;Pesticides totaux;;;;;;no ref;;;0.5;no ref;no ref
 ;6824;no ref;N,N-Dimet-tolylsulphamid;DMST;;;;;;66840-71-9;;C9H14N2O2S;0.1;no ref;no ref
 ;6856;no ref;Acetochlor ESA;t-sulfonic acid ;;;oui;1903;Acétochlore;187022-11-3;;C14H21NO5S;0.1;no ref;no ref
 ;6862;no ref;Acetochlor OXA;t-oxanilic acid;;;oui;1903;Acétochlore;194992-44-4;;C14H19NO4;0.1;no ref;no ref
 ;7514;F;Thiophanate-ethyl;;;PNA;;;;23564-06-9;;C14H18N4O4S2;0.1;O;Fongicide
 ;7782;no ref;Desméthyl-chlortoluron;Desméthyl-chlortoluron;;PA;oui;1136;;22175-22-0;;C9H11ClN2O;0.1;no ref;no ref
-;9999;no ref;Total des substances (calculé);Total des substances;;;;;;Non renseigné;;;0.1;no ref;no ref
-;12143;no ref;Total des substances;Total des substances;;SO;;;;Non renseigné;;;0.1;no ref;no ref
+;9999;no ref;Total des substances (calculé);Total des substances;;;;;;no ref;;;0.1;no ref;no ref
+;12143;no ref;Total des substances;Total des substances;;SO;;;;no ref;;;0.1;no ref;no ref
 ;99020;no ref;2,4 D (sel de dimethylamine);;;;;;;no ref;;;0.1;no ref;no ref
 Aldéhydes et cétones;2076;H;Mésotrione;Mésotrione;Aldéhydes et cétones;PA;;;;104206-82-8;;C14H13NO7S;0.1;no ref;Herbicide
 Amides;2;H;Mefluidide;Mefluidide;Amides;;;;;53780-34-0;2005-10-26;C11H13F3N2O3S;0.1;I;Herbicide
@@ -266,7 +266,7 @@ Divers (organiques);1127;F;Captafol;Captafol;Divers (organiques);PNA;;;;2425-06-
 Divers (organiques);1128;F;Captane;Captane;Divers (organiques);PNA;;;;133-06-2;2009-12-31;C9H8Cl3NO2S;0.1;U;Fongicide
 Divers (organiques);1139;F;Cymoxanil;curzate;Divers (organiques);PA;;;;57966-95-7;;C7H10N4O3;0.1;I;Fongicide
 Divers (organiques);1141;H;2,4-D;2,4-D;Divers (organiques);PA;;;;94-75-7;;C8H6Cl2O3;0.1;I;Herbicide
-Divers (organiques);1141;H;2,4-D methyl ester;2,4-D METHYL ESTER;Divers (organiques);;;;;Non renseigné;;;0.1;no ref;Herbicide
+Divers (organiques);1141;H;2,4-D methyl ester;2,4-D METHYL ESTER;Divers (organiques);;;;;no ref;;;0.1;no ref;Herbicide
 Divers (organiques);1142;H;2,4-DB;2,4-DB;Divers (organiques);PA;;;;94-82-6;;C10H10Cl2O3;0.1;I;Herbicide
 Divers (organiques);1169;H;Dichlorprop;Dichlorprop;Divers (organiques);PNA;;;;120-36-5;2003-12-31;C9H8Cl2O3;0.1;no ref;Herbicide
 Divers (organiques);1171;H;Dic(h)lofop-méthyl;Diclofop-méthyl;Divers (organiques);PNA;;;;51338-27-3;2011-12-31;C16H14Cl2O4;0.1;no ref;Herbicide
@@ -365,7 +365,7 @@ Divers (organiques);2094;H;Dalapon;Dalapon;Divers (organiques);PNA;;;;75-99-0;20
 Divers (organiques);2095;H;Clodinafop-propargyl;Clodinafop-propargyl;Divers (organiques);PA;;;;105512-06-9;;C17H13ClFNO4;0.1;no ref;Herbicide
 Divers (organiques);2096;Reg;Trinexapac-ethyl;Trinexapac-ethyl;Divers (organiques);PA;;;;95266-40-3;;C13H16O5;0.1;no ref;Régulateur de croissance
 Divers (organiques);2097;Reg;Chloroméquat chlorure;Chloroméquat chlorure;Divers (organiques);PA;;;;999-81-5;;C5H13Cl2N;0.1;I;Régulateur de croissance
-Divers (organiques);2522;H;(Code gelé en 2012 2,4-D-ester);2,4-D-ester;Divers (organiques);PA;;;;Non renseigné;;;0.1;no ref;Herbicide
+Divers (organiques);2522;H;(Code gelé en 2012 2,4-D-ester);2,4-D-ester;Divers (organiques);PA;;;;no ref;;;0.1;no ref;Herbicide
 Divers (organiques);2523;H;2,4-D-non-ester;2,4-D;Divers (organiques);PA;;;;94-75-7;;;0.1;I;Herbicide
 Divers (organiques);2525;no ref;Code gelé en version Provisoire (Desmethylnorflurazon);;Divers (organiques);;oui;1679;Dichlobenil;no ref;;;0.1;no ref;no ref
 Divers (organiques);2544;H;Dichlorprop-P;;Divers (organiques);PA;;;;15165-67-0;;C9H8Cl2O3;0.1;no ref;Herbicide
@@ -607,7 +607,7 @@ Inconnu;7441;PP;Furilazole;Furilazole;Inconnu;PA;;;;121776-33-8;;C11H13Cl2NO3;0.
 Inconnu;7442;H;Proximpham;Proximpham;Inconnu;;;;;2828-42-4;;C10H12N2O2;0.1;no ref;Herbicide
 Inconnu;7512;I;thiocyclam hydrogen oxala;Thiocyclam-hydrogenoxalate;Inconnu;PNA;;;;31895-22-4;;C7H13NO4S3;0.1;I;Insecticide
 Inconnu;7513;PP;Fenchlorazole-ethyl;Fenchlorazole-ethyl;Inconnu;;;;;103112-35-2;;C12H8Cl5N3O2;0.1;U;no ref on 'PP'
-Indices;12140;no ref;Pesticides Kit immuno enzimatique;Pesticides Kit immuno enzimatique;Indices;;;;;Non renseigné;;;0.1;no ref;no ref
+Indices;12140;no ref;Pesticides Kit immuno enzimatique;Pesticides Kit immuno enzimatique;Indices;;;;;no ref;;;0.1;no ref;no ref
 Metaux et métalloïdes;5561;F;hydroxyde de cuivre;;Metaux et métalloïdes;;;;;no ref;;;0.1;no ref;Fongicide
 Metaux et métalloïdes;5562;F;oxychlorure de cuivre;;Metaux et métalloïdes;;;;;1332-65-6;;;0.1;no ref;Fongicide
 Metaux et métalloïdes;5564;F;sulfate tribasique de cuivre;;Metaux et métalloïdes;PA;;;;1333-22-8;;;0.1;no ref;Fongicide
@@ -684,7 +684,7 @@ Organochlorés;7146;I;Somme de 4 paramètres : DDDpp' [1144], DDEpp' [1146], DDT
 Organochlorés;7170;I;Somme de 4 paramètres : DDD 24' [1143], DDE 24' [1145], DDT 24' [1147], DDT 44'[1148];Somme de 4 paramètres : DDD 24' [1143], DDE 24' [1145], DDT 24' [1147], DDT 44'[1148];Organochlorés;;;;;no ref;;;;no ref;Insecticide
 Organochlorés;11810;no ref;Endrine Aldéhyde;Endrine Aldéhyde;Organochlorés;;oui;1181;Endrine;7421-93-4;;C12H10Cl6O;0.1;no ref;no ref
 Organochlorés;12003;no ref;Hexachlorocyclohexane;;Organochlorés;;;;;no ref;;;0.1;no ref;no ref
-Organochlorés;12098;no ref;Total Organochlorés;Total Organochlorés;Organochlorés;;;;;Non renseigné;;;0.1;no ref;no ref
+Organochlorés;12098;no ref;Total Organochlorés;Total Organochlorés;Organochlorés;;;;;no ref;;;0.1;no ref;no ref
 Organochlorés;81511;I;Méthoxychlore op'+pp';;Organochlorés;SO;;;;no ref;;;0.1;no ref;Insecticide
 Organochlorés;91132;no ref;Chlordane total (calculé);;Organochlorés;;;;;no ref;;;0.1;no ref;no ref
 Organochlorés;91198;no ref;Heptachlore époxyde total (calculé);;Organochlorés;;;;;no ref;;;0.1;no ref;no ref
@@ -768,7 +768,7 @@ Organophosphorés;1671;I,A;Methamidophos;Methamidophos;Organophosphorés;PNA;;;;
 Organophosphorés;1674;I;Fonofos;Fonofos;Organophosphorés;PNA;;;;944-22-9;2003-12-31;C10H15OPS2;0.1;O;Insecticide
 Organophosphorés;1682;I;Coumaphos;Coumaphos;Organophosphorés;PNA;;;;56-72-4;;C14H16ClO5PS;0.1;I;Insecticide
 Organophosphorés;1716;I,A;Code gelé en 2003 (Dithiométon);Dithiométon;Organophosphorés;;;;;640-15-3;;C6H15O2PS3;0.1;I;Insecticide,Acaricide
-Organophosphorés;1766;I,A;(Code gelé en 1998 Total Parathion);Total Parathion;Organophosphorés;SO;;;;Non renseigné;;;0.1;no ref;Insecticide,Acaricide
+Organophosphorés;1766;I,A;(Code gelé en 1998 Total Parathion);Total Parathion;Organophosphorés;SO;;;;no ref;;;0.1;no ref;Insecticide,Acaricide
 Organophosphorés;1816;F;Fosetyl;Fosetyl;Organophosphorés;PA;;;;15845-66-6;;C2H7O3P;0.1;no ref;Fongicide
 Organophosphorés;1817;no ref;Code gelé en 2000 (Glufosinate);;Organophosphorés;;;;;no ref;;;0.1;no ref;no ref
 Organophosphorés;1829;I;Isofenphos;Isofenphos;Organophosphorés;PNA;;;;25311-71-1;2003-12-31;C15H24NO4PS;0.1;O;Insecticide
@@ -850,7 +850,7 @@ Organophosphorés;7503;I;Cythioate;Cythioate;Organophosphorés;;;;;115-93-5;;C8H
 Organophosphorés;7511;I;Tébupirimfos;Tébupirimfos;Organophosphorés;;;;;96182-53-5;;C13H23N2O3PS;0.1;I;Insecticide
 Organophosphorés;7516;H;Amiprofos-methyl;;Organophosphorés;;;;;36001-88-4;;C11H17N2O4PS;0.1;no ref;Herbicide
 Organophosphorés;11510;I;Total Déméthon méthyl;Total Déméthon méthyl;Organophosphorés;SO;;;;8022-00-2;;C12H30O6P2S4;0.1;no ref;Insecticide
-Organophosphorés;12099;no ref;Total Organophosphorés;Total Organophosphorés;Organophosphorés;;;;;Non renseigné;;;0.1;no ref;no ref
+Organophosphorés;12099;no ref;Total Organophosphorés;Total Organophosphorés;Organophosphorés;;;;;no ref;;;0.1;no ref;no ref
 Organophosphorés;91151;no ref;Déméthon méthyl total (calculé);;Organophosphorés;;;;;no ref;;;0.1;no ref;no ref
 Organophosphorés;91550;no ref;Déméton total (calculé);;Organophosphorés;;;;;no ref;;;0.1;no ref;no ref
 Organophosphorés;91766;no ref;Parathion total (calculé);;Organophosphorés;;;;;no ref;;;0.1;no ref;no ref
@@ -893,7 +893,7 @@ Pyréthrinoïdes;3209;I;Betacyfluthrine;;Pyréthrinoïdes;PA;;;;68359-37-5;;C22H
 Pyréthrinoïdes;5682;I;Perméthrine cis;;Pyréthrinoïdes;;;;;no ref;;;0.1;no ref;Insecticide
 Pyréthrinoïdes;5683;I;Perméthrine trans;;Pyréthrinoïdes;;;;;no ref;;;0.1;no ref;Insecticide
 Pyréthrinoïdes;6629;I;Cyphenothrin;;Pyréthrinoïdes;;;;;39515-40-7;;;0.1;I;Insecticide
-Pyréthrinoïdes;7999;no ref;Total Pyréthrénoides;Total Pyréthrénoides;Pyréthrinoïdes;;;;;Non renseigné;;;0.1;no ref;no ref
+Pyréthrinoïdes;7999;no ref;Total Pyréthrénoides;Total Pyréthrénoides;Pyréthrinoïdes;;;;;no ref;;;0.1;no ref;no ref
 Pyréthrinoïdes;91523;I;Perméthryne total (calculé);;Pyréthrinoïdes;;;;;no ref;;;0.1;no ref;Insecticide
 Quinazolinones;7422;F;Proquinazid;Proquinazid;Quinazolinones;PA;;;;189278-12-4;;C14H7IN2O2;0.1;no ref;Fongicide
 Triazines et métabolites;1104;H;Amétryne;Amétryne;Triazines et métabolites;PNA;;;;834-12-8;2003-01-10;C9H17N5S;0.1;I;Herbicide
@@ -947,8 +947,8 @@ Triazines et métabolites;6282;no ref;Somme de l'atrazine et de ses metabolites;
 Triazines et métabolites;6283;no ref;Somme terbuthyazin metabo;;Triazines et métabolites;;;;;no ref;;;0.1;no ref;no ref
 Triazines et métabolites;7150;H;Terbuthylazine desethyl-2-hydroxy;Terbuthyl des hydroxy;Triazines et métabolites;PNA;oui;1268;Terbuthylazine;66753-06-8;;C7H13N5O;0.1;no ref;Herbicide
 Triazines et métabolites;12118;no ref;Hydroxyatrazine;Hydroxyatrazine;Triazines et métabolites;;probable;1107;Atrazine;2163-68-0;;C8H15N5O;0.1;no ref;no ref
-Triazines et métabolites;12119;no ref;Atrazine déséthyl-2-hydroxy;Atrazine déséthyl-2-hydroxy;Triazines et métabolites;;probable;1107;Atrazine;Non renseigné;;;0.1;no ref;no ref
-Triazines et métabolites;12120;no ref;Atrazine déisopropyl-2-hydroxy;Atrazine déisopropyl-2-hydroxy;Triazines et métabolites;;probable;1107;Atrazine;Non renseigné;;;0.1;no ref;no ref
+Triazines et métabolites;12119;no ref;Atrazine déséthyl-2-hydroxy;Atrazine déséthyl-2-hydroxy;Triazines et métabolites;;probable;1107;Atrazine;no ref;;;0.1;no ref;no ref
+Triazines et métabolites;12120;no ref;Atrazine déisopropyl-2-hydroxy;Atrazine déisopropyl-2-hydroxy;Triazines et métabolites;;probable;1107;Atrazine;no ref;;;0.1;no ref;no ref
 Triazines et métabolites;12121;no ref;Deisopropyldeethylatrazine;Deisopropyldeethylatrazine;Triazines et métabolites;;;;;3397-62-4;;C3H4ClN5;0.1;no ref;no ref
 Triazoles;7482;F;Uniconazole;Uniconazole;Triazoles;PNA;;;;83657-22-1;;C15H18CLN3O;0.1;I;Fongicide
 Triazoles;7510;F;Imibenconazole;Imibenconazole;Triazoles;PNA;;;;86598-92-7;;C17H13Cl3N4S;0.1;U;Fongicide
@@ -956,9 +956,9 @@ Triazoles;7517;H;Thiencarbazone-methyl;Thiencarbazone-methyl;Triazoles;PA;;;;317
 Triazolopyrimidines sulfonamides;7340;H,G;Pyroxsulam;kloquintocet-mexyl;Triazolopyrimidines sulfonamides;;;;;422556-08-9;;;0.1;no ref;Herbicide,Graminicide
 Urées;1136;H;Chlortoluron;Chlortoluron;Urées;PA;;;;15545-48-9;;C10H13ClN2O;0.1;U;Herbicide
 Urées;1177;H;Diuron;Diuron;Urées;PNA;;;;330-54-1;2008-12-13;C9H10Cl2N2O;0.1;I;Herbicide
-Urées;1177;no ref;Diuron desmethyl;Diuron desmethyl;Urées;;;;;Non renseigné;;;0.1;no ref;no ref
+Urées;1177;no ref;Diuron desmethyl;Diuron desmethyl;Urées;;;;;no ref;;;0.1;no ref;no ref
 Urées;1208;H;Isoproturon;Isoproturon;Urées;PA;;;;34123-59-6;;C12H18N2O;0.1;I;Herbicide
-Urées;1208;no ref;Isoproturon desmethyl;Isoproturon desmethyl;Urées;;oui;1208;Isoproturon;Non renseigné;;;0.1;no ref;no ref
+Urées;1208;no ref;Isoproturon desmethyl;Isoproturon desmethyl;Urées;;oui;1208;Isoproturon;no ref;;;0.1;no ref;no ref
 Urées;1209;H;Linuron;Linuron;Urées;PA;;;;330-55-2;;C9H10Cl2N2O2;0.1;I;Herbicide
 Urées;1216;H;Méthabenzthiazuron;Méthabenzthiazuron;Urées;PNA;;;;18691-97-9;2009-12-31;C10H11N3OS;0.1;I;Herbicide
 Urées;1222;H;Métoxuron;Métoxuron;Urées;PNA;;;;19937-59-8;2007-12-31;C10H13ClN2O2;0.1;I;Herbicide
@@ -1005,7 +1005,7 @@ Urées;2806;H;Foramsulfuron;;Urées;PA;;;;173159-57-4;;C17H2ON6O7S;0.1;no ref;He
 Urées;2848;no ref;(Code gelé en 2009 (Demethyldiuron));;Urées;;oui;1177;Diuron;no ref;;;0.1;no ref;no ref
 Urées;2849;no ref;(Code gelé en 2010 Didemethyldiuron);;Urées;;oui;1177;Diuron;no ref;;;0.1;no ref;no ref
 Urées;2869;no ref;(Code gelé en 2009 1 4 isopropyl phényl urée);1 4 isopropyl phényl urée;Urées;;oui;1208;Isoproturon;56046-17-4;;;0.1;no ref;no ref
-Urées;2934;no ref;1-(3-chloro-4-methylphenyl)uree;methylphen;Urées;;probable;1177;Diuron;Non renseigné;;;0.1;no ref;no ref
+Urées;2934;no ref;1-(3-chloro-4-methylphenyl)uree;methylphen;Urées;;probable;1177;Diuron;no ref;;;0.1;no ref;no ref
 Urées;2937;H;Azimsulfuron;;Urées;PA;;;;120162-55-2;;;0.1;U;Herbicide
 Urées;2950;I;Chlorfluazuron;;Urées;PNA;;;;71422-67-8;;;0.1;U;Insecticide
 Urées;2991;H;Triflusulfuron-methyl;;Urées;PA;;;;126535-15-7;;;0.1;U;Herbicide
@@ -1040,8 +1040,8 @@ Urées;6815;H;Mesosulfuron;;Urées;;;;;400852-66-6;;C16H19N5O9S2;0.1;no ref;Herb
 Urées;7515;no ref;Diphenylurée;Carbanilide;Urées;;;;;102-07-8;;C13H12N2O;0.1;no ref;no ref
 Urées;9050;no ref;3,4-dichlorophenylurée;3,4-dichlorophenylurée;Urées;;oui;1177;Diuron;2327-02-08 00:00:00;;C7H6Cl2N2O;0.1;no ref;no ref
 Urées;9051;no ref;1-(4-isopropyl phényl)-3-méthylurée;Monodesmethylisoproturon;Urées;;oui;1208;Isoproturon;34123-57-4;;;0.1;no ref;no ref
-Urées;9052;no ref;1 4 isopropyl phényl urée;1 4 isopropyl phényl urée;Urées;;oui;1208;Isoproturon;Non renseigné;;;0.1;no ref;no ref
+Urées;9052;no ref;1 4 isopropyl phényl urée;1 4 isopropyl phényl urée;Urées;;oui;1208;Isoproturon;no ref;;;0.1;no ref;no ref
 Urées;9054;no ref;1-(3,4dichlorophényl)-urée;Didemethyldiuron;Urées;;oui;1177;Diuron;2327-02-08 00:00:00;;;0.1;no ref;no ref
-Urées;9055;no ref;1-(3-chloro,4-méthyl phényl)-urée;methylphen;Urées;;probable;1177;Diuron;Non renseigné;;;0.1;no ref;no ref
+Urées;9055;no ref;1-(3-chloro,4-méthyl phényl)-urée;methylphen;Urées;;probable;1177;Diuron;no ref;;;0.1;no ref;no ref
 Urées;99011;H;Isoproturon-1CH3;;Urées;;;;;no ref;;;0.1;no ref;Herbicide
 Urées;99012;H;Isoproturon-2CH3;;Urées;;;;;no ref;;;0.1;no ref;Herbicide
