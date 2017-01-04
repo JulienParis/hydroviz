@@ -109,14 +109,14 @@ alert{
 
 
 
-/* NAVBAR & DROPDOWNS */ 
+/* NAVBAR & DROPDOWNS */
 .navbar {
     /*background-color: rgba(100, 100, 100, 0.5);*/
     /*background-color: {{ app_colors.navbar }} ;*/
 
     border: hidden;
     margin-bottom: 5px;
-    z-index: 1;
+    z-index: 10;
 }
 
 .navbar-btn {
@@ -129,21 +129,6 @@ alert{
     margin-bottom: 0px;
 }
 
-/*    @media (min-width: 979px) {*/
-/*	ul.nav li.dropdown:hover > ul.dropdown-menu {*/
-/*	display: block;*/
-/*	*/
-/*      }*/
-/*    }*/
-
-/*#navbar-text {*/
-/*    color : {{ app_colors.navbar_text }}*/
-/*}*/
-
-/*    .dropdown-menu > li > a:hover {*/
-/*	background-color: {{ app_colors.navbar }};*/
-/*	background-image: none;*/
-/*    }*/
 
 
 
@@ -230,25 +215,6 @@ alert{
     background-color: #e6e6e6;
 }
 
-/*.btn-warning{*/
-/*    background-color: {{ app_colors.btn_warning }} ;*/
-/*}*/
-/*.btn-default{*/
-/*    background-color: {{ app_colors.btn_default }} ;*/
-/*}*/
-/*.btn-success{*/
-/*    background-color: {{ app_colors.btn_success }} ;*/
-/*}*/
-/*.btn-danger{*/
-/*    background-color: {{ app_colors.btn_danger }} ;*/
-/*}*/
-/*.btn-info{*/
-/*    background-color: {{ app_colors.btn_info }} ;*/
-/*}*/
-/*.btn-primary{*/
-/*    background-color: {{ app_colors.btn_primary }} ;*/
-/*}*/
-
 
 /* SIDEBAR CUSTOM PROPERTIES */
 #row-main {
@@ -293,34 +259,22 @@ alert{
     z-index: 9999;
     position: fixed;
 }
-/*.tooltip .tooltip-inner {*/
-/*    background-color: {{ app_colors.btn_warning }} ;*/
-/*    color: #fff;*/
-/*}*/
-/**/
-/*.tooltip.right .tooltip-arrow {*/
-/*    border-right-color: {{ app_colors.btn_warning }} ;*/
-/*}*/
-/**/
-/*.tooltip.bottom .tooltip-arrow {*/
-/*    border-bottom-color: {{ app_colors.btn_warning }} ;*/
-/*}*/
+
 
 
 /* tooltips for nodes */
-.tooltipNode {	
+.tooltipNode {
     color : white ;
-    position: absolute;			
-    text-align: center;			
-    max-width: 250px;					
+    position: absolute;
+    text-align: center;
+    max-width: 250px;
     /*height: 28px;*/
-    padding: 4px;				
+    padding: 4px;
     /*font: 12px sans-serif;*/
-    background: grey;	
+    background: grey;
     /*border-width: 1px;*/
     /*border-color: white;*/
-    border-radius: 6px;			
+    border-radius: 6px;
     pointer-events: none;
     z-index: 3;
 }
-

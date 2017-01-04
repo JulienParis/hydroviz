@@ -1,0 +1,23 @@
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+
+	<div class="{{ bootstrap_vars.col_graph }}" id="content">
+
+    <!-- LEAFLET MAP  -->
+    {% include "map.html" %}
+
+	</div>
+
+
+	<div class="{{ bootstrap_vars.col_sidebar }}" id="sidebar">
+
+    <!-- INFOS  -->
+
+	</div>
+
+
+{% endblock %}

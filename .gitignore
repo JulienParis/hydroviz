@@ -1,5 +1,9 @@
 # Created by https://www.gitignore.io/api/osx,python,komodoedit
 
+
+### BOWER
+bower_components
+
 ### OSX ###
 *.DS_Store
 .AppleDouble
