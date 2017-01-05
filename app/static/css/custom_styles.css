@@ -1,40 +1,5 @@
 /* GLOBAL STYLES */
 
-body {
-    background-color: teal ;
-    /* azure darcyan honeydew lightcyan lightseagreen mintcream teal   */
-}
-
-hr {
-    margin-top: 8px;
-    margin-bottom: 8px;
-
-}
-text {
-    font-size: medium;
-}
-
-h2 {
-    color: white;
-    margin-top: 0px;
-}
-
-h3 {
-    color: teal;
-}
-
-h4 {
-    color: white;
-    font-size: 14px;
-}
-
-h5 {
-    color: teal;
-    margin-bottom: 2px;
-    margin-top: 2px;
-}
-
-
 .dropdown-header {
     color: mediumaquamarine;
 }
@@ -66,6 +31,7 @@ h5 {
     -moz-box-shadow: none;
     box-shadow: none;
     }
+
 
 /* ANIMATED LOADER */
 .loader {

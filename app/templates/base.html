@@ -9,7 +9,10 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     	<!-- APP INFOS  -->
-
+      <title> {{ app_metas.title }} - {{ app_metas.version }} </title>
+      <meta name="keywords" content="{{ app_metas.metas }}">
+      <meta name="author"   content="{{ app_metas.authors }}">
+      <meta name="description" content="{{ app_metas.description }}">
       <!-- Google search meta -->
       <!-- <meta name="google-site-verification" content="..." /> -->
 
@@ -45,76 +48,7 @@
 
     	<style>
 
-      /* NAVBAR & DROPDOWNS */
-  	    .navbar {
-      		  background-color: {{ app_colors.navbar }} ;
-  	    }
-
-  	    #navbar-text {
-  		      color : {{ app_colors.navbar_text }}
-  	    }
-
-
-  	    /* SIDEBAR & JUMBOTRON */
-  	    .container-fluid .jumbotron{
-  		      background-color: {{ app_colors.jumbotron }} ;
-  	    }
-
-
-  	    .btn-warning{
-  		      background-color: {{ app_colors.btn_warning }} ;
-  	    }
-  	    .btn-default{
-  		      background-color: {{ app_colors.btn_default }} ;
-  	    }
-  	    .btn-success{
-  		      background-color: {{ app_colors.btn_success }} ;
-  	    }
-  	    .btn-danger{
-  		      background-color: {{ app_colors.btn_danger }} ;
-  	    }
-  	    .btn-info{
-  		      background-color: {{ app_colors.btn_info }} ;
-  	    }
-  	    .btn-primary{
-  		      background-color: {{ app_colors.btn_primary }} ;
-  	    }
-
-
-  	    .tooltip .tooltip-inner {
-        		background-color: {{ app_colors.btn_warning }} ;
-        		color: #fff;
-  	    }
-
-  	    .tooltip.right .tooltip-arrow {
-  		      border-right-color: {{ app_colors.btn_warning }} ;
-  	    }
-
-  	    .tooltip.bottom .tooltip-arrow {
-  		      border-bottom-color: {{ app_colors.btn_warning }} ;
-  	    }
-
-
-
-        /* MAP CSS */
-        #content {
-          padding-left: 0px;
-          padding-right: 0px;
-        }
-        html,body,#map{
-          height:100%;
-          width: 100%;
-          z-index: 1;
-        }
-
-        div .leaflet-control-container .leaflet-top {
-          top: 40px;
-        }
-
-        div .leaflet-bar .leaflet-control-zoom {
-          display: inline-block;
-          float: none;
-        }
+        {% include "styles_app.css" %}
 
       </style>
 
@@ -123,7 +57,7 @@
 
   <header>
 
-    {% include "navbar.html" %}
+    {% include "navbar_sidebar.html" %}
 
   </header>
 
@@ -152,7 +86,7 @@
   	<!-- FOOTER --------------------------------------------------------------------- -->
   	<div class="footer navbar-fixed-bottom">
 
-      <div class="col-sm-12 col-sm-offset-0">
+      <div class="col-sm-12 col-sm-offset-1">
 
     		<h6 class="text-left" style="color: white; opacity: 0.4">
 
@@ -222,42 +156,6 @@
       $(this).remove();
         });
     }, 4000);
-
-
-
-
-  </script>
-
-
-  <!--  SOCKET IO callings  -->
-  <script type="text/javascript" charset="utf-8">
-
-    $(document).ready(function() {
-
-      var socket = io.connect('http://' + document.domain + ':' + location.port);
-
-      socket.on('connect', function() {
-
-        // socket.emit('connection start', {data: '--> client connected from : ' + document.domain + ':' + location.port });
-        socket.emit('connection start', {
-          data: 'Bonjour serveur, je commence à naviguer sur le site, attention !! ' ,
-          operation : 44
-        });
-
-
-
-      });
-
-      socket.on('my response', function(response) {
-
-        var resp = response.data ;
-
-        console.log(resp) ;
-
-      });
-
-
-    });
 
   </script>
 

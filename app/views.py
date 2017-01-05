@@ -9,10 +9,8 @@ from flask import Flask, flash, render_template, url_for, request, session, redi
 
 from flask_socketio import emit #, send
 
-from . import SITE_ROOT, SITE_STATIC, STATIC_DATA, STATIC_DATA_STATS, STATIC_DATA_CARTO
-
-
-import folium
+#from . import SITE_ROOT, SITE_STATIC, STATIC_DATA, STATIC_DATA_STATS, STATIC_DATA_CARTO
+#import folium
 
 from scripts.app_settings import bootstrap_vars, app_colors, app_metas
 from scripts.get_data import GetDataSlice
@@ -29,13 +27,18 @@ src_carto_files = {
     "topo_rivieres"     : "rivieres_lessFields_009.json",
 }
 for k, v in src_carto_files.iteritems() :
-    src_carto_files[k] = STATIC_DATA_CARTO + v
+    src_carto_files[k] = "data/carto_web/" + v
 
 dft_basemaps = {
-    "admin"   : src_carto_files["topo_departements"],
-    "water"   : src_carto_files["topo_ME_agg"],
-    "station" : src_carto_files["topo_stations"]
+    "admin"    : src_carto_files["topo_departements"],
+    "water"    : src_carto_files["topo_ME_agg"],
+    "stations" : src_carto_files["topo_stations"]
 }
+
+
+dft_data_water = {}
+dft_data_admin = {}
+
 
 ### routing #######################
 
@@ -45,9 +48,12 @@ def index():
     ### get global app variables
 
     return render_template('index.html',
+                           app_metas      = app_metas,  
                            app_colors     = app_colors,
                            bootstrap_vars = bootstrap_vars,
-                           basemaps       = dft_basemaps
+                           basemaps       = dft_basemaps,
+                           data_ME        = dft_data_water,
+                           data_admin     = dft_data_admin,
     )
 
 

@@ -3,8 +3,8 @@
 
 ### vars for name application / metas
 app_metas = {
-    "title"       : u"Pesticides",
-    "subtitle"    : u"les pesticides dans les nappes phréatiques françaises",
+    "title"       : u"STYG-VIZ",
+    "subtitle"    : u"concentrations de pesticides dans les nappes phréatiques françaises",
     "version"     : u"beta 0.1",
     "description" : u"cartographie et datavisualisation de la teneur en pesticides des nappes phréatiques de France entre 2007 et 2012",
     "authors"     : u"Julien Paris | Florian Melki",
@@ -24,16 +24,18 @@ colors = {
             "green_"  : {"hex" : "#d9ecbb"},
             "red_"    : {"hex" : "#f22f59"},
             "ocre_"   : {"hex" : "#ffbb46"},
-            "blue_"   : {"hex" : "#2dd6b5", "rgba" : "rgba(46, 214, 180, 0)"},
+            "blue_"   : {"hex" : "#2dd6b5", "rgba" : "rgba(46, 214, 180, 0)" },
             "orange_" : {"hex" : "#fe5a34"},
             "purple_" : {"hex" : "#7841a9"},
             "dark_"   : {"hex" : "#3e0963"},
+            "water_"  : {"hex" : "#1d91c0", "rgba" : "rgba(29,145,192, 0.8)" }
 }
 
 app_colors = {
-    'navbar'        : colors['blue_']['rgba'],
-    'navbar_text'   : colors['blue_']['hex'],
+    'navbar'        : colors['water_']['rgba'],
+    'navbar_text'   : colors['grey_']['hex'],
     'navbar_select' : colors['ocre_']['hex'],
+
     'jumbotron'     : colors['blue_']['hex'],
 
     'btn_primary' : colors['green_']['hex'],

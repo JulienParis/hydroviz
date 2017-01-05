@@ -1,101 +1,309 @@
 
+<style>
+
+  /* MAP CSS */
+  #content {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  html,body,#map{
+    height:100%;
+    width: 100%;
+    z-index: 1;
+  }
+
+  div .leaflet-control-container .leaflet-top {
+    top: 20px;
+  }
+
+
+  div .leaflet-control-zoom {
+    display: inline-flex;
+
+  }
+  div .leaflet-bar a:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 4px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 4px;
+    border-bottom : none;
+    border-right : 1px solid #ccc ;
+  }
+  div .leaflet-bar a:last-child {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 0px;
+  }
+
+</style>
+
 
 <div id="map" style="position: fixed;"></div>
+
+<!-- CHROMA JS -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.9/chroma.min.js"></script>
+
+<!-- MARKER CLUSTER -->
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.0/dist/MarkerCluster.Default.css" />
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.0/dist/MarkerCluster.css" />
+<script type='text/javascript' src='https://unpkg.com/leaflet.markercluster@1.0.0/dist/leaflet.markercluster.js'></script>
 
 
 <script>
 
-  // CREATE EMPTY LAYERS GROUPS
-  var water_layer    = new L.layerGroup();
-  var admin_layer    = new L.layerGroup();
-  var stations_layer = new L.layerGroup();
+  //queue
+    //.defer(d3.json, 'states.json') // topojson polygons
+    //await(makeMap) ;
 
-  // BASEMAP TILES
-  var mbAttr =
-    'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery <a href="http://mapbox.com">Mapbox</a>';
-  var mbUrl  = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
+  //function makeMap(error, water, admin) {
 
-  var grayscale  = L.tileLayer(mbUrl, {id: 'mapbox.light'  , attribution: mbAttr});
-  var streets    = L.tileLayer(mbUrl, {id: 'mapbox.streets', attribution: mbAttr});
+    // CREATE EMPTY LAYERS GROUPS
+    var water_layer    = new L.layerGroup();
+    var admin_layer    = new L.layerGroup();
 
-  // LEAFLET MAP OBJECT
-  var map = L.map('map', {
-    center: [47, 3],
-    zoom: 6,
-    layers: [ grayscale, water_layer, admin_layer ]
-  });
+    //var stations_layer = new L.layerGroup();
+    var stations_layer_cluster = L.markerClusterGroup({
+        spiderfyOnMaxZoom: false,
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true
+    });
 
 
-  // CREATE CONTROLS
-  var baseLayers = {
-    "Grayscale": grayscale,
-    "Streets"  : streets
-  };
+    // BASEMAP TILES
+    var mbAttr =
+      'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+      '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+      'Imagery <a href="http://mapbox.com">Mapbox</a>';
+    var mbUrl  = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
 
-  var overlays = {
-    "admin layer"    : admin_layer,
-    "water layer"    : water_layer,
-    "stations layer" : stations_layer
-  };
+    var grayscale  = L.tileLayer(mbUrl, {id: 'mapbox.light'  , attribution: mbAttr});
+    var streets    = L.tileLayer(mbUrl, {id: 'mapbox.streets', attribution: mbAttr});
 
-  var controls = L.control.layers(baseLayers, overlays, { position:"topleft" } ).addTo(map);
+    // LEAFLET MAP OBJECT
+    var map = L.map('map', {
+      center: [47, 3],
+      zoom: 6,
+      layers: [ grayscale, water_layer ],
+      zoomControl:false
+    });
 
 
-  // TOPOJSON HANDLING
-  L.TopoJSON = L.GeoJSON.extend({
-    addData: function(jsonData) {
-      if (jsonData.type === "Topology") {
-        for (key in jsonData.objects) {
-          geojson = topojson.feature(jsonData, jsonData.objects[key]);
-          L.GeoJSON.prototype.addData.call(this, geojson);
+    // CREATE CONTROLS
+    var baseLayers = {
+      "Grayscale": grayscale,
+      "Streets"  : streets
+    };
+
+    var overlays = {
+      "water layer"    : water_layer,
+      "admin layer"    : admin_layer,
+      "stations layer" : stations_layer_cluster
+    };
+
+    var zoom = L.control.zoom( { position : "topright"} ).addTo(map);
+    var controls = L.control.layers(baseLayers, overlays, { position:"topright" } ).addTo(map);
+
+    // TOPOJSON HANDLING
+    L.TopoJSON = L.GeoJSON.extend({
+      addData: function(jsonData) {
+        if (jsonData.type === "Topology") {
+          for (key in jsonData.objects) {
+            geojson = topojson.feature(jsonData, jsonData.objects[key]);
+            L.GeoJSON.prototype.addData.call(this, geojson);
+          }
+        }
+        else {
+          L.GeoJSON.prototype.addData.call(this, jsonData);
         }
       }
-      else {
-        L.GeoJSON.prototype.addData.call(this, jsonData);
-      }
+    }); // Copyright (c) 2013 Ryan Clark
+
+    var topoLayer_water    = new L.TopoJSON();
+    var topoLayer_admin    = new L.TopoJSON();
+    var topoLayer_stations = new L.TopoJSON();
+
+
+    // LOAD DATA FOR EACH LAYER VIA SOCKET IO
+
+
+
+    // DEFER FUNCTION TO PRELOAD STUFF ...
+    // queue()
+    //   .defer(d3.json, "{{ url_for( 'static', filename='data/carto_web/departements.json' ) }}" )
+    //   .defer(d3.json, "{{ url_for( 'static', filename='data/carto_web/departements.json' ) }}" )
+    //   .await(addTopoData);
+
+
+    // TO DO : ADD SOCKET IO FUNCTIONS HERE
+    //$.getJSON( "{{ url_for( 'static', filename='data/carto_web/ME_014_030_060.json' ) }}" )
+    $.getJSON( "{{ url_for ( 'static', filename = basemaps.water ) }}" )
+      .done(addTopoData_water);
+
+    //$.getJSON( "{{ url_for( 'static', filename='data/carto_web/departements.json' ) }}" )
+    $.getJSON( "{{ url_for( 'static', filename = basemaps.admin ) }}" )
+      .done(addTopoData_admin);
+
+
+
+
+
+
+    // WARNING : OVERWRITES previous TOPOLAYER object
+
+    function addTopoData_water(topoData){
+      topoLayer_water.addData(topoData);
+      topoLayer_water.addTo(water_layer);
+      topoLayer_water.eachLayer(handleWaterLayer);
+    };
+
+    function addTopoData_admin(topoData){
+      topoLayer_admin.addData(topoData);
+      topoLayer_admin.addTo(admin_layer);
+      topoLayer_admin.eachLayer(handleAdminLayer);
+    };
+
+
+
+    var colorScale_1 = chroma
+      .scale(['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#0c2c84'])
+      .domain([0,1]);
+
+    var colorScale_2 = chroma
+        .scale(['#FFEDA0', '#800026'])
+        .domain([0,1]);
+
+
+    var dft_opacity = 0.6;
+    var dft_weight  = 0.5;
+
+    function handleWaterLayer(layer){
+
+      //console.log("--",layer.feature.properties);
+
+      var randomValue = Math.random(),
+        fillColor = colorScale_1(randomValue).hex();
+
+      layer.setStyle({
+        fillColor : fillColor,
+        fillOpacity: dft_opacity,
+        color:'white',
+        weight:dft_weight,
+        opacity: 1
+      });
+      layer.on({
+        mouseover: enterLayer,
+        mouseout: leaveLayer,
+        click: zoomToFeature
+
+      });
+    };
+
+    function handleAdminLayer(layer){
+
+      //console.log("--",layer.feature.properties);
+
+      var randomValue = Math.random(),
+         fillColor = colorScale_2(randomValue).hex();
+
+      layer.setStyle({
+        fillColor : fillColor,
+        fillOpacity: dft_opacity,
+        dashArray: '3',
+        color:'white',
+        weight: dft_weight + 1.5 ,
+        opacity: 1
+      });
+      layer.bringToFront();
+
+      layer.on({
+        mouseover: enterLayer,
+        mouseout: leaveLayer,
+        click: zoomToFeature
+      });
+    };
+
+    var $tooltip = $('.country-name');
+
+    function enterLayer(){
+      //var countryName = this.feature.properties.name;
+      //$tooltip.text(countryName).show();
+      //console.log(this);
+
+      this.bringToFront();
+      this.setStyle({
+        weight: this.options.weight + 2,
+        fillOpacity: 1
+      });
     }
-  }); // Copyright (c) 2013 Ryan Clark
 
-  var topoLayer_water    = new L.TopoJSON();
-  var topoLayer_admin    = new L.TopoJSON();
-  var topoLayer_stations = new L.TopoJSON();
+    function leaveLayer(){
+      //$tooltip.hide();
 
+      //this.bringToBack();
+      this.setStyle({
+        weight: this.options.weight - 2,
+        fillOpacity: dft_opacity
+      });
+    }
 
-
-  // DEFER FUNCTION TO PRELOAD STUFF ...
-  // queue()
-  //   .defer(d3.json, "{{ url_for( 'static', filename='data/carto_web/departements.json' ) }}" )
-  //   .defer(d3.json, "{{ url_for( 'static', filename='data/carto_web/departements.json' ) }}" )
-  //   .await(addTopoData);
-
-
-  // TO DO : ADD SOCKET IO FUNCTIONS HERE
-  $.getJSON( "{{ url_for( 'static', filename='data/carto_web/departements.json' ) }}" )
-    .done(addTopoData_admin);
-
-  $.getJSON( "{{ url_for( 'static', filename='data/carto_web/ME_014_030_060.json' ) }}" )
-    .done(addTopoData_water);
-
-  // $.getJSON( "{{ url_for( 'static', filename='data/carto_web/stations_web_carto_topo.json' ) }}" )
-  //   .done(addTopoData_stations);
-
-  // WARNING : OVERWRITES previous TOPOLAYER object
-  function addTopoData_admin(topoData){
-    topoLayer_admin.addData(topoData);
-    topoLayer_admin.addTo(admin_layer);
-  };
-
-  function addTopoData_water(topoData){
-    topoLayer_water.addData(topoData);
-    topoLayer_water.addTo(water_layer);
-  };
+    function zoomToFeature(e) {
+        map.fitBounds(e.target.getBounds());
+    }
 
 
-  // function addTopoData_stations(topoData){
-  //   topoLayer_water.addData(topoData);
-  //   topoLayer_water.addTo(stations_layer);
-  // };
+
+
+    $.getJSON( "{{ url_for( 'static', filename='data/carto_web/stations_web_carto_topo.json' ) }}" )
+       //.done(addTopoData_stations);
+
+    // function addTopoData_stations(topoData){
+    //   topoLayer_stations.addData(topoData);
+    //   topoLayer_stations.eachLayer(
+    //     var m = L.marker( [layer[i].lat, markers[i].lng] );
+    //     stations_layer_cluster.addLayer( m );
+    //   );
+    //   //topoLayer_stations.addTo(stations_layer_cluster);
+    // };
+
+
+
+
+    var somestring = "this is an initial string";
+
+  //}
+
+    // SOCKET IO callings
+
+    $(document).ready(function() {
+
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+      socket.on('connect', function() {
+
+        // socket.emit('connection start', {data: '--> client connected from : ' + document.domain + ':' + location.port });
+        socket.emit('connection start', {
+          data: somestring ,
+          operation : 44
+        });
+
+      });
+
+      socket.on('my response', function(response) {
+
+        var resp = response.data ;
+
+        somestring = resp ;
+
+        console.log(somestring) ;
+
+        // update data + reload layer
+        //topoLayer_water.eachLayer(updateData);
+        //map.viewreset(); //redraw
+
+      });
+
+
+  });
 
 </script>
