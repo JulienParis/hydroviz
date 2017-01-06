@@ -13,7 +13,6 @@ from flask_socketio import emit #, send
 #import folium
 
 from scripts.app_settings import bootstrap_vars, app_colors, app_metas
-from scripts.get_data import GetDataSlice
 
 ### sources topojson in app/static/data/carto_web
 src_carto_files = {
@@ -36,37 +35,74 @@ dft_basemaps = {
 }
 
 
-dft_data_water = {}
-dft_data_admin = {}
+"""
+df_dict = {
+    "df_stations"       : {"df" : df_stations,       "idx" : indexing_stations },
+    "df_pest_danger"    : {"df" : df_pest_danger,    "idx" : indexing_pest_danger },
+    "df_pest_functions" : {"df" : df_pest_functions, "idx" : indexing_pest_functions },
+    "df_pesticides"     : {"df" : df_pesticides,     "idx" : indexing_pesticides },
+    "df_MCT"            : {"df" : df_MCT,            "idx" : indexing_MCT_MA },
+    "df_MA"             : {"df" : df_MA,             "idx" : indexing_MCT_MA },
+    "df_AV_dpt"         : {"df" : df_AV_dpt,         "idx" : indexing_AV_dpt_ME },
+    "df_AV_ME"          : {"df" : df_AV_ME,          "idx" : indexing_AV_dpt_ME }
+}
+"""
+import json
+import pandas as pd
+import numpy as np
+#from scripts.load_data import  df_dict, var_dict
+from scripts.get_data import GetDataSlice
 
+idx = pd.IndexSlice
 
 ### routing #######################
 
 @app.route('/')
 def index():
 
-    ### get global app variables
+    ## list variables : ANNEES / --> dropdowns
 
     return render_template('index.html',
-                           app_metas      = app_metas,  
+                           app_metas      = app_metas,
                            app_colors     = app_colors,
                            bootstrap_vars = bootstrap_vars,
                            basemaps       = dft_basemaps,
-                           data_ME        = dft_data_water,
-                           data_admin     = dft_data_admin,
+                           #data_ME        = dft_data_water,
+                           #data_admin     = dft_data_admin,
     )
 
 
-@socketio.on('connection start')
-def test_message(message):
+@socketio.on('io_request_water')
+def return_init_data(request_client):
 
     print
-    print message['data']
+    print "***** io_connection_start / request from client : ", request_client
+
+    df_src              = request_client['df_source']
+    slice_query_index   = request_client['slice_query_index']
+    slice_query_columns = request_client['slice_query_columns']
+
+    slice_year = slice_query_index[0]
+    slice_pest = slice_query_index[1]
+
+    print "***** io_connection_start / slice_query_index : ", slice_year , "-", slice_pest
+
+    ### get the slice from pandas dataframe
+    slice_water = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , "AG001":"TOT_FRANCE" ]
+
+    ### reset index and attribute unique index as custom "REQUEST" (otherwise pandas fucks up the JSON and client JSON.parse won't work )
+    slice_water = slice_water.reset_index()
+    slice_water["REQUEST"] = slice_water['ANNEE'].astype(str) + "_" + slice_water['CD_PARAMETRE']
+    slice_water.set_index( ["REQUEST"], inplace=True )
+
+    ### transpose dataframe to set "REQUEST" columns as index
+    slice_water = slice_water.T
+
+    ### save slice as JSON
+    slice_water_json = slice_water.to_json(orient="index")
+
+    #print "***** io_connection_start / slice_water_json : ", slice_water_json
     print
 
-    ## test
-    chiffre =  message['operation']
-    result  = chiffre * 2
-    msg     = "tu as envoyé %s, donc %s X 2 =  %s" %(chiffre, chiffre, result)
-
-    emit('my response', {'data': msg })
+    ### emit the json
+    emit( 'io_slice_from_server', {'request_sent': request_client, 'data_water': slice_water_json } )

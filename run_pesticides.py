@@ -23,8 +23,10 @@ debug_ = True
 if __name__ == '__main__':
 
     if debug_ :
+
+        print
         print "= " *70
-        print " - app.config : ", app.config
+        #print " - app.config : ", app.config
         print
 
     ## $ python run_pesticides.py
