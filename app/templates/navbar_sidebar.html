@@ -103,7 +103,7 @@
 
   @media(min-width:700px) {
      #wrapper {
-         padding-left: 150px;
+         padding-left: 300px;
      }
      .fixed-brand{
          width: 150px;
@@ -112,10 +112,10 @@
          padding-left: 0;
      }
      #sidebar-wrapper {
-         width: 150px;
+         width: 300px;
      }
      #wrapper.toggled #sidebar-wrapper {
-         width: 150px;
+         width: 300px;
      }
      #wrapper.toggled-2 #sidebar-wrapper {
          width: 50px;
@@ -164,6 +164,14 @@
     padding-left: 20pt;
     }
 
+  #slider_years{
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0px;
+  }
+  #annee_selected{
+    color: white;
+  }
 </style>
 
 
@@ -189,13 +197,33 @@
       <li class="active" >
         <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2">
           <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-          filtres
+          <!-- filtres -->
         </button>
       </li>
 
+      <li>
+        <form class="navbar-form navbar-left" role="slider">
+
+            <div class="row">
+              <label class="" for="slider_years">
+                Années
+              </label>
+              <div class="input-group">
+              <input class="form-control" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
+              <output class="" for="slider_years" id="annee_selected">
+                2007
+              </output>
+            </div>
+          </div>
+
+        </form>
+      </li>
 
 
     </ul>
+
+
+
 
     <ul class="nav navbar-nav navbar-right">
 
@@ -318,19 +346,29 @@
                   par familles <span class="caret"></span>
                 </a>
                 <div class="collapse" id="collapseFamilles">
-                    <a href="#" class="request indent2" reqtype="pest_fam" reqvalue="famille1" > > famille 1 </a>
-                    <a href="#" class="request indent2" reqtype="pest_fam" reqvalue="famille2" > > famille 2 </a>
+                  {% for famille in var_dict.pest_familles|sort %}
+                    <a href="#" class="request indent2" reqtype="pest_fam" reqvalue="{{ famille }}" > > {{ famille }} </a>
+                  {% endfor %}
                 </div>
 
 
                 <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseFonctions" aria-expanded="false" aria-controls="collapseFonctions">
                   par fonctions <span class="caret"></span>
                 </a>
+                <div class="collapse" id="collapseFonctions">
+                  {% for fonction in var_dict.pest_fonctions|sort %}
+                    <a href="#" class="request indent2" reqtype="pest_fonct" reqvalue="{{ fonction }}" > > {{ fonction }} - </a>
+                  {% endfor %}
+                </div>
 
                 <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseDangers" aria-expanded="false" aria-controls="collapseDangers">
                   par dangerosité <span class="caret"></span>
                 </a>
-
+                <div class="collapse" id="collapseDangers">
+                  {% for danger in var_dict.pest_danger_types|sort %}
+                    <a href="#" class="request indent2" reqtype="pest_dang" reqvalue="{{ danger }}" > > {{ danger }} - </a>
+                  {% endfor %}
+                </div>
 
               </div>
 
@@ -349,7 +387,7 @@
               <div class="collapse" id="collapseDpts">
                 <hr>
                 {% for dpt in var_dict.departements|sort %}
-                  <a href="#" class="request indent2" reqtype="dpt" reqvalue="{{ dpt }}" >{{ dpt }}</a>
+                  <a href="#" class="request indent2" reqtype="dpt" reqvalue="{{ dpt }}" >{{ dpt }} - </a>
                 {% endfor %}
               </div>
 

@@ -30,8 +30,9 @@ for k, v in src_carto_files.iteritems() :
 
 dft_basemaps = {
     "admin"    : src_carto_files["topo_departements"],
-    "water"    : src_carto_files["topo_ME_agg"],
-    "stations" : src_carto_files["topo_stations"]
+    "ME"       : src_carto_files["topo_ME_agg"],
+    "stations" : src_carto_files["topo_stations"],
+    "rivers"   : src_carto_files["topo_rivieres"]
 }
 
 
@@ -78,40 +79,49 @@ def index():
 
 def send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest ) :
 
+    print "-----> send_AV_slice / variables / request_client : %s - req_query : %s - df_src : %s - slice_year : %s - slice_pest  : %s" \
+                                            %(request_client,       req_query,       df_src,       slice_year,       slice_pest )
+
     ### get the slice from pandas dataframe
-    slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , "AG001":"TOT_FRANCE" ]
-    #slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] ]   [ 2 : ]
+    #slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , "AG001":"TOT_FRANCE" ]
+    slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , : ]
     print "-----> send_AV_slice / slice_df : OK "
     #print "sample slice_df :  "
     #print slice_df.head(1)
 
     ### reset index and attribute unique index as custom "REQUEST" (otherwise pandas fucks up the JSON and client JSON.parse won't work )
-    slice_df = slice_df.reset_index()
-    slice_df["REQUEST"] = slice_df['ANNEE'].astype(str) + "_" + slice_df['CD_PARAMETRE']
+    slice_df  = slice_df.reset_index()
+    req_index = str(slice_year) + "_" + str(slice_pest)
+    slice_df["REQUEST"] = req_index
+    #slice_df["REQUEST"] = slice_df['ANNEE'].astype(str) + "_" + slice_df['CD_PARAMETRE'].astype(str)
     slice_df.set_index( ["REQUEST"], inplace=True )
-    # print "sample slice_df.set_index : "
+    print "-----> send_AV_slice / add column 'REQUEST' : ", req_index
     # print slice_df.head(1)
+
+    ### drop useless columns
+    slice_df.drop(["ANNEE", "CD_PARAMETRE"], axis=1, inplace=True)
+    print "-----> send_AV_slice / drop columns 'ANNEE' and 'CD_PARAMETRE' "
 
     ### transpose dataframe to set "REQUEST" columns as index
     slice_df = slice_df.T
-    # print "sample slice_df.T : "
+    print "-----> send_AV_slice / transpose slice_df : slice_df.T"
     # print slice_df.head(1)
 
     ### save slice as JSON
     slice_df_json = slice_df.to_json(orient="index")
 
-    print
-
     ### emit the json
     emit( 'io_slice_from_server', {'request_sent': request_client, 'request_query' : req_query, 'slice_df': slice_df_json } )
-    print "----> send_AV_slice / emit : OK "
+    print "-----> send_AV_slice / emit : OK "
+
+    print
 
 
-@socketio.on('io_request_water')
+@socketio.on('io_request_slice')
 def return_init_data(request_client):
 
     print
-    print "***** io_connection_start / request from client : ", request_client
+    print "***** io_request_slice / request from client : ", request_client
 
     df_src              = request_client['df_source']
     slice_query_index   = request_client['slice_query_index']
@@ -122,6 +132,6 @@ def return_init_data(request_client):
 
     req_query  = str(slice_year) + "_" + str(slice_pest)
 
-    print "***** io_connection_start / req_query : ", req_query
+    print "***** io_request_slice / req_query : ", req_query
 
     send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest )

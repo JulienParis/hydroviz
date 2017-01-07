@@ -53,8 +53,9 @@
 <script>
 
   // CREATE EMPTY LAYERS GROUPS
-  var water_layer    = new L.layerGroup();
-  var admin_layer    = new L.layerGroup();
+  var ME_layer     = new L.layerGroup();
+  var rivers_layer = new L.layerGroup();
+  var admin_layer  = new L.layerGroup();
 
   //var stations_layer = new L.layerGroup();
   var stations_layer_cluster = L.markerClusterGroup({
@@ -77,24 +78,28 @@
   var map = L.map('map', {
     center: [47, 3],
     zoom: 6,
-    layers: [ grayscale, water_layer ], // active layers
+    layers: [ grayscale, ME_layer, rivers_layer ], // active layers
     zoomControl:false
   });
 
   // CREATE CONTROLS
   var baseLayers = {
-    "Grayscale": grayscale,
-    "Streets"  : streets
+    "Fond gris": grayscale,
+    "Fond OSM" : streets
   };
 
   var overlays = {
-    "water layer"    : water_layer,
-    "admin layer"    : admin_layer,
-    "stations layer" : stations_layer_cluster
+    "nappes phréatiques" : ME_layer,
+    "départements"       : admin_layer,
+    "stations de mesure" : stations_layer_cluster,
+    "eaux de surface"    : rivers_layer,
   };
 
   var zoom = L.control.zoom( { position : "topright"} ).addTo(map);
-  var controls = L.control.layers(baseLayers, overlays, { position:"topright" } ).addTo(map);
+  var controls = L.control.layers(
+    baseLayers, overlays,
+    { position : "topright" }
+  ).addTo(map);
 
   // TOPOJSON HANDLING - TOPOJSON OBJECTS FOR LEAFLET
   L.TopoJSON = L.GeoJSON.extend({
@@ -113,6 +118,7 @@
 
   // CREATE EMPTY TOPOJSON-LEAFLET OBJECTS
   var topoLayer_water    = new L.TopoJSON();
+  var topoLayer_rivers   = new L.TopoJSON();
   var topoLayer_admin    = new L.TopoJSON();
   var topoLayer_stations = new L.TopoJSON();
 
@@ -124,34 +130,40 @@
       .scale( {{ choropleths.seq_turquoise|safe }} )
       .domain([0, 0.5]);
 
-  var dft_opacity    = 0.5;
-  var dft_weight     = 0.5;
-  var dft_null_color = "#f0f0f0";
+  var dft_opacity      = 0.6;
+  var dft_weight       = 0.5;
+  var dft_null_color   = "#f0f0f0";
+  var dft_stroke_color = "white";
 
   // VIZUALISATION OF DATA
-  function handleLayer(layer, value, layerGroup ){
+  function handleLayer(layer, value_fill, layer_name ){
 
-    if (value != null ){
+    var stroke_color  = dft_stroke_color ;
+    var stroke_weight = dft_weight ;
+
+    if (value_fill != null ){
 
       fillOpacity = dft_opacity ;
 
-      if (layerGroup == "water") {
-        var fillColor = colorScale_water(value).hex();
-      } else {
-        var fillColor = colorScale_admin(value).hex();
+      if (layer_name == df_ME ) {
+        var fillColor = colorScale_water(value_fill).hex();
+      } else if (layer_name == df_dpt ) {
+        var fillColor = colorScale_admin(value_fill).hex();
       }
     }
 
-    else {
+    else { /// <-- rivers for now
       var fillColor   = dft_null_color ;
       var fillOpacity = 0 ;
+      stroke_color    = "#081d58" ;
+      stroke_weight   = 0.5 ;
     }
 
     layer.setStyle({
       fillColor  : fillColor,
       fillOpacity: fillOpacity,
-      color      :'white',
-      weight     :dft_weight,
+      color      : stroke_color,
+      weight     : stroke_weight,
       opacity    : 1
     });
 
@@ -164,7 +176,7 @@
 
   function enterLayer(){
 
-    this.bringToFront();
+    //this.bringToFront();
     this.setStyle({
       weight : dft_weight + 2,
       opacity: 1
@@ -172,7 +184,7 @@
   }
 
   function leaveLayer(){
-    this.bringToBack();
+    //this.bringToBack();
     this.setStyle({
       weight : dft_weight,
       opacity: dft_opacity
@@ -193,8 +205,10 @@
     /// for instance : layer_name == "water"
     if (layer_name == df_ME){
       topoLayer = topoLayer_water;
-    } else {
+    } else if (layer_name == df_dpt) {
       topoLayer = topoLayer_admin;
+    } else {
+      topoLayer = topoLayer_rivers;
     }
 
     topoLayer.eachLayer(
@@ -204,9 +218,12 @@
         if (layer_name == df_ME) {
           var index_geom = layer.feature.properties.CdMasseDEa ;
           //console.log(" io_slice_from_server / index_ME : ", index_ME)
-        } else {
+        } else if (layer_name == df_dpt) {
           var index_geom = layer.feature.properties.code ;
+        } else {
+          var index_geom = null ;
         }
+
         var data_geom = data_json[index_geom] ;
         //console.log(" io_slice_from_server / index_ME : " + index_ME + " / data_ME : ", data_ME) ;
 
@@ -242,18 +259,20 @@
     //var def = new $.Deferred();
 
     // GET TOPOJSON FILES
-    $.getJSON( "{{ url_for ( 'static', filename = basemaps.water ) }}" )
-      .done(addTopoData_water);
-    $.getJSON( "{{ url_for( 'static', filename = basemaps.admin ) }}" )
+    $.getJSON( "{{ url_for ( 'static', filename = basemaps.ME ) }}" )
+      .done(addTopoData_ME);
+    $.getJSON( "{{ url_for( 'static', filename  = basemaps.admin ) }}" )
        .done(addTopoData_admin);
+    $.getJSON( "{{ url_for( 'static', filename  = basemaps.rivers ) }}" )
+      .done(addTopoData_rivers);
+
 
     // PROCESS TOPOJSON // WARNING : OVERWRITES previous TOPOLAYER object
-    function addTopoData_water(topoData){
-      console.log(" - leaflet -- starting / addTopoData_water ");
+    function addTopoData_ME(topoData){
+      console.log(" - leaflet -- starting / addTopoData_ME ");
       topoLayer_water.addData(topoData);
-      topoLayer_water.addTo(water_layer);
-      //topoLayer_water.eachLayer(handleWaterLayer); //////////////////
-      console.log(" - leaflet -- finished / addTopoData_water ");
+      topoLayer_water.addTo(ME_layer);
+      console.log(" - leaflet -- finished / addTopoData_ME ");
 
       callback(); // <-- callback inside last called function
     };
@@ -262,23 +281,45 @@
       console.log(" - leaflet -- starting / addTopoData_admin ");
       topoLayer_admin.addData(topoData);
       topoLayer_admin.addTo(admin_layer);
-      //topoLayer_admin.eachLayer(handleAdminLayer); /////////////////
       console.log(" - leaflet -- finished / addTopoData_admin ");
     };
+
+    function addTopoData_rivers(topoData){
+      console.log(" - leaflet -- starting / addTopoData_rivers ");
+      topoLayer_rivers.addData(topoData);
+      topoLayer_rivers.addTo(rivers_layer);
+
+      //topoLayer_rivers.eachLayer(handleLayer); /////////////////////////////////////
+      topoLayer_rivers.eachLayer(
+        function (layer) {
+          handleLayer(layer, null , df_rivers);
+          layer.bringToBack();
+        }
+      );
+
+      console.log(" - leaflet -- finished / addTopoData_rivers ");
+
+    };
+
+    // modify Leaflet controls
+    $(".leaflet-control-layers").addClass("leaflet-control-layers-expanded") ;
 
     //return def.promise();
 
   }; // <-- end : InitMap
 
 
-  var df_ME  = "df_AV_ME"  ;
-  var df_dpt = "df_AV_dpt" ;
+  var df_ME       = "df_AV_ME"    ;
+  var df_dpt      = "df_AV_dpt"   ;
+  var df_stations = "df_stations" ;
+  var df_rivers   = "df_rivers"   ;
 
   //ConnectSocketIO = function () {
   function ConnectSocketIO () {
 
+    // default values
     var req_client = "request IO from client";
-    var year   = "2011"   ;
+    var year   = "2007"   ;
     var pest   = "XXXXXX" ;
 
     // INITIATE SOCKET IO CONNECTION
@@ -286,7 +327,7 @@
 
     function EmitRequestSlice(df_name) {
       socket.emit(
-        'io_request_water', {
+        'io_request_slice', {
           msg                 : req_client ,
           df_source           : df_name ,
           slice_query_index   : [ year, pest ] ,
@@ -295,10 +336,12 @@
       );
     };
 
+
+
     socket.on('connect', function() {
       // socket.emit('connection start', {data: '--> client connected from : ' + document.domain + ':' + location.port });
       EmitRequestSlice(df_ME);
-      //EmitRequestSlice(df_dpt);
+      EmitRequestSlice(df_dpt);
     });
 
     socket.on('io_slice_from_server', function(data_slice) {
@@ -351,7 +394,33 @@
         year = req_value ;
       }
 
-      EmitRequestSlice(df_ME)
+      EmitRequestSlice(df_ME);
+      EmitRequestSlice(df_dpt);
+
+    });
+
+
+
+    $("#slider_years").on("input change", function() {
+
+      console.log(this) ;
+
+      var year_slide = this.value ;
+
+      console.log(year_slide) ;
+
+      document.querySelector('#annee_selected').value = year_slide ;
+
+      var req_value = year_slide ;
+      var req_type  = "year";
+
+      // console.log( "req_type : " + req_type + " / " + req_value + " (" + jQuery.type(req_value) + ")" );
+      if ( req_type == "year") {
+        year = req_value ;
+      }
+
+      EmitRequestSlice(df_ME);
+      EmitRequestSlice(df_dpt);
 
     });
 

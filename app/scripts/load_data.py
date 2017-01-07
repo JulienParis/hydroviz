@@ -78,12 +78,12 @@ indexing_AV_dpt_ME = ["ANNEE", "CD_PARAMETRE"]
 ###############
 df_AV_dpt          = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["AV_dpt_web_file"]), \
                                     sep=csv_sep, encoding=csv_encoding )
-df_AV_dpt.set_index( indexing_AV_dpt_ME, inplace=True, drop=False )
+df_AV_dpt.set_index( indexing_AV_dpt_ME, inplace=True, drop=True )
 df_AV_dpt.sort_index(inplace=True)
 ###############
 df_AV_ME           = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["AV_ME_web_file"]), \
                                     sep=csv_sep, encoding=csv_encoding )
-df_AV_ME.set_index( indexing_AV_dpt_ME, inplace=True, drop=False )
+df_AV_ME.set_index( indexing_AV_dpt_ME, inplace=True, drop=True )
 df_AV_ME.sort_index(inplace=True)
 
 
