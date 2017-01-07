@@ -24,14 +24,12 @@ src_stat_files = {
 }
 
 
-### load files as pandas dataframes
+### load files as pandas dataframes ##########################################
 
 ### ADMINISTRATIVE AREAS ##########################################
 # get list/dict of NUM_REG - nested
 # get list/dict of NUM_DEP
 # get list/dict of NUM_COM
-
-
 
 ### STATIONS  ##########################################
 indexing_stations = ["NUM_DEP", "NUM_COM",  "CD_ME_niv1_surf", "CD_ME_v2", "INDEX_STATION"]
@@ -40,11 +38,6 @@ df_stations       = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files[
 df_stations.set_index( indexing_stations, inplace=True, drop=False )
 df_stations.sort_index(inplace=True)
 
-dict_dpt_com  = { k: g["NUM_COM"].tolist() for k,g in df_stations.groupby("NUM_DEP")}
-dict_INDEX_CD = { k: g["CD_STATION"].tolist() for k,g in df_stations.groupby("INDEX_STATION")}
-
-#####
-
 
 ### PESTICIDES ##########################################
 indexing_pest_danger = ["CAS"]
@@ -52,33 +45,18 @@ df_pest_danger       = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_fil
                                     sep=csv_sep, encoding=csv_encoding )
 df_pest_danger.set_index( indexing_pest_danger, inplace=True, drop=False )
 df_pest_danger.sort_index(inplace=True)
-
-dict_CAS_Type = { k: g["Type"].tolist() for k,g in df_pest_danger.groupby("CAS")}
-
 ###############
 indexing_pest_functions = ["CODE_FONCTION"]
 df_pest_functions       = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["pest_functions_file"]), \
                                     sep=csv_sep, encoding=csv_encoding )
 df_pest_functions.set_index( indexing_pest_functions, inplace=True, drop=False )
 df_pest_functions.sort_index(inplace=True)
-
-dict_FONCTION_LIBELLE = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
-
-
 ###############
 indexing_pesticides = ["CODE_FAMILLE", "CD_PARAMETRE", "CODE_FONCTION"]
 df_pesticides       = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["pesticides_file"]), \
                                     sep=csv_sep, encoding=csv_encoding )
 df_pesticides.set_index(indexing_pesticides, inplace=True, drop=False)
 df_pesticides.sort_index(inplace=True)
-
-dict_FONCTION_FAMILLE  = { k : g["CODE_FAMILLE"].tolist() for k,g in df_pesticides.groupby("CODE_FONCTION")}
-dict_FAMILLE_PARAMETRE = { k : g["CD_PARAMETRE"].tolist() for k,g in df_pesticides.groupby("CODE_FAMILLE")}
-
-###############
-# get list of CAS
-# get list of CODE_FONCTION
-# get list of CODE_FAMILLE
 
 
 ### MCT /MA ##########################################
@@ -93,11 +71,6 @@ df_MA           = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["M
                                     sep=csv_sep, encoding=csv_encoding )
 df_MA.set_index( indexing_MCT_MA, inplace=True, drop=False )
 df_MA.sort_index(inplace=True)
-###############
-# get list of ANNEE
-# get list of INDEX_STATION
-# get list of CD_PARAMETRE
-
 
 
 ### AV_dpt \ AV_ME ##########################################
@@ -114,7 +87,6 @@ df_AV_ME.set_index( indexing_AV_dpt_ME, inplace=True, drop=False )
 df_AV_ME.sort_index(inplace=True)
 
 
-
 ### WRAP IT ALL UP ##########################################
 df_dict = {
     "df_stations"       : {"df" : df_stations,       "idx" : indexing_stations },
@@ -126,6 +98,16 @@ df_dict = {
     "df_AV_dpt"         : {"df" : df_AV_dpt,         "idx" : indexing_AV_dpt_ME },
     "df_AV_ME"          : {"df" : df_AV_ME,          "idx" : indexing_AV_dpt_ME }
 }
+
+
+#dict_CAS_Type          = { k: g["Type"].tolist()         for k,g in df_pest_danger.groupby("CAS")}
+dict_Type_CAS          = { k: g["CAS"].tolist()          for k,g in df_pest_danger.groupby("Type")}
+dict_dpt_com           = { k: g["NUM_COM"].tolist()      for k,g in df_stations.groupby("NUM_DEP")}
+dict_INDEX_CD          = { k: g["CD_STATION"].tolist()   for k,g in df_stations.groupby("INDEX_STATION")}
+dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
+dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist() for k,g in df_pesticides.groupby("CODE_FONCTION")}
+dict_FAMILLE_PARAMETRE = { k: g["CD_PARAMETRE"].tolist() for k,g in df_pesticides.groupby("CODE_FAMILLE")}
+
 
 ### lists vars for automatic dropdowns
 var_dict = {
@@ -139,5 +121,5 @@ var_dict = {
     "pesticides"       : dict_FONCTION_LIBELLE,
     "pest_familles"    : dict_FAMILLE_PARAMETRE,
     "pest_fonctions"   : dict_FONCTION_FAMILLE,
-    "pest_danger_types": dict_CAS_Type
+    "pest_danger_types": dict_Type_CAS
 }

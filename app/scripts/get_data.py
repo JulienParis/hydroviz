@@ -8,9 +8,6 @@ import numpy as np
 from .load_data import  df_dict, var_dict
 
 
-### test on loading
-#print df_stations.sample(1)
-
 ## set pandas slicer
 idx = pd.IndexSlice
 

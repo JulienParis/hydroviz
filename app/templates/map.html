@@ -77,7 +77,7 @@
   var map = L.map('map', {
     center: [47, 3],
     zoom: 6,
-    layers: [ grayscale, water_layer ],
+    layers: [ grayscale, water_layer ], // active layers
     zoomControl:false
   });
 
@@ -96,7 +96,7 @@
   var zoom = L.control.zoom( { position : "topright"} ).addTo(map);
   var controls = L.control.layers(baseLayers, overlays, { position:"topright" } ).addTo(map);
 
-  // TOPOJSON HANDLING
+  // TOPOJSON HANDLING - TOPOJSON OBJECTS FOR LEAFLET
   L.TopoJSON = L.GeoJSON.extend({
     addData: function(jsonData) {
       if (jsonData.type === "Topology") {
@@ -118,17 +118,17 @@
 
   // CREATE GRADIENTS --> CHECK VARIATIONS FROM COLORBREWER
   var colorScale_water = chroma
-    .scale( ['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#0c2c84'] )
+    .scale( {{ choropleths.seq_turquoise|safe }} )
     .domain([0, 0.3]);
   var colorScale_admin = chroma
-      .scale( ['#FFEDA0', '#800026'] )
+      .scale( {{ choropleths.seq_turquoise|safe }} )
       .domain([0, 0.5]);
 
-  var dft_opacity    = 0.6;
+  var dft_opacity    = 0.5;
   var dft_weight     = 0.5;
   var dft_null_color = "#f0f0f0";
 
-
+  // VIZUALISATION OF DATA
   function handleLayer(layer, value, layerGroup ){
 
     if (value != null ){
@@ -172,7 +172,7 @@
   }
 
   function leaveLayer(){
-    //this.bringToBack();
+    this.bringToBack();
     this.setStyle({
       weight : dft_weight,
       opacity: dft_opacity
@@ -180,9 +180,49 @@
   }
 
   function zoomToFeature(e) {
-      map.fitBounds(e.target.getBounds());
+    console.log(e);
+    map.fitBounds(e.target.getBounds());
   }
 
+
+
+
+  // update layer data
+  function refreshTopoLayer ( layer_name, req_query, data_json ) {
+
+    /// for instance : layer_name == "water"
+    if (layer_name == df_ME){
+      topoLayer = topoLayer_water;
+    } else {
+      topoLayer = topoLayer_admin;
+    }
+
+    topoLayer.eachLayer(
+
+      function(layer) {
+
+        if (layer_name == df_ME) {
+          var index_geom = layer.feature.properties.CdMasseDEa ;
+          //console.log(" io_slice_from_server / index_ME : ", index_ME)
+        } else {
+          var index_geom = layer.feature.properties.code ;
+        }
+        var data_geom = data_json[index_geom] ;
+        //console.log(" io_slice_from_server / index_ME : " + index_ME + " / data_ME : ", data_ME) ;
+
+        layer.feature.properties.value = data_geom ;
+
+        if (data_geom != null ){
+          if (data_geom[ req_query ] != null ) {
+            value = data_geom[ req_query ]
+          }
+        } else {
+          value = null
+        }
+        handleLayer(layer, value , layer_name);
+      }
+    );
+  };
 
 
   // var queue = d3_queue.queue(1);
@@ -204,8 +244,8 @@
     // GET TOPOJSON FILES
     $.getJSON( "{{ url_for ( 'static', filename = basemaps.water ) }}" )
       .done(addTopoData_water);
-    // $.getJSON( "{{ url_for( 'static', filename = basemaps.admin ) }}" )
-    //   .done(addTopoData_admin);
+    $.getJSON( "{{ url_for( 'static', filename = basemaps.admin ) }}" )
+       .done(addTopoData_admin);
 
     // PROCESS TOPOJSON // WARNING : OVERWRITES previous TOPOLAYER object
     function addTopoData_water(topoData){
@@ -214,7 +254,10 @@
       topoLayer_water.addTo(water_layer);
       //topoLayer_water.eachLayer(handleWaterLayer); //////////////////
       console.log(" - leaflet -- finished / addTopoData_water ");
+
+      callback(); // <-- callback inside last called function
     };
+
     function addTopoData_admin(topoData){
       console.log(" - leaflet -- starting / addTopoData_admin ");
       topoLayer_admin.addData(topoData);
@@ -223,78 +266,105 @@
       console.log(" - leaflet -- finished / addTopoData_admin ");
     };
 
-    callback();
     //return def.promise();
 
   }; // <-- end : InitMap
 
 
-  //
+  var df_ME  = "df_AV_ME"  ;
+  var df_dpt = "df_AV_dpt" ;
+
   //ConnectSocketIO = function () {
   function ConnectSocketIO () {
 
-    var var_client = "client is connected";
-    var dft_year   = 2012 ;
-    var dft_pest   = "XXXXXX" ;
-    var dft_df_src = "df_AV_ME" ;
+    var req_client = "request IO from client";
+    var year   = "2011"   ;
+    var pest   = "XXXXXX" ;
 
     // INITIATE SOCKET IO CONNECTION
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-    socket.on('connect', function() {
+    function EmitRequestSlice(df_name) {
+      socket.emit(
+        'io_request_water', {
+          msg                 : req_client ,
+          df_source           : df_name ,
+          slice_query_index   : [ year, pest ] ,
+          slice_query_columns : [ ]
+        }
+      );
+    };
 
+    socket.on('connect', function() {
       // socket.emit('connection start', {data: '--> client connected from : ' + document.domain + ':' + location.port });
-      socket.emit('io_request_water', {
-        msg                 : var_client ,
-        df_source           : dft_df_src ,
-        slice_query_index   : [ dft_year, dft_pest ] ,
-        slice_query_columns : [ ]
-      });
+      EmitRequestSlice(df_ME);
+      //EmitRequestSlice(df_dpt);
     });
 
     socket.on('io_slice_from_server', function(data_slice) {
 
-      var req        = data_slice.request_sent ;
-      var data_water = data_slice.data_water ;
+      var req_query  = data_slice.request_query ; // "2007_XXXXXX" for instance
+      var req        = data_slice.request_sent  ;
+      var data_      = data_slice.slice_df    ;
+      var req_df     = req.df_source  ;
 
-      console.log(" io_slice_from_server / request :",req) ;
+      console.log(" io_slice_from_server / req : ", req) ;
+      console.log(" io_slice_from_server / req_df : ", req_df) ;
 
-      var data_slice = JSON.parse(data_water) ;
+      var data_json = JSON.parse(data_) ;
 
-        // update layer data
-        topoLayer_water.eachLayer( function(layer) {
+      refreshTopoLayer ( req_df, req_query, data_json );
 
-          var index_ME = layer.feature.properties.CdMasseDEa ;
-          console.log(" io_slice_from_server / index_ME : ", index_ME)
-
-          var data_ME = data_slice[index_ME] ;
-          console.log(" io_slice_from_server / index_ME : " + index_ME + " / data_ME : ", data_ME) ;
-
-          layer.feature.properties.value = data_ME ;
-
-          if (data_ME != null ){
-            if (data_ME["2012_XXXXXX"] != null ) {
-              value = data_ME["2012_XXXXXX"]
-            }
-          } else {
-            value = null
-          }
-          handleLayer(layer, value , "water");
-
-        });
+      // update layer data
+      // topoLayer_water.eachLayer(
+      //
+      //   function(layer) { ///////////////////////////////////////////////////
+      //
+      //     var index_ME = layer.feature.properties.CdMasseDEa ;
+      //     //console.log(" io_slice_from_server / index_ME : ", index_ME)
+      //
+      //     var data_ME = data_json[index_ME] ;
+      //     //console.log(" io_slice_from_server / index_ME : " + index_ME + " / data_ME : ", data_ME) ;
+      //
+      //     layer.feature.properties.value = data_ME ;
+      //
+      //     if (data_ME != null ){
+      //       if (data_ME[ req_query ] != null ) {
+      //         value = data_ME[ req_query ]
+      //       }
+      //     } else {
+      //       value = null
+      //     }
+      //     handleLayer(layer, value , "water");
+      //   }
+      // );
 
     }); // <-- end : io_slice_from_server
+
+    $('.request').on('click', function() {
+
+      var req_value = $(this).attr("reqvalue");
+      var req_type  = $(this).attr("reqtype");
+
+      console.log( "req_type : " + req_type + " / " + req_value + " (" + jQuery.type(req_value) + ")" );
+      if ( req_type == "year") {
+        year = req_value ;
+      }
+
+      EmitRequestSlice(df_ME)
+
+    });
 
   }; // <-- end : ConnectSocketIO
 
 
-  //$(document).ready(function() { // <-- place at top to run stuff in order
+  $(document).ready(function() { // <-- place at top to run stuff in order
 
     //InitMap().then(ConnectSocketIO); // <-- with defer
     InitMap( ConnectSocketIO ); // <-- with callback
     //ConnectSocketIO();
 
-  //}); //<-- end : $(document).ready
+  }); //<-- end : $(document).ready
 
 
 </script>

@@ -12,7 +12,7 @@ from flask_socketio import emit #, send
 #from . import SITE_ROOT, SITE_STATIC, STATIC_DATA, STATIC_DATA_STATS, STATIC_DATA_CARTO
 #import folium
 
-from scripts.app_settings import bootstrap_vars, app_colors, app_metas
+from scripts.app_settings import bootstrap_vars, app_colors, app_metas, choropleths
 
 ### sources topojson in app/static/data/carto_web
 src_carto_files = {
@@ -51,7 +51,7 @@ import json
 import pandas as pd
 import numpy as np
 #from scripts.load_data import  df_dict, var_dict
-from scripts.get_data import GetDataSlice
+from scripts.get_data import GetDataSlice, var_dict
 
 idx = pd.IndexSlice
 
@@ -60,16 +60,51 @@ idx = pd.IndexSlice
 @app.route('/')
 def index():
 
-    ## list variables : ANNEES / --> dropdowns
+    ## list variables from var_dict : / --> dropdowns
+    # {ANNEES} --> 2007, 2008, ...
+    # {PESTICIDES} choices --> fonctions / familles / danger...
+    # {BASEMAPS} --> admin : départements
 
     return render_template('index.html',
                            app_metas      = app_metas,
                            app_colors     = app_colors,
                            bootstrap_vars = bootstrap_vars,
                            basemaps       = dft_basemaps,
+                           choropleths    = choropleths,
+                           var_dict       = var_dict
                            #data_ME        = dft_data_water,
                            #data_admin     = dft_data_admin,
     )
+
+def send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest ) :
+
+    ### get the slice from pandas dataframe
+    slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , "AG001":"TOT_FRANCE" ]
+    #slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] ]   [ 2 : ]
+    print "-----> send_AV_slice / slice_df : OK "
+    #print "sample slice_df :  "
+    #print slice_df.head(1)
+
+    ### reset index and attribute unique index as custom "REQUEST" (otherwise pandas fucks up the JSON and client JSON.parse won't work )
+    slice_df = slice_df.reset_index()
+    slice_df["REQUEST"] = slice_df['ANNEE'].astype(str) + "_" + slice_df['CD_PARAMETRE']
+    slice_df.set_index( ["REQUEST"], inplace=True )
+    # print "sample slice_df.set_index : "
+    # print slice_df.head(1)
+
+    ### transpose dataframe to set "REQUEST" columns as index
+    slice_df = slice_df.T
+    # print "sample slice_df.T : "
+    # print slice_df.head(1)
+
+    ### save slice as JSON
+    slice_df_json = slice_df.to_json(orient="index")
+
+    print
+
+    ### emit the json
+    emit( 'io_slice_from_server', {'request_sent': request_client, 'request_query' : req_query, 'slice_df': slice_df_json } )
+    print "----> send_AV_slice / emit : OK "
 
 
 @socketio.on('io_request_water')
@@ -82,27 +117,11 @@ def return_init_data(request_client):
     slice_query_index   = request_client['slice_query_index']
     slice_query_columns = request_client['slice_query_columns']
 
-    slice_year = slice_query_index[0]
+    slice_year = int(slice_query_index[0])
     slice_pest = slice_query_index[1]
 
-    print "***** io_connection_start / slice_query_index : ", slice_year , "-", slice_pest
+    req_query  = str(slice_year) + "_" + str(slice_pest)
 
-    ### get the slice from pandas dataframe
-    slice_water = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , "AG001":"TOT_FRANCE" ]
+    print "***** io_connection_start / req_query : ", req_query
 
-    ### reset index and attribute unique index as custom "REQUEST" (otherwise pandas fucks up the JSON and client JSON.parse won't work )
-    slice_water = slice_water.reset_index()
-    slice_water["REQUEST"] = slice_water['ANNEE'].astype(str) + "_" + slice_water['CD_PARAMETRE']
-    slice_water.set_index( ["REQUEST"], inplace=True )
-
-    ### transpose dataframe to set "REQUEST" columns as index
-    slice_water = slice_water.T
-
-    ### save slice as JSON
-    slice_water_json = slice_water.to_json(orient="index")
-
-    #print "***** io_connection_start / slice_water_json : ", slice_water_json
-    print
-
-    ### emit the json
-    emit( 'io_slice_from_server', {'request_sent': request_client, 'data_water': slice_water_json } )
+    send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest )
