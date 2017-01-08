@@ -23,7 +23,8 @@ src_carto_files = {
     "topo_ME_agg"       : "ME_014_030_060.json",
     "topo_ME_all"       : "ME_all_025_050_073_50.json",
     "topo_bassins"      : "Hydroecoregion1.json",
-    "topo_rivieres"     : "rivieres_lessFields_009.json",
+    #"topo_rivieres"     : "rivieres_lessFields_009.json",
+    "topo_rivieres"     : "rivieres_lessFields_009_017.json",
 }
 for k, v in src_carto_files.iteritems() :
     src_carto_files[k] = "data/carto_web/" + v
@@ -107,11 +108,21 @@ def send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest ) :
     print "-----> send_AV_slice / transpose slice_df : slice_df.T"
     # print slice_df.head(1)
 
+    ### find min_max
+    #slice_AV_ME["AG001":"HG508"].max()
+    min_max_values = {"min" : "" , "max" : ""}
+
     ### save slice as JSON
     slice_df_json = slice_df.to_json(orient="index")
 
     ### emit the json
-    emit( 'io_slice_from_server', {'request_sent': request_client, 'request_query' : req_query, 'slice_df': slice_df_json } )
+    emit( 'io_slice_from_server',
+            {   'request_sent'  : request_client,
+                'request_query' : req_query,
+                'slice_df'      : slice_df_json,
+                'min_max'       : min_max_values
+            }
+        )
     print "-----> send_AV_slice / emit : OK "
 
     print
