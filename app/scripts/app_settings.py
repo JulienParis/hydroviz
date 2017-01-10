@@ -4,17 +4,18 @@
 ### vars for name application / metas
 app_metas = {
     "title"       : u"StygViz",
-    "subtitle"    : u"concentrations de pesticides dans les nappes phréatiques françaises",
+    "subtitle"    : u"concentrations de pesticides dans les nappes phréatiques en France",
     "version"     : u"beta 0.1",
     "description" : u"cartographie et datavisualisation de la teneur en pesticides des nappes phréatiques de France entre 2007 et 2012",
     "authors"     : u"Julien Paris | Florian Melki",
     "licence"     : 'by-nc-sa',
     "metas"       : u"""
-        dataviz,data visualisation,graph,
-        pesticides,pollution,nappes phréatiques,
+        dataviz,data visualisation,graph,SIG,
+        pesticides,pollution,nappes phréatiques,insecticides,
         pandas,geopandas,socketio,
+        Etalab,ecologie,ecology,water,
         opensource,open source,open data,creative commons,github,
-        d3,d3.js,javascript,python,flask,HTML,CSS,JSON,bootstrap,Leaflet
+        d3,d3.js,javascript,python,flask,HTML,CSS,JSON,bootstrap,Leaflet,socketIO
         """
     }
 
@@ -65,10 +66,11 @@ bootstrap_vars  = {
 }
 
 choropleths = {
-    "seq_turquoise"  : ['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58'],
-    "seq_ocres"      : ['#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#fc4e2a','#e31a1c','#bd0026','#800026'],
-    "div_red_blue"   : ['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061'],
-    "div_brown_turq" : ['#543005','#8c510a','#bf812d','#dfc27d','#f6e8c3','#c7eae5','#80cdc1','#35978f','#01665e','#003c30'],
-    "qual_12_hard"   : ['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928'],
-    "qual_12_soft"   : ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5','#ffed6f']
+    "seq_beige_blue_red" : ['#edf8b1','#41b6c4','#bd0026' ],
+    "seq_turquoise"      : ['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58'],
+    "seq_ocres"          : ['#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#fc4e2a','#e31a1c','#bd0026','#800026'],
+    "div_red_blue"       : ['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061'],
+    "div_brown_turq"     : ['#543005','#8c510a','#bf812d','#dfc27d','#f6e8c3','#c7eae5','#80cdc1','#35978f','#01665e','#003c30'],
+    "qual_12_hard"       : ['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928'],
+    "qual_12_soft"       : ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5','#ffed6f']
 }

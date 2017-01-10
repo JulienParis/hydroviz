@@ -180,7 +180,7 @@
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header fixed-brand">
 
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
       </button>
 
@@ -295,112 +295,121 @@
 
 <div id="wrapper" class="toggled-2">
 
-    <div id="sidebar-wrapper">
+  <div id="sidebar-wrapper">
 
-        <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+    <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
 
-            <br>
+      <!-- <li>
+        <button class="navbar-toggle collapse" data-toggle="collapse" id="menu-toggle-2">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li> -->
 
-            <li>
-              <a role="button">
-                <span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x" aria-hidden="true"></i></span>
-                <strong>Détails</strong>
-              </a>
-            </li>
+      <br>
 
-            <hr>
-            <hr>
+      <li>
+        <a role="button"
+            data-toggle="modal"
+            data-target="#mod_pest">
+          <span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x" aria-hidden="true"></i></span>
+          <strong>Détails</strong>
+        </a>
+      </li>
 
-
-            <li>
-
-              <a role="button" data-toggle="collapse" data-target="#collapseAnnees" aria-expanded="false" aria-controls="collapseAnnees">
-                <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x" aria-hidden="true"></i></span>
-                <strong>Années</strong>
-                <span class="caret"></span>
-              </a>
-
-              <div class="collapse" id="collapseAnnees">
-                <hr>
-                {% for annee in var_dict.annees %}
-                  <a href="#" class="request indent2" reqtype="year" reqvalue="{{ annee }}" >{{ annee }}</a>
-                {% endfor %}
-              </div>
-
-            </li>
-
-            <hr>
-
-            <li>
-
-              <a role="button" data-toggle="collapse" data-target="#collapsePesticides" aria-expanded="false" aria-controls="collapsePesticides">
-                <span class="fa-stack fa-lg pull-left"><i class="fa fa-warning fa-stack-1x" aria-hidden="true"></i></span>
-                <strong>Pesticides</strong>
-                <span class="caret"></span>
-              </a>
-
-              <div class="collapse" id="collapsePesticides">
-                <hr>
-
-                <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseFamilles" aria-expanded="false" aria-controls="collapseFamilles">
-                  par familles <span class="caret"></span>
-                </a>
-                <div class="collapse" id="collapseFamilles">
-                  {% for famille in var_dict.pest_familles|sort %}
-                    <a href="#" class="request indent2" reqtype="pest_fam" reqvalue="{{ famille }}" > > {{ famille }} </a>
-                  {% endfor %}
-                </div>
+      <hr>
+      <hr>
 
 
-                <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseFonctions" aria-expanded="false" aria-controls="collapseFonctions">
-                  par fonctions <span class="caret"></span>
-                </a>
-                <div class="collapse" id="collapseFonctions">
-                  {% for fonction in var_dict.pest_fonctions|sort %}
-                    <a href="#" class="request indent2" reqtype="pest_fonct" reqvalue="{{ fonction }}" > > {{ fonction }} - </a>
-                  {% endfor %}
-                </div>
+      <!-- <li>
 
-                <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseDangers" aria-expanded="false" aria-controls="collapseDangers">
-                  par dangerosité <span class="caret"></span>
-                </a>
-                <div class="collapse" id="collapseDangers">
-                  {% for danger in var_dict.pest_danger_types|sort %}
-                    <a href="#" class="request indent2" reqtype="pest_dang" reqvalue="{{ danger }}" > > {{ danger }} - </a>
-                  {% endfor %}
-                </div>
+        <a role="button" data-toggle="collapse" data-target="#collapseAnnees" aria-expanded="false" aria-controls="collapseAnnees">
+          <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x" aria-hidden="true"></i></span>
+          <strong>Années</strong>
+          <span class="caret"></span>
+        </a>
 
-              </div>
+        <div class="collapse" id="collapseAnnees">
+          <hr>
+          % for annee in var_dict.annees %
+            <a href="#" class="request indent2" reqtype="year" reqvalue="{{ annee }}" >{{ annee }}</a>
+          % endfor %
+        </div>
 
-            </li>
+      </li> -->
 
-            <hr>
+      <!-- <hr> -->
 
-            <li>
+      <li>
 
-              <a role="button" data-toggle="collapse" data-target="#collapseDpts" aria-expanded="false" aria-controls="collapseDpts">
-                <span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x" aria-hidden="true"></i></span>
-                <strong>Départements</strong>
-                <span class="caret"></span>
-              </a>
+        <a role="button" data-toggle="collapse" data-target="#collapsePesticides" aria-expanded="false" aria-controls="collapsePesticides">
+          <span class="fa-stack fa-lg pull-left"><i class="fa fa-warning fa-stack-1x" aria-hidden="true"></i></span>
+          <strong>Pesticides</strong>
+          <span class="caret"></span>
+        </a>
 
-              <div class="collapse" id="collapseDpts">
-                <hr>
-                {% for dpt in var_dict.departements|sort %}
-                  <a href="#" class="request indent2" reqtype="dpt" reqvalue="{{ dpt }}" >{{ dpt }} - </a>
-                {% endfor %}
-              </div>
+        <div class="collapse" id="collapsePesticides">
+          <hr>
 
-            </li>
+          <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseFamilles" aria-expanded="false" aria-controls="collapseFamilles">
+            par familles <span class="caret"></span>
+          </a>
+          <div class="collapse" id="collapseFamilles">
+            {% for famille in var_dict.pest_familles|sort %}
+              <a href="#" class="request indent2" reqtype="pest_fam" reqvalue="{{ famille }}" > > {{ famille }} </a>
+            {% endfor %}
+          </div>
 
-            <hr>
 
-            <br>
+          <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseFonctions" aria-expanded="false" aria-controls="collapseFonctions">
+            par fonctions <span class="caret"></span>
+          </a>
+          <div class="collapse" id="collapseFonctions">
+            {% for fonction in var_dict.pest_fonctions|sort %}
+              <a href="#" class="request indent2" reqtype="pest_fonct" reqvalue="{{ fonction }}" > > {{ fonction }} - </a>
+            {% endfor %}
+          </div>
 
-        </ul>
+          <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseDangers" aria-expanded="false" aria-controls="collapseDangers">
+            par dangerosité <span class="caret"></span>
+          </a>
+          <div class="collapse" id="collapseDangers">
+            {% for danger in var_dict.pest_danger_types|sort %}
+              <a href="#" class="request indent2" reqtype="pest_dang" reqvalue="{{ danger }}" > > {{ danger }} - </a>
+            {% endfor %}
+          </div>
 
-    </div><!-- /#sidebar-wrapper -->
+        </div>
 
+      </li>
+
+      <hr>
+
+      <li>
+
+        <a role="button" data-toggle="collapse" data-target="#collapseDpts" aria-expanded="false" aria-controls="collapseDpts">
+          <span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x" aria-hidden="true"></i></span>
+          <strong>Départements</strong>
+          <span class="caret"></span>
+        </a>
+
+        <div class="collapse" id="collapseDpts">
+          <hr>
+          {% for dpt in var_dict.departements|sort %}
+            <a href="#" class="request indent2" reqtype="dpt" reqvalue="{{ dpt }}" >{{ dpt }} - </a>
+          {% endfor %}
+        </div>
+
+      </li>
+
+      <hr>
+
+      <br>
+
+    </ul>
+
+  </div><!-- /#sidebar-wrapper -->
+
+</div> <!-- end #wrapper -->
 
 
 

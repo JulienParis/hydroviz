@@ -100,13 +100,13 @@ df_dict = {
 }
 
 
-#dict_CAS_Type          = { k: g["Type"].tolist()         for k,g in df_pest_danger.groupby("CAS")}
-dict_Type_CAS          = { k: g["CAS"].tolist()          for k,g in df_pest_danger.groupby("Type")}
-dict_dpt_com           = { k: g["NUM_COM"].tolist()      for k,g in df_stations.groupby("NUM_DEP")}
-dict_INDEX_CD          = { k: g["CD_STATION"].tolist()   for k,g in df_stations.groupby("INDEX_STATION")}
+#dict_CAS_Type          = { k: g["Type"].tolist()                 for k,g in df_pest_danger.groupby("CAS")}
+dict_Type_CAS          = { k: g["CAS"].tolist()                   for k,g in df_pest_danger.groupby("Type")}
+dict_dpt_com           = { k: g["NUM_COM"].tolist()               for k,g in df_stations.groupby("NUM_DEP")}
+dict_INDEX_CD          = { k: g["CD_STATION"].tolist()            for k,g in df_stations.groupby("INDEX_STATION")}
 dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
-dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist() for k,g in df_pesticides.groupby("CODE_FONCTION")}
-dict_FAMILLE_PARAMETRE = { k: g["CD_PARAMETRE"].tolist() for k,g in df_pesticides.groupby("CODE_FAMILLE")}
+dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
+dict_FAMILLE_PARAMETRE = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("CODE_FAMILLE")}
 
 
 ### lists vars for automatic dropdowns

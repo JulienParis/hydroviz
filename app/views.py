@@ -55,7 +55,12 @@ import numpy as np
 #from scripts.load_data import  df_dict, var_dict
 from scripts.get_data import GetDataSlice, var_dict
 
+### global variables
 idx = pd.IndexSlice
+### colorscale limits
+limit_middle   = 0.5
+limit_up       = 5.0
+limit_minus    = - limit_middle
 
 ### routing #######################
 
@@ -66,14 +71,20 @@ def index():
     # {ANNEES} --> 2007, 2008, ...
     # {PESTICIDES} choices --> fonctions / familles / danger...
     # {BASEMAPS} --> admin : départements
+    colorscaleLimits = {
+        "limit_middle" : limit_middle ,
+        "limit_up"     : limit_up,
+        "limit_minus"  : limit_minus
+    }
 
     return render_template('index.html',
-                           app_metas      = app_metas,
-                           app_colors     = app_colors,
-                           bootstrap_vars = bootstrap_vars,
-                           basemaps       = dft_basemaps,
-                           choropleths    = choropleths,
-                           var_dict       = var_dict
+                           app_metas        = app_metas,
+                           app_colors       = app_colors,
+                           bootstrap_vars   = bootstrap_vars,
+                           basemaps         = dft_basemaps,
+                           choropleths      = choropleths,
+                           colorscaleLimits = colorscaleLimits,
+                           var_dict         = var_dict
                            #data_ME        = dft_data_water,
                            #data_admin     = dft_data_admin,
     )
@@ -92,7 +103,7 @@ def send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest ) :
 
     ### reset index and attribute unique index as custom "REQUEST" (otherwise pandas fucks up the JSON and client JSON.parse won't work )
     slice_df  = slice_df.reset_index()
-    req_index = str(slice_year) + "_" + str(slice_pest)
+    req_index = req_query #str(slice_year) + "_" + str(slice_pest)
     slice_df["REQUEST"] = req_index
     #slice_df["REQUEST"] = slice_df['ANNEE'].astype(str) + "_" + slice_df['CD_PARAMETRE'].astype(str)
     slice_df.set_index( ["REQUEST"], inplace=True )
@@ -103,24 +114,37 @@ def send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest ) :
     slice_df.drop(["ANNEE", "CD_PARAMETRE"], axis=1, inplace=True)
     print "-----> send_AV_slice / drop columns 'ANNEE' and 'CD_PARAMETRE' "
 
+    ### find min and max
+    cols_to_ignore = ["TOT_FRANCE", "Type", "CODE_FONCTION", "CODE_FAMILLE", "ANNEE", "CD_PARAMETRE"]
+    slice_min      = slice_df[ [col for col in slice_df.columns if col not in cols_to_ignore] ].min(axis=1)[req_index].round(2)
+    slice_max      = slice_df[ [col for col in slice_df.columns if col not in cols_to_ignore] ].max(axis=1)[req_index].round(2)
+    min_limit      = np.linspace(slice_min,limit_middle,6).tolist()
+    limit_max      = np.linspace(limit_middle,limit_up,3).tolist()
+    min_max        = min_limit + limit_max[1:]
+
+    min_max_array  = np.around(min_max, decimals=2).tolist()
+
+    min_max_values = { "min" : slice_min , "max" : slice_max, "min_max_array" : min_max_array }
+
+
+
     ### transpose dataframe to set "REQUEST" columns as index
     slice_df = slice_df.T
     print "-----> send_AV_slice / transpose slice_df : slice_df.T"
     # print slice_df.head(1)
 
-    ### find min_max
-    #slice_AV_ME["AG001":"HG508"].max()
-    min_max_values = {"min" : "" , "max" : ""}
-
     ### save slice as JSON
     slice_df_json = slice_df.to_json(orient="index")
 
-    ### emit the json
+    seq_div_qual = "sequential"
+
+    ### emit the json as "data_slice"
     emit( 'io_slice_from_server',
             {   'request_sent'  : request_client,
                 'request_query' : req_query,
                 'slice_df'      : slice_df_json,
-                'min_max'       : min_max_values
+                'min_max'       : min_max_values,
+                'seq_div_qual'  : seq_div_qual
             }
         )
     print "-----> send_AV_slice / emit : OK "

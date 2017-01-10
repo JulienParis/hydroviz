@@ -14,7 +14,7 @@ text {
 }
 
 h2 {
-    color: white;
+    color: {{ app_colors.navbar }};
     margin-top: 0px;
 }
 
@@ -23,7 +23,7 @@ h3 {
 }
 
 h4 {
-    color: white;
+    color: {{ app_colors.navbar }};
     font-size: 14px;
 }
 
