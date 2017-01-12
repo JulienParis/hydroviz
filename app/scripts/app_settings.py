@@ -3,7 +3,7 @@
 
 ### vars for name application / metas
 app_metas = {
-    "title"       : u"StygViz",
+    "title"       : u"HydroViz",
     "subtitle"    : u"concentrations de pesticides dans les nappes phréatiques en France",
     "version"     : u"beta 0.1",
     "description" : u"cartographie et datavisualisation de la teneur en pesticides des nappes phréatiques de France entre 2007 et 2012",

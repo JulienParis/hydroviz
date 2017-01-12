@@ -89,6 +89,7 @@ def index():
                            #data_admin     = dft_data_admin,
     )
 
+### REPLACE ALL THIS vvv BY FUNCTIONS FROM "GET_DATA.PY" ######################################################
 def send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest ) :
 
     print "-----> send_AV_slice / variables / request_client : %s - req_query : %s - df_src : %s - slice_year : %s - slice_pest  : %s" \
@@ -96,7 +97,7 @@ def send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest ) :
 
     ### get the slice from pandas dataframe
     #slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , "AG001":"TOT_FRANCE" ]
-    slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , : ]
+    slice_df = GetDataSlice( df_src, slice_year ).slice_AV_year.loc[ idx[ :, slice_pest  ] , : ]
     print "-----> send_AV_slice / slice_df : OK "
     #print "sample slice_df :  "
     #print slice_df.head(1)
@@ -135,6 +136,8 @@ def send_AV_slice( request_client, req_query, df_src, slice_year, slice_pest ) :
 
     ### save slice as JSON
     slice_df_json = slice_df.to_json(orient="index")
+
+
 
     seq_div_qual = "sequential"
 

@@ -8,8 +8,9 @@ import numpy as np
 
 from .. import SITE_ROOT, SITE_STATIC, STATIC_DATA, STATIC_DATA_STATS, STATIC_DATA_CARTO
 
-csv_sep = ";"
+csv_sep      = ";"
 csv_encoding = "utf-8"
+_missing     = "no ref"
 
 ### sources stats in app/static/data/stats_web
 src_stat_files = {
@@ -22,6 +23,26 @@ src_stat_files = {
     "pesticides_file"      : "pesticides_web.csv",
     "stations_file"        : "stations_web.csv"
 }
+
+
+### main reference dict
+# functions_dict = {
+#     "A"   : "Acaricide",
+#     "B"   : "Biocide",
+#     "F"   : "Fongicide",
+#     "H"   : "Herbicide",
+#     "I"   : "Insecticide",
+#     "M"   : "Mollusticide",
+#     "N"   : "Nématicide",
+#     #"R"   : "Rodenticide", ### twin with Ro
+#     "Reg" : "Régulateur de croissance",
+#     #"reg" : "Régulateur de croissance",
+#     "RepO": "Répulsif",
+#     "Ro"  : "Rodenticide", ### twin with R
+#     "G"   : "Graminicide",
+#     "PP"  : "%s on 'PP'" %(_missing), #### unknown
+#     _missing : _missing
+# }
 
 
 ### load files as pandas dataframes ##########################################
@@ -60,17 +81,21 @@ df_pesticides.sort_index(inplace=True)
 
 
 ### MCT /MA ##########################################
-indexing_MCT_MA = ["ANNEE", "INDEX_STATION", "CD_PARAMETRE"]
+indexing_MCT_MA_YeStPe = ["ANNEE", "INDEX_STATION", "CD_PARAMETRE"]
+indexing_MCT_MA_YeFaPe = ["ANNEE", "CODE_FAMILLE", "CD_PARAMETRE"]
+indexing_MCT_MA_YePe   = ["ANNEE", "CD_PARAMETRE"]
+
+indexing_MCT_MA  = indexing_MCT_MA_YePe
 ###############
 df_MCT          = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["MCT_file"]), \
                                     sep=csv_sep, encoding=csv_encoding )
-df_MCT.set_index( indexing_MCT_MA, inplace=True, drop=False )
+df_MCT.set_index( indexing_MCT_MA, inplace=True, drop=True )
 df_MCT.sort_index(inplace=True)
 ###############
 df_MA           = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["MA_file"]), \
                                     sep=csv_sep, encoding=csv_encoding )
-df_MA.set_index( indexing_MCT_MA, inplace=True, drop=False )
-df_MA.sort_index(inplace=True)
+df_MA = df_MA.set_index( indexing_MCT_MA, drop=False )
+df_MA = df_MA.sort_index(inplace=True)
 
 
 ### AV_dpt \ AV_ME ##########################################
@@ -101,12 +126,15 @@ df_dict = {
 
 
 #dict_CAS_Type          = { k: g["Type"].tolist()                 for k,g in df_pest_danger.groupby("CAS")}
-dict_Type_CAS          = { k: g["CAS"].tolist()                   for k,g in df_pest_danger.groupby("Type")}
 dict_dpt_com           = { k: g["NUM_COM"].tolist()               for k,g in df_stations.groupby("NUM_DEP")}
 dict_INDEX_CD          = { k: g["CD_STATION"].tolist()            for k,g in df_stations.groupby("INDEX_STATION")}
 dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
-dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
-dict_FAMILLE_PARAMETRE = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("CODE_FAMILLE")}
+#dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
+
+dict_FONCTION_CAS       = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
+dict_FAMILLE_CAS        = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("CODE_FAMILLE")}
+dict_TYPE_CAS           = { k: g["CAS"].tolist()                   for k,g in df_pest_danger.groupby("Type")}
+#dict_DANGER_CAS         = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("Type")}
 
 
 ### lists vars for automatic dropdowns
@@ -116,10 +144,10 @@ var_dict = {
     "departements"     : dict_dpt_com,
     #"communes"         : [],
     "stations"         : dict_INDEX_CD,
-    "masses_d_eau"     : [],
-    "bassins"          : [],
+    #"masses_d_eau"     : [],
+    #"bassins"          : [],
     "pesticides"       : dict_FONCTION_LIBELLE,
-    "pest_familles"    : dict_FAMILLE_PARAMETRE,
-    "pest_fonctions"   : dict_FONCTION_FAMILLE,
-    "pest_danger_types": dict_Type_CAS
+    "pest_familles"    : dict_FAMILLE_CAS,
+    "pest_fonctions"   : dict_FONCTION_CAS,
+    "pest_danger_types": dict_TYPE_CAS
 }

@@ -250,7 +250,7 @@
           // second loop for text
           for (var i = 0; i < grades.length; i++) {
               div.innerHTML +=
-                  '<label>' + (grades[i + 1] ? '<' + grades[i]  : '>=' + grades[i] ) + '</label>';
+                  '<label>' + (grades[i + 1] ? '<' + grades[i+1]  : '>=' + grades[i] ) + '</label>';
           }
           return div;
       };
@@ -356,7 +356,6 @@
       console.log("refreshMinMax / new_minmax :", new_minmax );
 
     };
-
 
     // refresh legend scale
     function refreshLegend ( req_df_, seq_div_qual ) {
@@ -511,7 +510,7 @@
     // START ConnectSocketIO = function () {
     function ConnectSocketIO () {
 
-      // default values
+      // default request values
       var req_client = "request IO from client";
       var year   = "2007"   ;
       var pest   = "XXXXXX" ;
