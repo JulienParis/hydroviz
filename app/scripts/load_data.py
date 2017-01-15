@@ -94,7 +94,7 @@ df_MCT.sort_index(inplace=True)
 ###############
 df_MA           = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["MA_file"]), \
                                     sep=csv_sep, encoding=csv_encoding )
-df_MA = df_MA.set_index( indexing_MCT_MA, drop=False )
+df_MA.set_index( indexing_MCT_MA, inplace=True, drop=True )
 df_MA = df_MA.sort_index(inplace=True)
 
 
@@ -128,7 +128,7 @@ df_dict = {
 #dict_CAS_Type          = { k: g["Type"].tolist()                 for k,g in df_pest_danger.groupby("CAS")}
 dict_dpt_com           = { k: g["NUM_COM"].tolist()               for k,g in df_stations.groupby("NUM_DEP")}
 dict_INDEX_CD          = { k: g["CD_STATION"].tolist()            for k,g in df_stations.groupby("INDEX_STATION")}
-dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
+#dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
 #dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
 
 dict_FONCTION_CAS       = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
@@ -146,7 +146,7 @@ var_dict = {
     "stations"         : dict_INDEX_CD,
     #"masses_d_eau"     : [],
     #"bassins"          : [],
-    "pesticides"       : dict_FONCTION_LIBELLE,
+    #"pesticides"       : dict_FONCTION_LIBELLE,
     "pest_familles"    : dict_FAMILLE_CAS,
     "pest_fonctions"   : dict_FONCTION_CAS,
     "pest_danger_types": dict_TYPE_CAS

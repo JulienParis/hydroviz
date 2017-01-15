@@ -220,6 +220,8 @@
     // CREATE LEGEND
     var legend ; // global variable
     var selected_layer = df_ME ;
+    var scale_categ    = "sequential" ;
+
 
     function createLegend( seq_div_qual ) {
 
@@ -397,7 +399,7 @@
     };
 
     // update layer data
-    function refreshTopoLayer ( req_df, req_query, data_json, seq_div_qual ) {
+    function refreshTopoLayer ( req_df, req_query, data_json, dataset, seq_div_qual ) {
 
       if ( req_df == df_ME ){
         topoLayer = topoLayer_water;
@@ -422,7 +424,7 @@
             var index_geom = null ;
           };
 
-          var data_geom = data_json[index_geom] ;
+          var data_geom = data_json[ index_geom ] ;
           //console.log(" io_slice_from_server / index_ME : " + index_ME + " / data_ME : ", data_ME) ;
 
           layer.feature.properties.value = data_geom ;
@@ -538,29 +540,45 @@
       });
 
       // REFRESH WHEN RECEIVING NEW DATA
-      socket.on('io_slice_from_server', function(data_slice) {
+      socket.on('io_slice_from_server', function( data_slice ) {
 
-        var req_query    = data_slice.request_query ; // "2007_XXXXXX" for instance
-        var data_df      = data_slice.slice_df      ;
-        var data_minmax  = data_slice.min_max       ;
-        var seq_div_qual = data_slice.seq_div_qual  ;
-        var req          = data_slice.request_sent  ;
-        var req_df_      = req.df_source            ;
+        var req_query           = pest ; //data_slice.request_query   ; // "XXXXXX" for instance
+
+        var data_MOYPTOT        = data_slice.slice_MOYPTOT.data    ;
+        var data_MOYPTOT_minmax = data_slice.slice_MOYPTOT.min_max ;
+
+        var data_FUNCTIONS      = data_slice.slice_FUNCTIONS.data ;
+        var data_FAMILLES       = data_slice.slice_FAMILLES.data  ;
+        var data_TYPES          = data_slice.slice_TYPES.data     ;
+
+        var seq_div_qual        = data_slice.seq_div_qual    ;
+        var req                 = data_slice.request_sent    ;
+        var req_df_             = req.df_source              ;
 
         //console.log(" io_slice_from_server / req : ", req) ;
-        console.log(" io_slice_from_server / req_df_ : ", req_df_, " - req_query : ", req_query ) ;
-        console.log(" io_slice_from_server / data_minmax : ", data_minmax) ;
+        console.log(" io_slice_from_server / req_df_ : "    , req_df_ , " - req_query : ", req_query ) ;
+        console.log(" io_slice_from_server / data_minmax : ", data_MOYPTOT_minmax) ;
 
         // parse data from JSON
-        var data_json = JSON.parse(data_df) ;
+        var data_MOYPTOT_json   = JSON.parse(data_MOYPTOT) ;
+        var data_FUNCTIONS_json = JSON.parse(data_FUNCTIONS) ;
+        var data_FAMILLES_json  = JSON.parse(data_FAMILLES) ;
+        var data_TYPES_json     = JSON.parse(data_TYPES) ;
+
+        var dataset = {
+          "MOYPTOT"   : data_MOYPTOT_json,
+          "FUNCTIONS" : data_FUNCTIONS_json,
+          "FAMILLES"  : data_FAMILLES_json,
+          "TYPES"     : data_TYPES_json
+        };
 
         // choose scaling type
         //seq_div_qual = "sequential"; /////////////////////////////////////////////////////
 
         // refresh in ordrer : MINMAX -> LEGEND -> TOPOLAYER
-        refreshMinMax(     req_df_, data_minmax ) ;
+        refreshMinMax(     req_df_, data_MOYPTOT_minmax ) ;
         refreshLegend(     req_df_, seq_div_qual ) ;
-        refreshTopoLayer ( req_df_, req_query, data_json, seq_div_qual );
+        refreshTopoLayer ( req_df_, req_query, data_MOYPTOT_json, dataset, seq_div_qual );
 
         console.log("");
 
@@ -570,7 +588,7 @@
       $('.request').on('click', function() {
 
         var req_value = $(this).attr("reqvalue");
-        var req_type  = $(this).attr("reqtype");
+        var req_type  = $(this).attr("reqtype") ;
 
         //console.log( "req_type : " + req_type + " / " + req_value + " (" + jQuery.type(req_value) + ")" );
 
