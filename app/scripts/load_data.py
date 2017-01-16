@@ -21,7 +21,8 @@ src_stat_files = {
     "pest_dang_file"       : "pest_dang_web.csv",
     "pest_functions_file"  : "pest_functions_web.csv",
     "pesticides_file"      : "pesticides_web.csv",
-    "stations_file"        : "stations_web.csv"
+    "stations_file"        : "stations_web.csv",
+    "dpts_file"            : "departements-2010.csv"
 }
 
 
@@ -51,6 +52,16 @@ src_stat_files = {
 # get list/dict of NUM_REG - nested
 # get list/dict of NUM_DEP
 # get list/dict of NUM_COM
+
+### DEPARTEMENTS  ##########################################
+indexing_dpt = ["DEP"]
+df_dpt       = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["dpts_file"]), \
+                                    sep=",", encoding=csv_encoding )
+df_dpt.set_index( indexing_dpt, inplace=True, drop=False )
+df_dpt.sort_index(inplace=True)
+dpt_dict = df_dpt.to_dict(orient="index")
+# print dpt_dict
+# print
 
 ### STATIONS  ##########################################
 indexing_stations = ["NUM_DEP", "NUM_COM",  "CD_ME_niv1_surf", "CD_ME_v2", "INDEX_STATION"]
@@ -126,15 +137,44 @@ df_dict = {
 
 
 #dict_CAS_Type          = { k: g["Type"].tolist()                 for k,g in df_pest_danger.groupby("CAS")}
-dict_dpt_com           = { k: g["NUM_COM"].tolist()               for k,g in df_stations.groupby("NUM_DEP")}
-dict_INDEX_CD          = { k: g["CD_STATION"].tolist()            for k,g in df_stations.groupby("INDEX_STATION")}
+dict_dpt_com           = { k: { "dpt_name" : dpt_dict[k]["NCC"], "dpt_communes" : g["NUM_COM"].tolist()}  for k,g in df_stations.groupby("NUM_DEP")}
+#dict_INDEX_CD          = { k: g["CD_STATION"].tolist()            for k,g in df_stations.groupby("INDEX_STATION")}
 #dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
 #dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
 
-dict_FONCTION_CAS       = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
-dict_FAMILLE_CAS        = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("CODE_FAMILLE")}
-dict_TYPE_CAS           = { k: g["CAS"].tolist()                   for k,g in df_pest_danger.groupby("Type")}
+dict_FONCTION_CAS       = { k: { "CAS" : g["CD_PARAMETRE"].tolist() }        for k,g in df_pesticides.groupby("CODE_FONCTION")}
+dummy_FONCTION_CAS      = { "name" : "fonctions", "children" :\
+                            [ { "name"     : k,  \
+                              "children" : [ { "name" : cas, "value": None } for cas in g["CD_PARAMETRE"].tolist() ]  \
+                              } for k,g in df_pesticides.groupby("CODE_FONCTION") ] \
+                           }
+
+dict_FAMILLE_CAS        = { k: { "CAS" : g["CD_PARAMETRE"].tolist() }        for k,g in df_pesticides.groupby("CODE_FAMILLE")}
+dummy_FAMILLE_CAS       = { "name" : "familles", "children" :\
+                            [ { "name"     : k,  \
+                              "children" : [ { "name" : cas, "value": None } for cas in g["CD_PARAMETRE"].tolist() ]  \
+                              } for k,g in df_pesticides.groupby("CODE_FAMILLE") ] \
+                           }
+
+dict_TYPE_CAS           = { k: { "CAS" : g["CAS"].tolist() }                 for k,g in df_pest_danger.groupby("Type")}
+dummy_TYPE_CAS          = { "name" : "types", "children" :\
+                            [ { "name"     : k,  \
+                              "children" : [ { "name" : cas, "value": None } for cas in g["CAS"].tolist() ]  \
+                              } for k,g in df_pest_danger.groupby("Type") ] \
+                          }
+
 #dict_DANGER_CAS         = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("Type")}
+
+
+# print "**** load_data.py / dict_dpt_com : "
+# print dict_dpt_com
+# print
+
+print "**** load_data.py / dummies counts : "
+# print dummy_FONCTION_CAS, " ..."
+# print dummy_FAMILLE_CAS, " ..."
+#print dummy_TYPE_CAS, " ..."
+print
 
 
 ### lists vars for automatic dropdowns
@@ -143,11 +183,17 @@ var_dict = {
     #"regions"          : [],
     "departements"     : dict_dpt_com,
     #"communes"         : [],
-    "stations"         : dict_INDEX_CD,
+    #"stations"         : dict_INDEX_CD,
     #"masses_d_eau"     : [],
     #"bassins"          : [],
     #"pesticides"       : dict_FONCTION_LIBELLE,
     "pest_familles"    : dict_FAMILLE_CAS,
     "pest_fonctions"   : dict_FONCTION_CAS,
     "pest_danger_types": dict_TYPE_CAS
+}
+
+empty_counts = {
+    "by_function" : dummy_FONCTION_CAS,
+    "by_famille"  : dummy_FAMILLE_CAS,
+    "by_type"     : dummy_TYPE_CAS
 }

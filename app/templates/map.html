@@ -165,17 +165,33 @@
 
 
     // CREATE GRADIENTS --> CHECK VARIATIONS FROM COLORBREWER
-    var scale_limitMid    = {{ colorscaleLimits.limit_middle }} ;
-    var scale_limitUp     = {{ colorscaleLimits.limit_up }} ;
-    var scale_limitMinus  = {{ colorscaleLimits.limit_minus }} ;
+    var scale_limitMid      = {{ colorscaleLimits.limit_middle }} ;
+    var scale_limitUp       = {{ colorscaleLimits.limit_up }} ;
+    var scale_limitMinus    = {{ colorscaleLimits.limit_minus }} ;
+
+    var scale_limitUp_count = 100 ;
+
+
+    var min_value_count      = 0   ;
+    var max_value_count      = 100 ;
+    var min_max_array_count  = [0, 5, 10, 15, 20, 25, 40, 50, 70, 85, 100 ] ;
+
+    var min_value_concent      = 0.0 ;
+    var max_value_concent      = 5.0 ;
+    var min_max_array_concent  = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 2, 3.5, 5] ;
+
+
+
+
 
     var min_value_ME      = 0.0 ; /////////////////////////////////////////////////
-    var max_value_ME      = 0.5 ; /////////////////////////////////////////////////
-    var min_max_array_ME  = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5] ; /////////////////////////////////////////////////
+    var max_value_ME      = 5.0 ; /////////////////////////////////////////////////
+    var min_max_array_ME  = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 2, 3.5, 5]  ; /////////////////////////////////////////////////
 
     var min_value_dpt     = 0.0 ; /////////////////////////////////////////////////
-    var max_value_dpt     = 0.5 ; /////////////////////////////////////////////////
-    var min_max_array_dpt = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5] ; /////////////////////////////////////////////////
+    var max_value_dpt     = 5.0 ; /////////////////////////////////////////////////
+    var min_max_array_dpt = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 2, 3.5, 5]  ; /////////////////////////////////////////////////
+
 
     var dft_opacity       = 0.5;
     var dft_weight        = 0.5;
@@ -184,49 +200,67 @@
     var dft_stroke_color  = "white"   ;
     var dft_rivers_color  = "#081d58" ;
 
+
     // choose between  - sequential / divergent / qualitative - colorscales
-    function chooseColorScale( seq_div_qual) {
+    function chooseColorScale( seq_div_qual ) {
 
       if ( seq_div_qual == "sequential" ) {
         var colorScale  = chroma
           .scale( {{ choropleths.seq_beige_blue_red|safe }} )
-          .domain( [ 0.0001, scale_limitUp ], 9, 'log');
+          .domain( [ 0.0001, scale_limitUp ], 9, 'log' );
+      }
+      else if ( seq_div_qual == "counts") {
+        var colorScale  = chroma
+          .scale( {{ choropleths.seq_yel_red|safe }} )
+          .domain( [ 0.0001, scale_limitUp_count ], 9, 'log' );
       }
       else if ( seq_div_qual == "divergent") {
         var colorScale  = chroma
-          .scale( {{ choropleths.seq_beige_blue_red|safe }} )
-          .domain( [ 0.0001, scale_limitUp ], 9, 'log');
+          .scale( {{ choropleths.div_gre_yel_red|safe }} )
+          .domain( [ -5, 5 ], 11 );
       }
       else if (seq_div_qual == "qualitative") {
         var colorScale  = chroma
-          .scale( {{ choropleths.seq_beige_blue_red|safe }} )
-          .domain( [ 0.0001, scale_limitUp ], 9, 'log');
+          .scale( {{ choropleths.qual_12_hard|safe }} )
+          .domain( [ 0.0001, scale_limitUp ], 9, 'log' );
       }
       ;
 
       return colorScale ;
     };
 
-    function chooseMinMaxArray( req_df ) {
-      if ( selected_layer == df_ME ){
-        var min_max_array = min_max_array_ME ;
+    function chooseMinMaxArray( seq_div_qual ) {
+      if ( seq_div_qual == "sequential" ){
+        var min_max_array = min_max_array_concent ;
       }
-      else if ( selected_layer == df_dpt ){
-        var min_max_array = min_max_array_dpt ;
+      else if ( seq_div_qual == "counts" ){
+        var min_max_array = min_max_array_count ;
       };
       return min_max_array;
     };
 
+    // function chooseMinMaxArray( req_df ) {
+    //   if ( selected_layer == df_ME ){
+    //     var min_max_array = min_max_array_ME ;
+    //   }
+    //   else if ( selected_layer == df_dpt ){
+    //     var min_max_array = min_max_array_dpt ;
+    //   };
+    //   return min_max_array;
+    // };
+
     // CREATE LEGEND
-    var legend ; // global variable
+    var legend ; // global empty variable
     var selected_layer = df_ME ;
     var scale_categ    = "sequential" ;
+    var categ          = "MOYPTOT"    ;
 
 
     function createLegend( seq_div_qual ) {
 
       var colorScale    = chooseColorScale(  seq_div_qual );
-      var min_max_array = chooseMinMaxArray( selected_layer );
+      var min_max_array = chooseMinMaxArray( seq_div_qual );
+      // var min_max_array = chooseMinMaxArray( selected_layer );
 
       console.log("createLegend / selected_layer :", selected_layer );
 
@@ -252,7 +286,7 @@
           // second loop for text
           for (var i = 0; i < grades.length; i++) {
               div.innerHTML +=
-                  '<label>' + (grades[i + 1] ? '<' + grades[i+1]  : '>=' + grades[i] ) + '</label>';
+                  '<label>' + (grades[i + 1] ? '<' + grades[i]  : '>=' + grades[i] ) + '</label>';
           }
           return div;
       };
@@ -330,34 +364,36 @@
 
     function zoomToFeature(e) {
       //console.log(e);
-      console.log(e.target.feature.properties.value);
+      console.log(e.target.feature.properties);
 
       //map.fitBounds(e.target.getBounds());
     };
 
 
     // refresh min-max values
-    function refreshMinMax (req_df_, data_minmax ) {
+    // function refreshMinMax_MOYPTOT ( req_df_, data_minmax ) {
+    //
+    //   new_min    = data_minmax.min ;
+    //   new_max    = data_minmax.max ;
+    //   new_minmax = data_minmax.min_max_array ;
+    //
+    //   // update min_max arrays
+    //   if ( req_df_ == df_ME ){
+    //     min_max_array_ME = new_minmax ;
+    //     max_value_ME     = new_max ;
+    //     min_value_ME     = new_min ;
+    //   }
+    //   else if ( req_df_ == df_dpt ){
+    //     min_max_array_dpt = new_minmax ;
+    //     max_value_dpt     = new_max ;
+    //     min_value_dpt     = new_min ;
+    //   } ;
+    //
+    //   console.log("refreshMinMax_MOYPTOT / new_minmax :", new_minmax );
+    //
+    // };
 
-      new_min    = data_minmax.min ;
-      new_max    = data_minmax.max ;
-      new_minmax = data_minmax.min_max_array ;
 
-      // update min_max arrays
-      if ( req_df_ == df_ME ){
-        min_max_array_ME = new_minmax ;
-        max_value_ME     = new_max ;
-        min_value_ME     = new_min ;
-      }
-      else if ( req_df_ == df_dpt ){
-        min_max_array_dpt = new_minmax ;
-        max_value_dpt     = new_max ;
-        min_value_dpt     = new_min ;
-      } ;
-
-      console.log("refreshMinMax / new_minmax :", new_minmax );
-
-    };
 
     // refresh legend scale
     function refreshLegend ( req_df_, seq_div_qual ) {
@@ -399,7 +435,7 @@
     };
 
     // update layer data
-    function refreshTopoLayer ( req_df, req_query, data_json, dataset, seq_div_qual ) {
+    function refreshTopoLayer ( req_df, dataset ) {
 
       if ( req_df == df_ME ){
         topoLayer = topoLayer_water;
@@ -424,24 +460,57 @@
             var index_geom = null ;
           };
 
-          var data_geom = data_json[ index_geom ] ;
-          //console.log(" io_slice_from_server / index_ME : " + index_ME + " / data_ME : ", data_ME) ;
+          //var data_L_MOYPTOT         = dataset["MOYPTOT"][ index_geom ] ;
+          //var data_L_MOYPTOT_all_CAS = _.pickBy(dataset["MOYPTOT_all_CAS"][ index_geom ]) ; // using LoDash to skip null values
+          var data_L_MOYPTOT_all_CAS = _.omitBy(dataset["MOYPTOT_all_CAS"][ index_geom ], _.isNil ) ; // using LoDash to skip null values
+          var data_L_FUNCTIONS       = dataset["FUNCTIONS"][ index_geom ] ;
+          var data_L_FAMILLES        = dataset["FAMILLES"][ index_geom ] ;
+          var data_L_TYPES           = dataset["TYPES"][ index_geom ] ;
 
-          layer.feature.properties.value = data_geom ;
+          //layer.feature.properties.MOYPTOT         = data_L_MOYPTOT ;
+          layer.feature.properties.MOYPTOT_all_CAS = data_L_MOYPTOT_all_CAS ;
+          layer.feature.properties.FUNCTIONS       = data_L_FUNCTIONS ;
+          layer.feature.properties.FAMILLES        = data_L_FAMILLES ;
+          layer.feature.properties.TYPES           = data_L_TYPES ;
+
+        }
+      );
+    };
+
+    // refresh map : colors and scale
+    function refreshMap ( req_df, categ, req_query, seq_div_qual ) {
+
+      console.log("refreshMap / start for req_df :", req_df );
+
+      if      ( req_df == df_ME  ) { topoLayer = topoLayer_water; }
+      else if ( req_df == df_dpt ) { topoLayer = topoLayer_admin; }
+      else                         { topoLayer = topoLayer_rivers; };
+
+      topoLayer.eachLayer(
+
+        function(layer) {
+
+          //if      (categ == "MOYPTOT")         { value_ = layer.feature.properties.MOYPTOT }
+          if      (categ == "MOYPTOT_all_CAS") { value_ = layer.feature.properties.MOYPTOT_all_CAS  }
+          else if (categ == "FUNCTIONS")       { value_ = layer.feature.properties.FUNCTIONS  }
+          else if (categ == "FAMILLES")        { value_ = layer.feature.properties.FAMILLES  }
+          else if (categ == "TYPES")           { value_ = layer.feature.properties.TYPES  } ;
 
           // handle missing data
-          if (data_geom != null ){
-            if (data_geom[ req_query ] != null ) {
-              value = data_geom[ req_query ]
+          if (value_ != null ){
+            if (value_[ req_query ] != null ) {
+              value = value_[ req_query ]
             }
           } else {
             value = null
           };
 
-          // refresh TOPOJSON layer : colors, values, ...
+          //console.log("refreshMap / value :", value );
+
           handleLayer( layer, value , req_df, seq_div_qual );
-        }
-      );
+
+        });
+
     };
 
     // var queue = d3_queue.queue(1);
@@ -514,8 +583,8 @@
 
       // default request values
       var req_client = "request IO from client";
-      var year   = "2007"   ;
-      var pest   = "XXXXXX" ;
+      var year       = "2007"   ;
+      var pest       = "XXXXXX" ;
 
       // INITIATE SOCKET IO CONNECTION
       var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -542,43 +611,52 @@
       // REFRESH WHEN RECEIVING NEW DATA
       socket.on('io_slice_from_server', function( data_slice ) {
 
-        var req_query           = pest ; //data_slice.request_query   ; // "XXXXXX" for instance
+        var req_query            = pest ; //data_slice.request_query   ; // "XXXXXX" for instance
 
-        var data_MOYPTOT        = data_slice.slice_MOYPTOT.data    ;
-        var data_MOYPTOT_minmax = data_slice.slice_MOYPTOT.min_max ;
+        //var data_MOYPTOT         = data_slice.slice_MOYPTOT.data    ;
+        //var data_MOYPTOT_minmax  = data_slice.slice_MOYPTOT.min_max ;
 
-        var data_FUNCTIONS      = data_slice.slice_FUNCTIONS.data ;
-        var data_FAMILLES       = data_slice.slice_FAMILLES.data  ;
-        var data_TYPES          = data_slice.slice_TYPES.data     ;
+        var data_MOYPTOT_all_CAS = data_slice.slice_MOYPTOT_all_CAS.data    ;
 
-        var seq_div_qual        = data_slice.seq_div_qual    ;
-        var req                 = data_slice.request_sent    ;
-        var req_df_             = req.df_source              ;
+        var data_FUNCTIONS       = data_slice.slice_FUNCTIONS.data ;
+        var data_FAMILLES        = data_slice.slice_FAMILLES.data  ;
+        var data_TYPES           = data_slice.slice_TYPES.data     ;
+
+        var seq_div_qual         = data_slice.seq_div_qual    ;
+        var req                  = data_slice.request_sent    ;
+        var req_df_              = req.df_source              ;
 
         //console.log(" io_slice_from_server / req : ", req) ;
         console.log(" io_slice_from_server / req_df_ : "    , req_df_ , " - req_query : ", req_query ) ;
-        console.log(" io_slice_from_server / data_minmax : ", data_MOYPTOT_minmax) ;
+        //console.log(" io_slice_from_server / data_minmax : ", data_MOYPTOT_minmax) ;
 
         // parse data from JSON
-        var data_MOYPTOT_json   = JSON.parse(data_MOYPTOT) ;
-        var data_FUNCTIONS_json = JSON.parse(data_FUNCTIONS) ;
-        var data_FAMILLES_json  = JSON.parse(data_FAMILLES) ;
-        var data_TYPES_json     = JSON.parse(data_TYPES) ;
+        //var data_MOYPTOT_json         = JSON.parse(data_MOYPTOT) ;
+        var data_MOYPTOT_all_CAS_json = JSON.parse(data_MOYPTOT_all_CAS) ;
+        var data_FUNCTIONS_json       = JSON.parse(data_FUNCTIONS) ;
+        var data_FAMILLES_json        = JSON.parse(data_FAMILLES) ;
+        var data_TYPES_json           = JSON.parse(data_TYPES) ;
 
         var dataset = {
-          "MOYPTOT"   : data_MOYPTOT_json,
-          "FUNCTIONS" : data_FUNCTIONS_json,
-          "FAMILLES"  : data_FAMILLES_json,
-          "TYPES"     : data_TYPES_json
+          //"MOYPTOT"         : data_MOYPTOT_json,
+          "MOYPTOT_all_CAS" : data_MOYPTOT_all_CAS_json,
+          "FUNCTIONS"       : data_FUNCTIONS_json,
+          "FAMILLES"        : data_FAMILLES_json,
+          "TYPES"           : data_TYPES_json
         };
 
-        // choose scaling type
-        //seq_div_qual = "sequential"; /////////////////////////////////////////////////////
+        // set global vars for TOT_FRANCE for treemap
+        //var MOYPTOT_FR   = data_MOYPTOT_json["TOT_FRANCE"] ;
+        var FUNCTIONS_FR = data_FUNCTIONS_json["TOT_FRANCE"] ;
+        var FAMILLES_FR  = data_FAMILLES_json["TOT_FRANCE"] ;
+        var TYPES_FR     = data_TYPES_json["TOT_FRANCE"] ;
 
-        // refresh in ordrer : MINMAX -> LEGEND -> TOPOLAYER
-        refreshMinMax(     req_df_, data_MOYPTOT_minmax ) ;
-        refreshLegend(     req_df_, seq_div_qual ) ;
-        refreshTopoLayer ( req_df_, req_query, data_MOYPTOT_json, dataset, seq_div_qual );
+
+        // refresh in ordrer : MINMAX -> LEGEND -> TOPOLAYER --> MAP
+        //refreshMinMax_MOYPTOT ( req_df_, data_MOYPTOT_minmax ) ;
+        refreshLegend(          req_df_, seq_div_qual ) ;
+        refreshTopoLayer(       req_df_, dataset );
+        refreshMap (            req_df_, "MOYPTOT_all_CAS", req_query, seq_div_qual );
 
         console.log("");
 
@@ -624,6 +702,9 @@
         EmitRequestSlice(df_dpt);
 
       });
+
+      // RADIO CONTROLS FOR COUNTS : FUNCTIONS / FAMILLES / TYPES
+      // TO DO ... /////////////////////////////////////////////////////////////////////////////
 
     }; // <-- end : ConnectSocketIO
 

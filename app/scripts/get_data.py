@@ -5,7 +5,7 @@ import json
 import pandas as pd
 import numpy as np
 
-from .load_data import df_dict, var_dict
+from .load_data import df_dict, var_dict, empty_counts
 from ..views    import limit_middle, limit_up, limit_minus
 
 
@@ -20,6 +20,15 @@ req_all_pest      = "XXXXXX"
 dict_FONCTION_CAS = var_dict["pest_fonctions"]
 dict_FAMILLE_CAS  = var_dict["pest_familles"]
 dict_Type_CAS     = var_dict["pest_danger_types"]
+
+"""
+dict_hierarch = {
+                "name" : "",
+                "children" : [
+                    {"name" : "" , "value" : 0 }
+                    ]
+                }
+"""
 
 # def get_slice( categ_index, indexing, index_values_list ):
 #
@@ -89,7 +98,7 @@ class GetDataSlice :
         # save slice_AV_year in .self level # / without "ANNEE" index
         self.slice_AV_year = slice_AV_year  #.index.droplevel(0)
         print "-----> GetDataSlice / __init__ / self.slice_AV_year OK / %s on df_ : %s " %( self.year, self.df_name )
-        print self.slice_AV_year.sample(3)
+        #print self.slice_AV_year.sample(3)
 
 
     ### DF_AV_ME / DF_AV_DPT ANALYSIS FUNCTIONS ##################################################
@@ -105,27 +114,40 @@ class GetDataSlice :
 
         # drop useless columns for cartography / returns numpy serie
         slice_AV_year_CAS_clean = slice_AV_year_CAS.drop( [ "Type", "CODE_FONCTION", "CODE_FAMILLE" ], axis=1 )
-        print slice_AV_year_CAS_clean.sample()
+        #print slice_AV_year_CAS_clean.sample()
         print "-----> GetDataSlice / select_AV_all_pesticides / slice_AV_year_CAS_clean OK "
 
         # get min max array
-        min_max_CAS_dict = get_serie_MinMax ( slice_AV_year_CAS_clean, limit_middle, limit_up, cellsLeft , cellsRight, rdecimals )
-        print min_max_CAS_dict
-        print "-----> GetDataSlice / select_AV_all_pesticides / min_max_CAS_dict OK "
+        #min_max_CAS_dict = get_serie_MinMax ( slice_AV_year_CAS_clean, limit_middle, limit_up, cellsLeft , cellsRight, rdecimals )
+        #print min_max_CAS_dict
+        #print "-----> GetDataSlice / select_AV_all_pesticides / min_max_CAS_dict OK "
 
         # save or return slice_AV_year_CAS_clean
         if pest_CAS == req_all_pest :
-            self.pest_CAS          = req_all_pest
+            self.pest_XXX          = req_all_pest
             self.slice_AV_year_XXX = slice_AV_year_CAS_clean
-            self.min_max_XXX       = min_max_CAS_dict
+            #self.min_max_XXX       = min_max_CAS_dict
 
         else :
             self.pest_CAS          = pest_CAS
             self.slice_AV_year_CAS = slice_AV_year_CAS_clean
-            self.min_max_CAS       = min_max_CAS_dict
+            #self.min_max_CAS       = min_max_CAS_dict
 
 
-    # 1_b clean and transpose MOYPTOT
+    # 1_b clean and transpose MOYPTOT_all_CAS
+    def moyptot_all_CAS (self) :
+
+        print "-----> GetDataSlice / moyptot_all_CAS "
+
+        slice_moyptot_all = self.slice_AV_year.reset_index()
+        slice_moyptot_all = slice_moyptot_all.drop( ["ANNEE", "CODE_FAMILLE", "CODE_FONCTION", "Type" ], axis=1 ).set_index( ["CD_PARAMETRE"] ).T
+
+        print "-----> GetDataSlice / moyptot_all_CAS / slice_moyptot_all ..."
+        #print slice_moyptot_all.sample(3) #.to_json( orient="index" )
+
+        self.slice_moyptot_all = slice_moyptot_all
+
+    # 1_c clean and transpose MOYPTOT
     def moyptot_XXX (self ):
 
         print "-----> GetDataSlice / moyptot_XXX on slice_AV_year_XXX for %s / df : %s " %( self.year, self.df_name )
@@ -139,7 +161,7 @@ class GetDataSlice :
         self.slice_moyptot = slice_moyptot
 
 
-    ### 1_c (opt) / compute delta CAS against DC_NORM
+    ### 1_d (opt) / compute delta CAS against NORME_DCE
     def AV_CAS_vs_norm ( self ) :
 
         slice_src = self.slice_AV_year_CAS
@@ -148,6 +170,9 @@ class GetDataSlice :
         # slice year for DF_MA
         MA_year_CAS = df_dict[ "df_MA" ][ "df" ].loc[ idx[ self.year, self.pest_CAS ] , : ]
         ###MA_year_CAS_norm = MA_year_CAS[ "NORME_DCE" ]  ### --> GROUP BY ???????? #############################
+
+
+        self.slice_DELTA_NORM = ""
 
 
 
@@ -181,8 +206,8 @@ class GetDataSlice :
             # save min and max and min_max_array ###########################################
 
         self.count_pests_dict = count_pests_dict
-        print "-----> GetDataSlice / AV_counts_by_func_fam_type / count_pests_dict['CODE_FONCTION'] ... "
-        print count_pests_dict['CODE_FONCTION']['counts_df'].sample(3)
+        print "-----> GetDataSlice / AV_counts_by_func_fam_type / count_pests_dict['CODE_FONCTION']['counts_df'] ... "
+        #print count_pests_dict['CODE_FONCTION']['counts_df'].sample(3)
 
 
 

@@ -61,7 +61,7 @@ limit_up       = 5.0
 limit_minus    = - limit_middle
 
 #from scripts.load_data import  df_dict, var_dict
-from scripts.get_data import GetDataSlice, var_dict
+from scripts.get_data import GetDataSlice, var_dict, empty_counts
 
 
 ### routing #######################
@@ -97,66 +97,31 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
 
     print "-----> send_AV_slice / variables / request_client : %s - df_src : %s - slice_year : %s - slice_pest  : %s" \
                                             %(request_client,       df_src,       slice_year,       slice_pest )
+    print
 
-    # ### get the slice from pandas dataframe
-    # #slice_df = GetDataSlice( df_src ).df.loc[ idx[ [ slice_year ] , [ slice_pest ] ] , "AG001":"TOT_FRANCE" ]
-    # slice_df = GetDataSlice( df_src, slice_year ).slice_AV_year.loc[ idx[ : ,  slice_pest  ] , : ]
-    # print "-----> send_AV_slice / slice_df : OK "
-    # #print "sample slice_df :  "
-    # print slice_df.head(1)
-
-
-    # ### reset index and attribute unique index as custom "REQUEST" (otherwise pandas fucks up the JSON and client JSON.parse won't work )
-    # slice_df  = slice_df.reset_index()
-    #
-    # req_query  = slice_pest
-    # # req_query  = str(slice_year) + "_" + str(slice_pest)
-    # slice_df["REQUEST"] = req_query
-    # slice_df.set_index( ["REQUEST"], inplace=True )
-    # print "-----> send_AV_slice / add column 'REQUEST' : ", req_query
-    # #print slice_df.head(1)
-    #
-    # ### drop useless columns
-    # slice_df.drop(["ANNEE", "CD_PARAMETRE"], axis=1, inplace=True)
-    # print "-----> send_AV_slice / drop columns 'ANNEE' and 'CD_PARAMETRE' "
-
-    # ### find min and max
-    # cols_to_ignore = ["TOT_FRANCE", "Type", "CODE_FONCTION", "CODE_FAMILLE", "ANNEE", "CD_PARAMETRE"]
-    # slice_min      = slice_df[ [col for col in slice_df.columns if col not in cols_to_ignore] ].min(axis=1)[req_query].round(2)
-    # slice_max      = slice_df[ [col for col in slice_df.columns if col not in cols_to_ignore] ].max(axis=1)[req_query].round(2)
-    # min_limit      = np.linspace(slice_min,limit_middle,6).tolist()
-    # limit_max      = np.linspace(limit_middle,limit_up,3).tolist()
-    # min_max        = min_limit + limit_max[1:]
-    #
-    # min_max_array  = np.around(min_max, decimals=2).tolist()
-    #
-    # min_max_values = { "min" : slice_min , "max" : slice_max, "min_max_array" : min_max_array }
-    # print "-----> send_AV_slice / min_max_values : ", min_max_values
-
-
-    # ### transpose dataframe to set "REQUEST" columns as index
-    # slice_df = slice_df.T
-    # print "-----> send_AV_slice / transpose slice_df : slice_df.T"
-    # # print slice_df.head(1)
-
-
-
-    ### get the slice from pandas dataframe
+    ### get the slice from pandas dataframe          --> slice_df.slice_AV_year
     slice_df = GetDataSlice( df_src, slice_year )
 
-    # compute MOYPTOT
+    # compute MOYPTOT                                --> slice_df.slice_AV_year_XXX
     slice_df.select_AV_pesticide()
-    # clean and transpose MOYPTOT
-    slice_df.moyptot_XXX()
-    # compute counts by FAMILLES / FUNCTIONS / TYPES
+
+    # clean and transpose MOYPTOT                    --> slice_df.slice_moyptot
+    #slice_df.moyptot_XXX()
+
+    # clean and transpose MOYPTOT_all_CAS            --> slice_df.slice_moyptot_all
+    slice_df.moyptot_all_CAS()
+
+    # compute counts by FAMILLES / FUNCTIONS / TYPES --> slice_df.count_pests_dict
     slice_df.AV_counts_by_func_fam_type()
 
-    print "-----> send_AV_slice / finish computinf on df... "
+    print "-----> send_AV_slice / finish computing on df... "
     print
 
     # set and organize variables
-    slice_MOYPTOT    = slice_df.slice_moyptot
-    min_max_MOYPTOT  = slice_df.min_max_XXX
+    # slice_MOYPTOT    = slice_df.slice_moyptot
+    #min_max_MOYPTOT  = slice_df.min_max_XXX
+
+    slice_MOYPTOT_all_CAS = slice_df.slice_moyptot_all
 
     count_pests_dict = slice_df.count_pests_dict
     slice_FUNCTIONS  = count_pests_dict["CODE_FONCTION"]["counts_df"]
@@ -164,7 +129,9 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
     slice_TYPES      = count_pests_dict["Type"]["counts_df"]
 
     ## save slices as JSON
-    slice_MOYPTOT_json   = slice_MOYPTOT.to_json(orient="index")
+    # slice_MOYPTOT_json         = slice_MOYPTOT.to_json(orient="index")
+    slice_MOYPTOT_all_CAS_json = slice_MOYPTOT_all_CAS.to_json(orient="index")
+
     slice_FUNCTIONS_json = slice_FUNCTIONS.to_json(orient="index")
     slice_FAMILLES_json  = slice_FAMILLES.to_json(orient="index")
     slice_TYPES_json     = slice_TYPES.to_json(orient="index")
@@ -174,36 +141,26 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
     seq_div_qual = "sequential"
 
     results = {
-            'request_sent'   : request_client,
+            'request_sent'          : request_client,
 
-            'slice_MOYPTOT'  : {"data" : slice_MOYPTOT_json  , "min_max" : min_max_MOYPTOT },
-            #'min_max'        : min_max_MOYPTOT,
-            'slice_FUNCTIONS': {"data" : slice_FUNCTIONS_json, "min_max" : ""  },
-            'slice_FAMILLES' : {"data" : slice_FAMILLES_json,  "min_max" : ""  },
-            'slice_TYPES'    : {"data" : slice_TYPES_json,     "min_max" : ""  },
+            #'slice_MOYPTOT'         : {"data" : slice_MOYPTOT_json , "min_max" : "" },
+            #'min_max'          : min_max_MOYPTOT,
 
-            'seq_div_qual'   : seq_div_qual
+            'slice_MOYPTOT_all_CAS' : {"data" : slice_MOYPTOT_all_CAS_json , "min_max" : "" },
+
+            #'slice_DELTA_NORM' : {"data" : ""  , "min_max" : "" },
+
+            'slice_FUNCTIONS'  : {"data" : slice_FUNCTIONS_json, "min_max" : ""  },
+            'slice_FAMILLES'   : {"data" : slice_FAMILLES_json,  "min_max" : ""  },
+            'slice_TYPES'      : {"data" : slice_TYPES_json,     "min_max" : ""  },
+
+            'seq_div_qual'     : seq_div_qual
         }
 
     ### emit the json as "data_slice"
     emit( 'io_slice_from_server', results )
 
-    # ### save slice as JSON
-    # slice_df_json = slice_df.to_json(orient="index")
-    #
-    #
-    #
-    # seq_div_qual = "sequential"
-    #
-    # ### emit the json as "data_slice"
-    # emit( 'io_slice_from_server',
-    #         {   'request_sent'  : request_client,
-    #             'request_query' : req_query,
-    #             'slice_MOYPTOT' : slice_df_json,
-    #             'min_max'       : min_max_values,
-    #             'seq_div_qual'  : seq_div_qual
-    #         }
-    #     )
+
     print "-----> send_AV_slice / emit : OK "
 
     print

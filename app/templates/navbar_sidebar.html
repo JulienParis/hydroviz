@@ -395,7 +395,7 @@
         <div class="collapse" id="collapseDpts">
           <hr>
           {% for dpt in var_dict.departements|sort %}
-            <a href="#" class="request indent2" reqtype="dpt" reqvalue="{{ dpt }}" >{{ dpt }} - </a>
+            <a href="#" class="request indent2" reqtype="dpt" reqvalue="{{ dpt }}" >{{ dpt }} - {{ var_dict.departements[dpt]["dpt_name"] }}</a>
           {% endfor %}
         </div>
 
