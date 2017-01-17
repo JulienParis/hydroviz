@@ -1,0 +1,62 @@
+
+<div class="jumbotron">
+
+  <div class="row" >
+
+    <h3 id="sb_title"
+        class="col-xs-11 lead text-lowercase"
+        style="margin-bottom: 10px">
+      infos
+    </h3>
+
+    <button type="button"
+            class="col-xs-1 close"
+            onclick="toggleSidebarInfos()"
+            style="margin-bottom: 10px">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+  </div>
+
+  <div class="scrollable">
+
+    <div class="col-sm-12">
+
+      <h4 id="sb_abstract"
+          class="lead ">
+        <div class="text-center">
+          <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+          double click on any icon
+          <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </div>
+      </h4>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="sd_buttons" style="padding-top: 0px;">
+
+  <button class="btn btn-info btn-sm custom-btn"
+          onclick="toggleSidebarInfos()">
+    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    Close
+  </button>
+
+</div>
+
+
+<script>
+
+// toggle map_info
+var toggled = 1  ;
+function toggleSidebarInfos() {
+
+  $("#sidebar_infos").toggleClass("collapsed-side");
+  $("#content").toggleClass("{{ bootstrap_vars.col_full }} {{ bootstrap_vars.col_graph }}"); //5 and 7 default
+  toggled *= -1 ;
+
+};
+
+</script>

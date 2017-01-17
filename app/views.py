@@ -106,10 +106,10 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
     slice_df.select_AV_pesticide()
 
     # clean and transpose MOYPTOT                    --> slice_df.slice_moyptot
-    #slice_df.moyptot_XXX()
+    slice_df.moyptot_XXX()
 
     # clean and transpose MOYPTOT_all_CAS            --> slice_df.slice_moyptot_all
-    slice_df.moyptot_all_CAS()
+    # slice_df.moyptot_all_CAS()
 
     # compute counts by FAMILLES / FUNCTIONS / TYPES --> slice_df.count_pests_dict
     slice_df.AV_counts_by_func_fam_type()
@@ -118,10 +118,10 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
     print
 
     # set and organize variables
-    # slice_MOYPTOT    = slice_df.slice_moyptot
+    slice_MOYPTOT    = slice_df.slice_moyptot
     #min_max_MOYPTOT  = slice_df.min_max_XXX
 
-    slice_MOYPTOT_all_CAS = slice_df.slice_moyptot_all
+    # slice_MOYPTOT_all_CAS = slice_df.slice_moyptot_all
 
     count_pests_dict = slice_df.count_pests_dict
     slice_FUNCTIONS  = count_pests_dict["CODE_FONCTION"]["counts_df"]
@@ -129,8 +129,8 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
     slice_TYPES      = count_pests_dict["Type"]["counts_df"]
 
     ## save slices as JSON
-    # slice_MOYPTOT_json         = slice_MOYPTOT.to_json(orient="index")
-    slice_MOYPTOT_all_CAS_json = slice_MOYPTOT_all_CAS.to_json(orient="index")
+    slice_MOYPTOT_json         = slice_MOYPTOT.to_json(orient="index")
+    # slice_MOYPTOT_all_CAS_json = slice_MOYPTOT_all_CAS.to_json(orient="index")
 
     slice_FUNCTIONS_json = slice_FUNCTIONS.to_json(orient="index")
     slice_FAMILLES_json  = slice_FAMILLES.to_json(orient="index")
@@ -138,15 +138,15 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
 
     #print "-----> send_AV_slice / slice_df_.slice_AV_year_XXX : ", slice_df_.slice_AV_year_XXX
 
-    seq_div_qual = "sequential"
+    #seq_div_qual = "sequential"
 
     results = {
             'request_sent'          : request_client,
 
-            #'slice_MOYPTOT'         : {"data" : slice_MOYPTOT_json , "min_max" : "" },
+            'slice_MOYPTOT'         : {"data" : slice_MOYPTOT_json , "min_max" : "" },
             #'min_max'          : min_max_MOYPTOT,
 
-            'slice_MOYPTOT_all_CAS' : {"data" : slice_MOYPTOT_all_CAS_json , "min_max" : "" },
+            # 'slice_MOYPTOT_all_CAS' : {"data" : slice_MOYPTOT_all_CAS_json , "min_max" : "" },
 
             #'slice_DELTA_NORM' : {"data" : ""  , "min_max" : "" },
 
@@ -154,7 +154,7 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
             'slice_FAMILLES'   : {"data" : slice_FAMILLES_json,  "min_max" : ""  },
             'slice_TYPES'      : {"data" : slice_TYPES_json,     "min_max" : ""  },
 
-            'seq_div_qual'     : seq_div_qual
+            #'seq_div_qual'     : seq_div_qual
         }
 
     ### emit the json as "data_slice"

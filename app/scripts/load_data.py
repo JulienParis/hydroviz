@@ -45,6 +45,32 @@ src_stat_files = {
 #     _missing : _missing
 # }
 
+functions_full = {
+    "A"       : u"Acaricide",
+    "B"       : u"Biocide",
+    "B,F"     : u"Biocide, Fongicide",
+    "F"       : u"Fongicide",
+    "F,A"     : u"Fongicide, Acaricide",
+    "F,H,M"   : u"Fongicide, Herbicide, Mollusticide",
+    "F,N"     : u"Fongicide, Nématicide",
+    "H"       : u"Herbicide",
+    "I"       : u"Insecticide",
+    "I,A"     : u"Insecticide, Acaricide",
+    "I,A,F,H" : u"Insecticide, Acaricide, Fongicide, Herbicide",
+    "I,A,M"   : u"Insecticide, Acaricide, Mollusticide",
+    "I,A,N"   : u"Insecticide, Acaricide, Nématicide",
+    "I,M"     : u"Insecticide, Mollusticide",
+    "I,N"     : u"Insecticide, Nématicide",
+    "I,Reg"   : u"Insecticide, Régulateur de croissance",
+    "N"       : u"Nématicide",
+    "R"       : u"Rodenticide", ### twin with Ro
+    "Reg"     : u"Régulateur de croissance",
+    "RepO"    : u"Répulsif",
+    "Ro"      : u"Rodenticide", ####
+    "H,F,N,I" : u"Herbicide, Fongicide, Nématicide, Insecticide",
+    "H,G"     : u"Herbicide, Graminicide",
+    "PP"      : u"no ref"
+}
 
 ### load files as pandas dataframes ##########################################
 
@@ -139,7 +165,7 @@ df_dict = {
 #dict_CAS_Type          = { k: g["Type"].tolist()                 for k,g in df_pest_danger.groupby("CAS")}
 dict_dpt_com           = { k: { "dpt_name" : dpt_dict[k]["NCC"], "dpt_communes" : g["NUM_COM"].tolist()}  for k,g in df_stations.groupby("NUM_DEP")}
 #dict_INDEX_CD          = { k: g["CD_STATION"].tolist()            for k,g in df_stations.groupby("INDEX_STATION")}
-#dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
+dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
 #dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
 
 dict_FONCTION_CAS       = { k: { "CAS" : g["CD_PARAMETRE"].tolist() }        for k,g in df_pesticides.groupby("CODE_FONCTION")}
@@ -170,6 +196,9 @@ dummy_TYPE_CAS          = { "name" : "types", "children" :\
 # print dict_dpt_com
 # print
 
+print "**** load_data.py / dict_FONCTION_LIBELLE : "
+print dict_FONCTION_LIBELLE
+
 print "**** load_data.py / dummies counts : "
 # print dummy_FONCTION_CAS, " ..."
 # print dummy_FAMILLE_CAS, " ..."
@@ -186,7 +215,7 @@ var_dict = {
     #"stations"         : dict_INDEX_CD,
     #"masses_d_eau"     : [],
     #"bassins"          : [],
-    #"pesticides"       : dict_FONCTION_LIBELLE,
+    "pest_fonc_lib"    : functions_full, #dict_FONCTION_LIBELLE,
     "pest_familles"    : dict_FAMILLE_CAS,
     "pest_fonctions"   : dict_FONCTION_CAS,
     "pest_danger_types": dict_TYPE_CAS

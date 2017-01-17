@@ -37,7 +37,7 @@ app_colors = {
     'navbar_text'   : colors['grey_']['hex'],
     'navbar_select' : colors['ocre_']['hex'],
 
-    'jumbotron'     : colors['blue_']['hex'],
+    'jumbotron'     : colors['water_']['hex'],
 
     'btn_primary' : colors['green_']['hex'],
     'btn_success' : colors['green_']['hex'],
@@ -48,7 +48,7 @@ app_colors = {
     }
 
 ### variables for app sidebar
-width_sidebar   = 5
+width_sidebar   = 4
 width_full      = 12
 width_graph     = width_full - width_sidebar
 col_graph_class = "col-xs-"
