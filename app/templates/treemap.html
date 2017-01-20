@@ -425,6 +425,10 @@ var mainRoot=
      ]
     }
 
+console.log(" /// TREEMAP / mainRoot : ");
+console.log(mainRoot);
+
+
 var margin = {top: 20, right: 0, bottom: 0, left: 0},
     width = 960,
     height = 500 - margin.top - margin.bottom,
@@ -468,7 +472,7 @@ grandparent.append("text")
     .attr("y", 6 - margin.top)
     .attr("dy", ".75em");
 
-starter(mainRoot);
+//starter(mainRoot);
 //d3.json("flare.json", function(root) {
 
 function starter(root){

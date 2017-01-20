@@ -209,6 +209,7 @@
     var pest_map   = "XXXXXX" ;
     var categ_map  = "sequential" ;
     var index_map  = "MOYPTOT";
+    var index_geom = "TOT_FRANCE" ;
 
 
     // choose between  - sequential / divergent / qualitative - colorscales
@@ -385,17 +386,20 @@
     };
 
     function zoomToFeature(e) {
-      //console.log(e);
-      console.log(e.target.feature.properties);
-      toggleSidebarInfos();
+
       //map.fitBounds(e.target.getBounds());
+
+      var props = e.target.feature.properties ;
+      //console.log(props);
+      //toggleSidebarInfos();
+      displayInfos(props);
     };
 
     // display infos on click
     var toggledLast ;
-    function displayInfos(e) {
+    function displayInfos(props) {
 
-      var props = e.target.feature.properties;
+      //var props = e.target.feature.properties;
       // if ( ) { }
       // else if () {};
 
@@ -407,7 +411,20 @@
       // do nothing
       else {
         //if (node.type != "comment") {
-        toggledLast = props.title ;
+        toggledLast = props ;
+        console.log(props);
+
+        d3.select('#sb_title').html(props.NomMasseDE);
+
+        d3.select('#CdMasseDEa').html(props.CdMasseDEa);
+        // d3.select('#NomMasseDE').html(props.NomMasseDE);
+        d3.select('#Karstique').html(props.Karstique);
+        d3.select('#FrangeLitt').html(props.FrangeLitt);
+        d3.select('#Niveau').html(props.Niveau);
+        d3.select('#NatureEcou').html(props.NatureEcou);
+
+        d3.select('#FONCTIONS').html(props.FUNCTIONS);
+
         //}
       }
 
@@ -618,6 +635,7 @@
         );
 
         console.log(" - leaflet -- finished / addTopoData_rivers ");
+        console.log("");
 
       };
 
@@ -632,7 +650,7 @@
     // START ConnectSocketIO = function () {
     function ConnectSocketIO () {
 
-      // // default request values
+      // // default request values ^^^ moved upper in code
       // var req_client = "request IO from client";
       // var year       = "2007"   ;
       // var pest_map   = "XXXXXX" ;
@@ -642,7 +660,7 @@
       // INITIATE SOCKET IO CONNECTION
       var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-      // EMIT REQUEST TO SERVER
+      // EMIT REQUEST SLICE TO SERVER
       function EmitRequestSlice(df_name) {
         socket.emit(
           'io_request_slice', {
@@ -654,17 +672,35 @@
         );
       };
 
+      // EMIT REQUEST TREE TO SERVER
+      function EmitRequestTree(df_name, area ) {
+        socket.emit(
+          'io_request_tree', {
+            msg                 : req_client ,
+            df_source           : df_name ,
+            slice_query_index   : [ year, pest_map ] ,
+            slice_query_columns : area
+          }
+        );
+      };
+
       // INITIATE MAP DATAS ON CONNECTION
       socket.on('connect', function() {
         // socket.emit('connection start', {data: '--> client connected from : ' + document.domain + ':' + location.port });
+
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
+
+        EmitRequestTree(df_ME, index_geom );
+
       });
 
-      // REFRESH WHEN RECEIVING NEW DATA
+      // IO - REFRESH DATAS AND MAP WHEN RECEIVING NEW DATA
       socket.on('io_slice_from_server', function( data_slice ) {
 
         //var req_query            = pest ; //data_slice.request_query   ; // "XXXXXX" for instance
+
+        console.log(" *** io_slice_from_server / data_slice (raw) : "  , data_slice ) //, " - req_query : ", req_query ) ;
 
         var data_MOYPTOT         = data_slice.slice_MOYPTOT.data    ;
         //var data_MOYPTOT_minmax  = data_slice.slice_MOYPTOT.min_max ;
@@ -680,8 +716,10 @@
         var req_df_              = req.df_source              ;
 
         //console.log(" io_slice_from_server / req : ", req) ;
-        console.log(" io_slice_from_server / req_df_ : "    , req_df_ ) //, " - req_query : ", req_query ) ;
+        console.log(" *** io_slice_from_server / req_df_ : "    , req_df_ ) //, " - req_query : ", req_query ) ;
         //console.log(" io_slice_from_server / data_minmax : ", data_MOYPTOT_minmax) ;
+
+
 
         // parse data from JSON
         var data_MOYPTOT_json         = JSON.parse(data_MOYPTOT) ;
@@ -717,6 +755,26 @@
       }); // <-- end : io_slice_from_server
 
 
+      // IO - REFRESH DATAS AND TREEMAP WHEN RECEIVING NEW DATA
+      socket.on('io_tree_from_server', function ( tree_pests ) {
+
+        console.log( " *** io_tree_from_server", tree_pests );
+        var tree_FAMILLES  = JSON.parse(tree_pests.tree_FAMILLES) ;
+        var tree_FUNCTIONS = JSON.parse(tree_pests.tree_FUNCTIONS) ;
+        var tree_TYPES     = JSON.parse(tree_pests.tree_TYPES) ;
+
+        console.log( " *** io_tree_from_server / tree_FAMILLES" );
+        console.log(tree_FAMILLES);
+
+        starter(tree_FAMILLES);
+
+        }
+
+      ); // <-- end : io_tree_from_server
+
+
+
+
       // REQUEST BUTTONS
       $('.request').on('click', function() {
 
@@ -731,6 +789,8 @@
 
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
+
+        EmitRequestTree(df_ME, index_geom );
 
       });
 
@@ -756,6 +816,8 @@
 
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
+
+        EmitRequestTree(df_ME, index_geom);
 
       });
 
@@ -785,7 +847,6 @@
       });
 
 
-
     }; // <-- end : ConnectSocketIO
 
 
@@ -795,7 +856,8 @@
     //ConnectSocketIO();
     InitMap( ConnectSocketIO ); // <-- with callback
 
-
+    console.log(" - InitMap / finished ");
+    console.log(" ");
 
   }); //<-- end : $(document).ready
 

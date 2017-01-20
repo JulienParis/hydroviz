@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 #import os
-import json
+#import json
 import pandas as pd
 import numpy as np
 
-from .load_data import df_dict, var_dict, empty_counts
+from .load_data import df_dict, var_dict #, empty_counts
 from ..views    import limit_middle, limit_up, limit_minus
 
 
@@ -21,14 +21,6 @@ dict_FONCTION_CAS = var_dict["pest_fonctions"]
 dict_FAMILLE_CAS  = var_dict["pest_familles"]
 dict_Type_CAS     = var_dict["pest_danger_types"]
 
-"""
-dict_hierarch = {
-                "name" : "",
-                "children" : [
-                    {"name" : "" , "value" : 0 }
-                    ]
-                }
-"""
 
 # def get_slice( categ_index, indexing, index_values_list ):
 #
@@ -147,6 +139,7 @@ class GetDataSlice :
 
         self.slice_moyptot_all = slice_moyptot_all
 
+
     # 1_c clean and transpose MOYPTOT
     def moyptot_XXX (self ):
 
@@ -209,6 +202,51 @@ class GetDataSlice :
         print "-----> GetDataSlice / AV_counts_by_func_fam_type / count_pests_dict['CODE_FONCTION']['counts_df'] ... "
         #print count_pests_dict['CODE_FONCTION']['counts_df'].sample(3)
 
+
+    ### 2/ count pesticides by functions / family / danger type
+    def AV_tree_by_func_fam_type ( self, geom_index ) :
+
+        print "-----> GetDataSlice / AV_tree_by_func_fam_type on slice_AV_year for %s / df : %s / geom_index : %s " %( self.year, self.df_name, geom_index )
+
+        # reset index
+        AV_reset_tree = self.slice_AV_year.reset_index()
+        print "-----> GetDataSlice / AV_tree_by_func_fam_type / AV_reset_tree ... "
+        # print AV_reset_tree.sample(3)
+
+        func_fam_type_list = [ 'CODE_FAMILLE', 'CODE_FONCTION', 'Type' ]
+        columns_list       = list(AV_reset_tree.columns.values)
+        fields_to_keep     = [ 'CD_PARAMETRE', geom_index ]
+
+        tree_pests = {}
+
+        for func_fam_type in func_fam_type_list :
+
+            # set fields to drop and drop them
+            fields_to_drop_list = list( set( columns_list ) - set( [func_fam_type] + fields_to_keep ) )
+            AV_reset_ = AV_reset_tree.drop( fields_to_drop_list, axis=1 )
+            #print AV_reset_.sample(3)
+
+            # make hierarchical structure for every func_fam_type
+            tree_list_ = { 'name'      : func_fam_type ,
+                           'children' :
+                                [ { 'name' : fft,
+                                    'children' :
+                                        [ { 'name' : cas ,
+                                            # conditional fill NaN values to avoid problems in JSON parsing later
+                                            'value' : round(float( val[ geom_index ] ), 4 ) if val[ geom_index ].isnull == False else 0.0   \
+                                          } for cas,val in c.groupby('CD_PARAMETRE') \
+                                        ]  \
+                                    } \
+                               for fft ,c in AV_reset_.groupby( func_fam_type ) \
+                            ]
+                        }
+
+            tree_pests[ func_fam_type ] = tree_list_
+
+
+
+        self.tree_pests = tree_pests
+        print "-----> GetDataSlice / AV_tree_by_func_fam_type "
 
 
     ### FORMALIZING FUNCTIONS ##################################################

@@ -3,6 +3,7 @@
 
 import time, os
 import datetime
+import json
 
 from app import app, socketio
 from flask import Flask, flash, render_template, url_for, request, session, redirect
@@ -61,7 +62,7 @@ limit_up       = 5.0
 limit_minus    = - limit_middle
 
 #from scripts.load_data import  df_dict, var_dict
-from scripts.get_data import GetDataSlice, var_dict, empty_counts
+from scripts.get_data import GetDataSlice, var_dict #, empty_counts
 
 
 ### routing #######################
@@ -115,7 +116,6 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
     slice_df.AV_counts_by_func_fam_type()
 
     print "-----> send_AV_slice / finish computing on df... "
-    print
 
     # set and organize variables
     slice_MOYPTOT    = slice_df.slice_moyptot
@@ -131,10 +131,12 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
     ## save slices as JSON
     slice_MOYPTOT_json         = slice_MOYPTOT.to_json(orient="index")
     # slice_MOYPTOT_all_CAS_json = slice_MOYPTOT_all_CAS.to_json(orient="index")
+    print "-----> send_AV_slice / printing slice_MOYPTOT_json ... "
+    #print slice_MOYPTOT_json
 
     slice_FUNCTIONS_json = slice_FUNCTIONS.to_json(orient="index")
-    slice_FAMILLES_json  = slice_FAMILLES.to_json(orient="index")
-    slice_TYPES_json     = slice_TYPES.to_json(orient="index")
+    slice_FAMILLES_json  = slice_FAMILLES.to_json( orient="index")
+    slice_TYPES_json     = slice_TYPES.to_json(    orient="index")
 
     #print "-----> send_AV_slice / slice_df_.slice_AV_year_XXX : ", slice_df_.slice_AV_year_XXX
 
@@ -160,9 +162,8 @@ def send_AV_slice( request_client, df_src, slice_year, slice_pest ) :
     ### emit the json as "data_slice"
     emit( 'io_slice_from_server', results )
 
-
+    print
     print "-----> send_AV_slice / emit : OK "
-
     print
 
 
@@ -182,3 +183,64 @@ def return_init_data(request_client):
     print "***** io_request_slice / slice_year : %s - slice_pest : %s " %( slice_year, slice_pest )
 
     send_AV_slice( request_client, df_src, slice_year, slice_pest )
+
+
+
+### REPLACE ALL THIS vvv BY FUNCTIONS FROM "GET_DATA.PY" ######################################################
+def send_AV_tree( request_client, df_src, slice_year, area_query_index ) :
+
+    print "-----> send_AV_tree / variables / request_client : %s - df_src : %s - slice_year : %s - area_query_index  : %s" \
+                                            %(request_client,       df_src,       slice_year,      area_query_index )
+    print
+
+    ### get the slice from pandas dataframe          --> slice_df.slice_AV_year
+    slice_df = GetDataSlice( df_src, slice_year )
+
+    ### get hierarch tree for FUNCTIONS / FAMILLES / TYPES -->
+    slice_df.AV_tree_by_func_fam_type( geom_index = area_query_index )
+
+    print "-----> send_AV_tree / finish computing on df... "
+
+    tree_pests = slice_df.tree_pests
+    #print tree_pests["CODE_FONCTION"]
+
+    # transform dictionnaries to JS objects (JSON)
+    tree_pests_functions_json = json.dumps(tree_pests["CODE_FONCTION"])
+    tree_pests_familles_json  = json.dumps(tree_pests["CODE_FAMILLE"])
+    tree_pests_types_json     = json.dumps(tree_pests["Type"])
+    #print tree_pests_functions_json
+
+
+    # send results
+    results = {
+            'request_sent'   : request_client,
+
+            'tree_FUNCTIONS' : tree_pests_functions_json ,
+            'tree_FAMILLES'  : tree_pests_familles_json ,
+            'tree_TYPES'     : tree_pests_types_json
+        }
+
+    ### emit the json as "data_slice"
+    emit( 'io_tree_from_server', results )
+
+    print
+    print "-----> send_AV_tree / emit : OK "
+    print
+
+
+@socketio.on('io_request_tree')
+def return_tree(request_client):
+
+    print
+    print "***** io_request_tree / request from client : ", request_client
+
+    df_src              = request_client['df_source']
+    slice_query_index   = request_client['slice_query_index']
+    area_query_index    = request_client['slice_query_columns']
+
+    slice_year = int(slice_query_index[0])
+    slice_pest = slice_query_index[1]
+
+    print "***** io_request_tree / slice_year : %s - slice_pest : %s - area_query_index : %s " %( slice_year, slice_pest, area_query_index )
+
+    send_AV_tree( request_client, df_src, slice_year, area_query_index )

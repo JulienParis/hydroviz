@@ -169,25 +169,25 @@ dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_
 #dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
 
 dict_FONCTION_CAS       = { k: { "CAS" : g["CD_PARAMETRE"].tolist() }        for k,g in df_pesticides.groupby("CODE_FONCTION")}
-dummy_FONCTION_CAS      = { "name" : "fonctions", "children" :\
-                            [ { "name"     : k,  \
-                              "children" : [ { "name" : cas, "value": None } for cas in g["CD_PARAMETRE"].tolist() ]  \
-                              } for k,g in df_pesticides.groupby("CODE_FONCTION") ] \
-                           }
+# dummy_FONCTION_CAS      = { "name" : "fonctions", "children" :\
+#                             [ { "name"     : k,  \
+#                               "children" : [ { "name" : cas, "value": None } for cas in g["CD_PARAMETRE"].tolist() ]  \
+#                               } for k,g in df_pesticides.groupby("CODE_FONCTION") ] \
+#                            }
 
 dict_FAMILLE_CAS        = { k: { "CAS" : g["CD_PARAMETRE"].tolist() }        for k,g in df_pesticides.groupby("CODE_FAMILLE")}
-dummy_FAMILLE_CAS       = { "name" : "familles", "children" :\
-                            [ { "name"     : k,  \
-                              "children" : [ { "name" : cas, "value": None } for cas in g["CD_PARAMETRE"].tolist() ]  \
-                              } for k,g in df_pesticides.groupby("CODE_FAMILLE") ] \
-                           }
+# dummy_FAMILLE_CAS       = { "name" : "familles", "children" :\
+#                             [ { "name"     : k,  \
+#                               "children" : [ { "name" : cas, "value": None } for cas in g["CD_PARAMETRE"].tolist() ]  \
+#                               } for k,g in df_pesticides.groupby("CODE_FAMILLE") ] \
+#                            }
 
 dict_TYPE_CAS           = { k: { "CAS" : g["CAS"].tolist() }                 for k,g in df_pest_danger.groupby("Type")}
-dummy_TYPE_CAS          = { "name" : "types", "children" :\
-                            [ { "name"     : k,  \
-                              "children" : [ { "name" : cas, "value": None } for cas in g["CAS"].tolist() ]  \
-                              } for k,g in df_pest_danger.groupby("Type") ] \
-                          }
+# dummy_TYPE_CAS          = { "name" : "types", "children" :\
+#                             [ { "name"     : k,  \
+#                               "children" : [ { "name" : cas, "value": None } for cas in g["CAS"].tolist() ]  \
+#                               } for k,g in df_pest_danger.groupby("Type") ] \
+#                           }
 
 #dict_DANGER_CAS         = { k: g["CD_PARAMETRE"].tolist()          for k,g in df_pesticides.groupby("Type")}
 
@@ -221,8 +221,8 @@ var_dict = {
     "pest_danger_types": dict_TYPE_CAS
 }
 
-empty_counts = {
-    "by_function" : dummy_FONCTION_CAS,
-    "by_famille"  : dummy_FAMILLE_CAS,
-    "by_type"     : dummy_TYPE_CAS
-}
+# empty_counts = {
+#     "by_function" : dummy_FONCTION_CAS,
+#     "by_famille"  : dummy_FAMILLE_CAS,
+#     "by_type"     : dummy_TYPE_CAS
+# }
