@@ -163,6 +163,15 @@
     var df_stations = "df_stations" ;
     var df_rivers   = "df_rivers"   ;
 
+    // default request values for init
+    var req_client = "request IO from client";
+    var year       = "2007"   ;
+    var pest_map   = "XXXXXX" ;
+    var categ_map  = "sequential" ;
+    var index_map  = "MOYPTOT";
+    var index_geom = "TOT_FRANCE" ;
+    var radio_tree = "byFunctions" ;
+    var dataset_trees ;
 
     // CREATE GRADIENTS --> CHECK VARIATIONS FROM COLORBREWER
     var scale_limitMid         = {{ colorscaleLimits.limit_middle }} ;
@@ -170,7 +179,6 @@
     var scale_limitMinus       = {{ colorscaleLimits.limit_minus }} ;
 
     var scale_limitUp_count    = 100 ;
-
 
     var min_value_count        = 0   ;
     var max_value_count        = 100 ;
@@ -203,13 +211,6 @@
     var dft_stroke_color  = "white"   ;
     var dft_rivers_color  = "#081d58" ;
 
-    // default request values for init
-    var req_client = "request IO from client";
-    var year       = "2007"   ;
-    var pest_map   = "XXXXXX" ;
-    var categ_map  = "sequential" ;
-    var index_map  = "MOYPTOT";
-    var index_geom = "TOT_FRANCE" ;
 
 
     // choose between  - sequential / divergent / qualitative - colorscales
@@ -405,27 +406,37 @@
 
       // close sidebar
       if (toggledLast == props | toggled == -1 ) {
+
+        //$("#collapseInfosNappe").collapse('hide');
+        $("#collapseInfosPest").collapse('hide');
+
         toggleSidebarInfos();
+
       }
 
-      // do nothing
+      // do nothing on sidebar and display infos
       else {
-        //if (node.type != "comment") {
+
         toggledLast = props ;
+
         console.log(props);
 
-        d3.select('#sb_title').html(props.NomMasseDE);
+        d3.select('#sb_title').html(props.CdMasseDEa + " : " + props.NomMasseDE);
+
+        d3.select('#reqTree_ME').attr("reqvalue", props.CdMasseDEa);
 
         d3.select('#CdMasseDEa').html(props.CdMasseDEa);
         // d3.select('#NomMasseDE').html(props.NomMasseDE);
+        d3.select('#TypeMasseD').html(props.TypeMasseD);
         d3.select('#Karstique').html(props.Karstique);
         d3.select('#FrangeLitt').html(props.FrangeLitt);
         d3.select('#Niveau').html(props.Niveau);
         d3.select('#NatureEcou').html(props.NatureEcou);
 
-        d3.select('#FONCTIONS').html(props.FUNCTIONS);
+        d3.select('#FONCTIONS').html( props.FUNCTIONS );
 
-        //}
+        $("#collapseInfosNappe").collapse('show');
+
       }
 
     };
@@ -452,7 +463,6 @@
     //   console.log("refreshMinMax_MOYPTOT / new_minmax :", new_minmax );
     //
     // };
-
 
 
     // refresh legend scale
@@ -650,12 +660,6 @@
     // START ConnectSocketIO = function () {
     function ConnectSocketIO () {
 
-      // // default request values ^^^ moved upper in code
-      // var req_client = "request IO from client";
-      // var year       = "2007"   ;
-      // var pest_map   = "XXXXXX" ;
-      // var categ_map  = "sequential" ;
-      // var index_map  = "MOYPTOT";
 
       // INITIATE SOCKET IO CONNECTION
       var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -691,7 +695,7 @@
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
 
-        EmitRequestTree(df_ME, index_geom );
+        //EmitRequestTree(df_ME, index_geom );
 
       });
 
@@ -758,21 +762,37 @@
       // IO - REFRESH DATAS AND TREEMAP WHEN RECEIVING NEW DATA
       socket.on('io_tree_from_server', function ( tree_pests ) {
 
-        console.log( " *** io_tree_from_server", tree_pests );
+        // console.log( " *** io_tree_from_server", tree_pests );
+
         var tree_FAMILLES  = JSON.parse(tree_pests.tree_FAMILLES) ;
         var tree_FUNCTIONS = JSON.parse(tree_pests.tree_FUNCTIONS) ;
         var tree_TYPES     = JSON.parse(tree_pests.tree_TYPES) ;
 
-        console.log( " *** io_tree_from_server / tree_FAMILLES" );
-        console.log(tree_FAMILLES);
+        console.log( " *** io_tree_from_server / tree_FAMILLES", tree_FAMILLES );
 
-        starter(tree_FAMILLES);
+        dataset_trees = {
+          "byFamilies"  : tree_FAMILLES,
+          "byFunctions" : tree_FUNCTIONS,
+          "byTypes"     : tree_TYPES,
+        };
 
-        }
+        // makeTreeMap (tree_FUNCTIONS);
+        d3.select('#pest_proportions').html(index_geom + " (en " + year + ")");
+        makeTreeMap ( dataset_trees, radio_tree )
 
-      ); // <-- end : io_tree_from_server
+      }); // <-- end : io_tree_from_server
 
 
+      $(".switchCategTree").on("click", function() {
+
+        categ_tree = $(this).attr("value") ;
+
+        console.log("switchCategTree / categ_tree : " , categ_tree) ;
+
+        radio_tree = categ_tree ;
+        makeTreeMap ( dataset_trees, radio_tree )
+
+      });
 
 
       // REQUEST BUTTONS
@@ -802,7 +822,7 @@
 
         var year_slide = this.value ;
 
-        console.log(year_slide) ;
+        console.log("slider_years / year : ", year_slide) ;
 
         document.querySelector('#annee_selected').value = year_slide ;
 
@@ -817,16 +837,15 @@
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
 
-        EmitRequestTree(df_ME, index_geom);
+        //EmitRequestTree(df_ME, index_geom);
 
       });
 
 
       // BUTTONS FOR COUNTS : FUNCTIONS / FAMILLES / TYPES
-      // TO DO ... /////////////////////////////////////////////////////////////////////////////
       $(".switchmap").on("click", function() {
 
-        console.log(this) ;
+        //console.log(this) ;
 
         var req_value = $(this).attr("reqvalue"); // ex.
         var req_type  = $(this).attr("reqtype") ; // ex.
@@ -839,13 +858,29 @@
         index_map = req_type  ;
         pest_map  = req_value ;
 
-        console.log("req_value : ", req_value , " / req_type : ", req_type) ;
+        console.log("switchmap / req_value : ", req_value , " / req_type : ", req_type) ;
 
         refreshLegend( req_df_, categ_map ) ;
         refreshMap (   req_df_, index_map, pest_map, categ_map );
 
       });
 
+
+      // UPDATE TREEMAP
+      $(".switchtree").on("click", function() {
+
+        //console.log(this) ;
+
+        var req_value = $(this).attr("reqvalue"); // ex.
+
+        index_geom = req_value;
+        area = req_value ;
+
+        console.log("switchtree / req_value : ", req_value ) ;
+
+        EmitRequestTree( df_ME, area )
+
+      });
 
     }; // <-- end : ConnectSocketIO
 

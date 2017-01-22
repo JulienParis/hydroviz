@@ -203,7 +203,7 @@ print "**** load_data.py / dummies counts : "
 # print dummy_FONCTION_CAS, " ..."
 # print dummy_FAMILLE_CAS, " ..."
 #print dummy_TYPE_CAS, " ..."
-print
+print 
 
 
 ### lists vars for automatic dropdowns

@@ -185,7 +185,6 @@ def return_init_data(request_client):
     send_AV_slice( request_client, df_src, slice_year, slice_pest )
 
 
-
 ### REPLACE ALL THIS vvv BY FUNCTIONS FROM "GET_DATA.PY" ######################################################
 def send_AV_tree( request_client, df_src, slice_year, area_query_index ) :
 

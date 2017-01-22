@@ -130,7 +130,7 @@
     <h3 id="sb_title"
         class="col-xs-11 lead text-lowercase"
         style="margin-bottom: 10px">
-      infos
+      infos - cliquer sur une masse d'eau
     </h3>
 
     <button type="button"
@@ -153,12 +153,13 @@
       </a>
 
       <div class="collapse" id="collapseInfosNappe">
-          <li> CdMasseDEa :  <a href="#" class="" id="CdMasseDEa" > </a></li>
-          <!-- <li> NomMasseDE :  <a href="#" class="" id="NomMasseDE" ></a></li> -->
-          <li> Karstique :   <a href="#" class="" id="Karstique"  > </a></li>
-          <li> FrangeLitt :  <a href="#" class="" id="FrangeLitt" > </a></li>
-          <li> Niveau :      <a href="#" class="" id="Niveau"     > </a></li>
-          <li> NatureEcou :  <a href="#" class="" id="NatureEcou" > </a></li>
+        <li> Code masse d'eau :       <a href="#" class="" id="CdMasseDEa" > </a></li>
+        <!-- <li> NomMasseDE :             <a href="#" class="" id="NomMasseDE" ></a></li> -->
+        <li> Type masse d'eau :       <a href="#" class="" id="TypeMasseD" > - </a></li>
+        <li> Karstique :              <a href="#" class="" id="Karstique"  > - </a></li>
+        <li> Frange littorale :       <a href="#" class="" id="FrangeLitt" > - </a></li>
+        <li> Niveau masse d'eau :     <a href="#" class="" id="Niveau"     > - </a></li>
+        <li> Nature de l'écoulement : <a href="#" class="" id="NatureEcou" > - </a></li>
       </div>
 
       <hr>
@@ -167,7 +168,27 @@
         infos pesticides <span class="caret"></span>
       </a>
       <div class="collapse" id="collapseInfosPest">
-          <li> <a href="#" class="" id="FONCTIONS" > FONCTIONS : </a></li>
+
+        <!-- <li> Concentrations totales :
+          <a role="button" class="switchmap" reqtype="MOYPTOT" reqvalue="XXXXXX" >
+          Moyennes
+          </a>
+        </li> -->
+
+        <li>
+          <a role="button"
+              class="switchtree"
+              id="reqTree_ME"
+              reqvalue="TOT_FRANCE"
+              data-toggle="modal"
+              data-target="#mod_pest">
+            répartition des pesticides
+          </a>
+        </li>
+
+        <!-- <li> FONCTIONS :    <a href="#" class="" id="FONCTIONS" > - </a></li>
+        <li> FAMILLES :     <a href="#" class="" id="FAMILLES" > - </a></li>
+        <li> DANGEROSITES : <a href="#" class="" id="TYPES" > - </a></li> -->
 
       </div>
 
@@ -181,7 +202,7 @@
   <button class="btn btn-info btn-sm custom-btn"
           onclick="toggleSidebarInfos()">
     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-    Close
+    Fermer
   </button>
 
 </div>
@@ -191,12 +212,16 @@
 
 // toggle map_info
 var toggled = 1  ;
+
 function toggleSidebarInfos() {
 
   $("#sidebar_infos").toggleClass("collapsed-side");
   $("#content").toggleClass("{{ bootstrap_vars.col_full }} {{ bootstrap_vars.col_graph }}"); //5 and 7 default
+
   toggled *= -1 ;
 
 };
+
+//toggleSidebarInfos();
 
 </script>

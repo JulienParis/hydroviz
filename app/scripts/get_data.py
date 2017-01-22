@@ -224,25 +224,32 @@ class GetDataSlice :
             # set fields to drop and drop them
             fields_to_drop_list = list( set( columns_list ) - set( [func_fam_type] + fields_to_keep ) )
             AV_reset_ = AV_reset_tree.drop( fields_to_drop_list, axis=1 )
+
+            #drop NaN values
+            AV_reset_ = AV_reset_.dropna(axis=0)
+
             #print AV_reset_.sample(3)
 
             # make hierarchical structure for every func_fam_type
-            tree_list_ = { 'name'      : func_fam_type ,
+            tree_list_ = { 'name'     : func_fam_type ,
                            'children' :
                                 [ { 'name' : fft,
                                     'children' :
                                         [ { 'name' : cas ,
                                             # conditional fill NaN values to avoid problems in JSON parsing later
-                                            'value' : round(float( val[ geom_index ] ), 4 ) if val[ geom_index ].isnull == False else 0.0   \
-                                          } for cas,val in c.groupby('CD_PARAMETRE') \
+                                            'value' : round(float( val[ geom_index ] ), 4 ) #if val[ geom_index ].isnull == False else 0.0   \
+                                          } for cas,val in c.groupby('CD_PARAMETRE')  \
                                         ]  \
                                     } \
-                               for fft ,c in AV_reset_.groupby( func_fam_type ) \
-                            ]
+                                    for fft,c in AV_reset_.groupby( func_fam_type ) \
+                               ]
                         }
 
-            tree_pests[ func_fam_type ] = tree_list_
+            print "-----> GetDataSlice / AV_tree_by_func_fam_type / tree_list_ - %s : " %(func_fam_type)
+            #print tree_list_
+            print
 
+            tree_pests[ func_fam_type ] = tree_list_
 
 
         self.tree_pests = tree_pests
