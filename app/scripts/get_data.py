@@ -208,10 +208,15 @@ class GetDataSlice :
 
         print "-----> GetDataSlice / AV_tree_by_func_fam_type on slice_AV_year for %s / df : %s / geom_index : %s " %( self.year, self.df_name, geom_index )
 
+        #drop row "XXXXXX"
+        AV_reset_tree = self.slice_AV_year.drop( "XXXXXX", level="CD_PARAMETRE")
+
         # reset index
-        AV_reset_tree = self.slice_AV_year.reset_index()
+        AV_reset_tree = AV_reset_tree.reset_index()
+
         print "-----> GetDataSlice / AV_tree_by_func_fam_type / AV_reset_tree ... "
-        # print AV_reset_tree.sample(3)
+        # print AV_reset_tree.tail(3)
+
 
         func_fam_type_list = [ 'CODE_FAMILLE', 'CODE_FONCTION', 'Type' ]
         columns_list       = list(AV_reset_tree.columns.values)

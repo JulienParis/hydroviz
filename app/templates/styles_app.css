@@ -37,7 +37,8 @@ a {
   color: #fff;
 }
 a:hover{
-  color: grey;
+  color: {{ app_colors.btn_info }};
+  text-decoration : none;
 }
 
 /* NAVBAR & DROPDOWNS */
@@ -77,14 +78,24 @@ a:hover{
 
 
 .tooltip .tooltip-inner {
-    background-color: {{ app_colors.btn_warning }} ;
+    background-color: {{ app_colors.btn_info }} ;
     color: #fff;
+    font-size : 12px;
+    font-weight : bold ;
 }
 
 .tooltip.right .tooltip-arrow {
-    border-right-color: {{ app_colors.btn_warning }} ;
+    border-right-color: {{ app_colors.btn_info }} ;
 }
 
 .tooltip.bottom .tooltip-arrow {
-    border-bottom-color: {{ app_colors.btn_warning }} ;
+    border-bottom-color: {{ app_colors.btn_info }} ;
+}
+
+.tooltip.left .tooltip-arrow {
+    border-left-color: {{ app_colors.btn_info }} ;
+}
+
+.tooltip.top .tooltip-arrow {
+    border-top-color: {{ app_colors.btn_info }} ;
 }

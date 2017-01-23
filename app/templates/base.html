@@ -130,11 +130,11 @@
 
     // manage appear on hover and disappear after x milliseconds
     $('.bstooltip').mouseenter(function(){
-        var that = $(this)
+        var that = $(this);
         that.tooltip('show');
         setTimeout(function(){
-      that.tooltip('hide');
-        }, 1500);
+          that.tooltip('hide');
+        }, 5000);
     });
 
     $('.bstooltip').mouseleave(function(){

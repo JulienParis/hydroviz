@@ -194,16 +194,37 @@
 
     <ul class="nav navbar-nav">
 
-      <li class="active" >
+
+      <li>
+        <a
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="A quoi sert HydroViz ?"
+        >
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+
+        </a>
+      </li>
+
+
+
+      <li
+        class="bstooltip active" data-toggle="tooltip" data-placement="bottom"
+        title="montrer les options de représentations cartographiques des pesticides"
+      >
         <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2">
           <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
           <!-- filtres -->
         </button>
       </li>
 
-      <li>
-        <form class="navbar-form navbar-left" role="slider">
 
+      <li
+        class="bstooltip active" data-toggle="tooltip" data-placement="bottom"
+        title="choisir une année"
+      >
+        <form class="navbar-form navbar-left"
+              role="slider"
+        >
             <div class="row">
               <label class="" for="slider_years">
                 Années
@@ -227,31 +248,37 @@
 
     <ul class="nav navbar-nav navbar-right">
 
+
       <li>
-        <a>
-          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-          Lexiques
+        <a
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="Méthodologie"
+        >
+          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+
         </a>
       </li>
 
+
+
       <li>
-        <a>
-          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-          Méthodologie
+        <a
+          class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="Lexiques"
+          >
+          <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+
         </a>
       </li>
 
-      <li>
-        <a>
-          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-          Infos/Licences
-        </a>
-      </li>
 
       <li>
-        <a href="#">
-          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-          Ressources
+        <a
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="Plus de ressources pour s'informer sur la pollution aux pesticides"
+        >
+          <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
+
         </a>
       </li>
 
@@ -267,13 +294,38 @@
       </li> -->
 
       <li>
-        <a  href="https://gitlab.com/Julien_P/concours_pesticides" target="_blank">
+        <a>
+          <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+        </a>
+      </li>
+
+
+
+      <li>
+        <a
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="Infos sur licences des bases de données et les programmes utilisés"
+        >
+          <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
+
+        </a>
+      </li>
+
+
+      <li>
+        <a  href="https://gitlab.com/Julien_P/concours_pesticides" target="_blank"
+            class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+            title="repo Gitlab"
+        >
           <i class="fa fa-gitlab fa-lg" area-hidden="true"></i>
         </a>
       </li>
 
       <li>
-        <a  href="https://twitter.com/jparis_py" target="_blank">
+        <a  href="https://twitter.com/jparis_py" target="_blank"
+            class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+            title="sur Twitter"
+        >
           <i class="fa fa-twitter fa-lg" area-hidden="true"></i>
         </a>
       </li>
@@ -307,18 +359,30 @@
 
       <br>
 
-      <li>
+      <li
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="répartition des pesticides sur toute la France"
+      >
         <a role="button"
             class="switchtree"
             reqvalue="TOT_FRANCE"
             data-toggle="modal"
-            data-target="#mod_pest">
+            data-target="#mod_pest"
+            >
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x" aria-hidden="true"></i></span>
-          <strong> Pesticides - toute la France </strong>
+          <strong
+          >
+            Pesticides - toute la France
+          </strong>
         </a>
       </li>
 
-      <li>
+      <hr>
+
+      <li
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="voir les niveaux de concentrations totales moyennes des pesticides sur toute la France"
+      >
         <a role="button" class="switchmap" reqtype="MOYPTOT" reqvalue="XXXXXX" >
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x" aria-hidden="true"></i></span>
           Concentrations totales
@@ -393,7 +457,10 @@
       </li> -->
 
 
-      <li>
+      <li
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="sélectionner une FONCTION de pesticides pour voir le nombre de pesticides correspondants détectés"
+      >
 
         <a role="button" data-toggle="collapse" data-target="#collapseFonctions" aria-expanded="false" aria-controls="collapseFonctions">
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-gear fa-stack-1x" aria-hidden="true"></i></span>
@@ -411,7 +478,10 @@
 
       <hr>
 
-      <li>
+      <li
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="sélectionner une FAMILLE de molécules pour voir le nombre de pesticides correspondants détectés"
+      >
 
         <a role="button" data-toggle="collapse" data-target="#collapseFamilles" aria-expanded="false" aria-controls="collapseFamilles">
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-dot-circle-o fa-stack-1x" aria-hidden="true"></i></span>
@@ -429,7 +499,10 @@
 
       <hr>
 
-      <li>
+      <li
+        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+        title="sélectionner un type de DANGEROSITE de pesticides pour voir le nombre de pesticides correspondants détectés"
+      >
 
         <a role="button" data-toggle="collapse" data-target="#collapseDangers" aria-expanded="false" aria-controls="collapseDangers">
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-warning fa-stack-1x" aria-hidden="true"></i></span>

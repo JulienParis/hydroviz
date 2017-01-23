@@ -128,8 +128,12 @@
   <div class="row" >
 
     <h3 id="sb_title"
-        class="col-xs-11 lead text-lowercase"
-        style="margin-bottom: 10px">
+        class="col-xs-11 lead text-lowercase bstooltip"
+        style="margin-bottom: 10px"
+
+        data-toggle="tooltip" data-placement="left"
+        title="propriétés de la masse d'eau sélectionnée"
+        >
       infos - cliquer sur une masse d'eau
     </h3>
 
@@ -146,7 +150,8 @@
 
   <div class="scrollable">
 
-    <div class="col-sm-12">
+    <div  class="col-sm-12"
+    >
 
       <a class="indent1"  role="button" data-toggle="collapse" data-target="#collapseInfosNappe" aria-expanded="false" aria-controls="collapseFonctions">
         infos nappe phréatique <span class="caret"></span>
@@ -164,10 +169,11 @@
 
       <hr>
 
-      <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseInfosPest" aria-expanded="false" aria-controls="collapseFonctions">
+      <!-- <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseInfosPest" aria-expanded="false" aria-controls="collapseFonctions">
         infos pesticides <span class="caret"></span>
       </a>
-      <div class="collapse" id="collapseInfosPest">
+
+      <div class="collapse" id="collapseInfosPest"> -->
 
         <!-- <li> Concentrations totales :
           <a role="button" class="switchmap" reqtype="MOYPTOT" reqvalue="XXXXXX" >
@@ -175,7 +181,10 @@
           </a>
         </li> -->
 
-        <li>
+        <a
+          class="indent1 bstooltip" data-toggle="tooltip" data-placement="left"
+          title="visualiser la répartition des pesticides pour cette masse d'eau"
+        >
           <a role="button"
               class="switchtree"
               id="reqTree_ME"
@@ -184,7 +193,7 @@
               data-target="#mod_pest">
             répartition des pesticides
           </a>
-        </li>
+        </a>
 
         <!-- <li> FONCTIONS :    <a href="#" class="" id="FONCTIONS" > - </a></li>
         <li> FAMILLES :     <a href="#" class="" id="FAMILLES" > - </a></li>
