@@ -111,10 +111,13 @@ df_pest_functions.set_index( indexing_pest_functions, inplace=True, drop=False )
 df_pest_functions.sort_index(inplace=True)
 ###############
 indexing_pesticides = ["CODE_FAMILLE", "CD_PARAMETRE", "CODE_FONCTION"]
-df_pesticides       = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["pesticides_file"]), \
+df_pesticides_      = pd.read_csv( os.path.join( STATIC_DATA_STATS,src_stat_files["pesticides_file"]), \
                                     sep=csv_sep, encoding=csv_encoding )
-df_pesticides.set_index(indexing_pesticides, inplace=True, drop=False)
+df_pesticides = df_pesticides_.set_index(indexing_pesticides, drop=False)
 df_pesticides.sort_index(inplace=True)
+print "**** load_data.py / df_pesticides : "
+# print df_pesticides.sample(5)
+print
 
 
 ### MCT /MA ##########################################
@@ -168,6 +171,16 @@ dict_dpt_com           = { k: { "dpt_name" : dpt_dict[k]["NCC"], "dpt_communes" 
 dict_FONCTION_LIBELLE  = { k: g["LIBELLE_CODE_FONCTION"].tolist() for k,g in df_pest_functions.groupby("CODE_FONCTION")}
 #dict_FONCTION_FAMILLE  = { k: g["CODE_FAMILLE"].tolist()          for k,g in df_pesticides.groupby("CODE_FONCTION")}
 
+
+# dict_CD_INFOS          = { k: { "LB"       : g["LB_PARAMETRE"].tolist(),
+#                                  "CODE_CAS" : ""
+#                                 } \
+#                             for k,g in df_pesticides.groupby("CD_PARAMETRE") }
+dict_CD_INFOS = df_pesticides_.set_index("CD_PARAMETRE").to_dict(orient="index")
+print "**** load_data.py / dict_CD_INFOS[2] : "
+print dict_CD_INFOS[2]
+print
+
 dict_FONCTION_CAS       = { k: { "CAS" : g["CD_PARAMETRE"].tolist() }        for k,g in df_pesticides.groupby("CODE_FONCTION")}
 # dummy_FONCTION_CAS      = { "name" : "fonctions", "children" :\
 #                             [ { "name"     : k,  \
@@ -203,7 +216,7 @@ print "**** load_data.py / dummies counts : "
 # print dummy_FONCTION_CAS, " ..."
 # print dummy_FAMILLE_CAS, " ..."
 #print dummy_TYPE_CAS, " ..."
-print 
+print
 
 
 ### lists vars for automatic dropdowns
@@ -215,7 +228,8 @@ var_dict = {
     #"stations"         : dict_INDEX_CD,
     #"masses_d_eau"     : [],
     #"bassins"          : [],
-    "pest_fonc_lib"    : functions_full, #dict_FONCTION_LIBELLE,
+    "pest_CD_infos"    : dict_CD_INFOS, #dict_FONCTION_LIBELLE,
+    "pest_fonc_lib"    : functions_full,
     "pest_familles"    : dict_FAMILLE_CAS,
     "pest_fonctions"   : dict_FONCTION_CAS,
     "pest_danger_types": dict_TYPE_CAS
