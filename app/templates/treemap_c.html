@@ -57,6 +57,32 @@
     fill-opacity: 1;
   }
 
+  #tooltip_tree {
+    position: absolute;
+    width: 350px;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+  }
+
+  #tooltip_tree.hidden {
+    display: none;
+  }
+
+  #tooltip_tree p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
 </style>
 
 <form
@@ -70,6 +96,19 @@
 
 <br>
 
+<div id="tooltip_tree" class="hidden">
+  <p><strong id="pest_lib"></strong></p>
+  <hr>
+  <p><span   id="value"></span></p>
+  <p><span   id="norme_dce"></span></p>
+  <hr>
+  <p><span   id="code_cas"></span></p>
+  <p><span   id="formule"></span></p>
+  <hr>
+  <p><span   id="code_famille"></span></p>
+  <p><span   id="fonctions"></span></p>
+</div>
+
 <p id="chart">
 
 <form>
@@ -80,7 +119,7 @@
 <p>
 * cliquer sur une sous-catégorie pour voir en détail / cliquer sur la barre supérieure pour revenir à une vue globale
 <br>
-* cliquer sur un pesticide pour afficher ses infos
+* survoler un pesticide pour afficher ses infos
 </p>
 
 
@@ -88,7 +127,14 @@
 
 <script>
 
-  var pest_infos = {{ var_dict.pest_CD_infos }};
+  // var dict_infos = {
+  //   byPest      : {{ var_dict.pest_CD_infos|tojson }}
+  // };
+
+  console.log(" >>> pest_infos : " );
+
+  byPest = {{ var_dict.pest_CD_infos|tojson }};
+  console.log(" >>> pest_infos : ", byPest );
 
   var color = d3.scale.category20c();
 
@@ -101,9 +147,48 @@
   };
 
 
+  /////////////////////////////
+  // cf : http://bl.ocks.org/tgk/6044254
+  function mousemove_ (d) {
+
+    //console.log(d);
+
+    var xPosition = d3.event.pageX - 250 ;
+    var yPosition = d3.event.pageY - 70 ;
+
+    d3.select("#tooltip_tree")
+      .style("left", xPosition + "px")
+      .style("top", yPosition + "px");
+
+    //code_cas   code_famille  formule fonctions
+    d3.select("#tooltip_tree #pest_lib")
+       .text( byPest[ Number(d.name)].LB_PARAMETRE ); //+ " (code " + d.name + ")" ) ;
+    d3.select("#tooltip_tree #value")
+      .text("valeur mesurée  : " + d.value + " ug/L");
+    d3.select("#tooltip_tree #norme_dce")
+       .text( "norme autorisée : " + byPest[ Number(d.name)].NORME_DCE + " ug/L" ) ;
+
+    d3.select("#tooltip_tree #code_cas")
+      .text( "code CAS : " + byPest[ Number(d.name)].CODE_CAS ) ;
+    d3.select("#tooltip_tree #code_famille")
+      .text( "famille : " + byPest[ Number(d.name)].CODE_FAMILLE ) ;
+    d3.select("#tooltip_tree #formule")
+      .text( "formule : " + byPest[ Number(d.name)].FORMULEB ) ;
+    d3.select("#tooltip_tree #fonctions")
+      .text( "fonctions : " + byPest[ Number(d.name)].FONCTIONS ) ;
+
+    d3.select("#tooltip_tree").classed("hidden", false);
+  };
+
+  function mouseout_ () {
+    d3.select("#tooltip_tree").classed("hidden", true);
+  };
+
+
+
   var isTree = false ;
 
-  // MAIN TREEMAP FUNCTION
+  // MAIN TREEMAP FUNCTION : byCateg = "byFamilies", "byFunctions", "byTypes"
   function makeTreeMap ( dataset_trees, byCateg ) {
 
     // remove previous treemap when updating
@@ -179,7 +264,7 @@
     display(root);
 
     function initialize(root) {
-      root.x = root.y = 0;
+      root.x  = root.y = 0;
       root.dx = width;
       root.dy = height;
       root.depth = 0;
@@ -206,8 +291,8 @@
       if (d._children) {
         treemap.nodes({_children: d._children});
         d._children.forEach(function(c) {
-          c.x = d.x + c.x * d.dx;
-          c.y = d.y + c.y * d.dy;
+          c.x  = d.x + c.x * d.dx;
+          c.y  = d.y + c.y * d.dy;
           c.dx *= d.dx;
           c.dy *= d.dy;
           c.parent = d;
@@ -235,6 +320,11 @@
           .classed("children", true)
           .on("click", transition);
 
+      g.filter(function(d) { return !d._children})
+          // .on("mouseover", function(d) { console.log(d);} );
+          .on("mousemove", mousemove_ )
+          .on("mouseout",  mouseout_  );
+
       g.selectAll(".child")
           .data(function(d) { return d._children || [d]; })
         .enter().append("rect")
@@ -251,7 +341,8 @@
       //////////////////////////////
       g.append("text")
           .attr("dy", ".75em")
-          .text(function(d) { return d.name ; })
+          .attr("font-size", "10px")
+          .text(function(d) { return d._children? d.name : byPest[ Number(d.name) ].LB_PARAMETRE ; })
           .call(text);
 
 
@@ -302,17 +393,17 @@
     }
 
     function rect(rect) {
-      rect.attr("x", function(d) { return x(d.x); })
-          .attr("y", function(d) { return y(d.y); })
-          .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
+      rect.attr("x",      function(d) { return x(d.x); })
+          .attr("y",      function(d) { return y(d.y); })
+          .attr("width",  function(d) { return x(d.x + d.dx) - x(d.x); })
           .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
     }
 
     // text grandparent on change-transition
     function name(d) {
-      return d.parent
-          ? name(d.parent) + " - " + d.name
-          : d.name;
+      return d.parent?
+              name(d.parent) + " - " + d.name
+              : d.name ;
     }
   };
 

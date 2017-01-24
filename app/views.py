@@ -80,6 +80,8 @@ def index():
         "limit_minus"  : limit_minus
     }
 
+    #pest_infos = json.dumps(var_dict["pest_CD_infos"])
+
     return render_template('index.html',
                            app_metas        = app_metas,
                            app_colors       = app_colors,
@@ -87,9 +89,10 @@ def index():
                            basemaps         = dft_basemaps,
                            choropleths      = choropleths,
                            colorscaleLimits = colorscaleLimits,
-                           var_dict         = var_dict
-                           #data_ME        = dft_data_water,
-                           #data_admin     = dft_data_admin,
+                           var_dict         = var_dict,
+                           #pest_infos       = pest_infos
+                           #data_ME          = dft_data_water,
+                           #data_admin       = dft_data_admin,
     )
 
 
@@ -193,7 +196,7 @@ def send_AV_tree( request_client, df_src, slice_year, area_query_index ) :
     print
 
     ### get the slice from pandas dataframe          --> slice_df.slice_AV_year
-    slice_df = GetDataSlice( df_src, slice_year )
+    slice_df = GetDataSlice( df_src, slice_year ) 
 
     ### get hierarch tree for FUNCTIONS / FAMILLES / TYPES -->
     slice_df.AV_tree_by_func_fam_type( geom_index = area_query_index )

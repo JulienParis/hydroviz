@@ -8,6 +8,10 @@ import numpy as np
 
 from .. import SITE_ROOT, SITE_STATIC, STATIC_DATA, STATIC_DATA_STATS, STATIC_DATA_CARTO
 
+
+print "**** load_data.py / starting ... "
+print
+
 csv_sep      = ";"
 csv_encoding = "utf-8"
 _missing     = "no ref"

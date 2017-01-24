@@ -292,7 +292,7 @@
           var grades = min_max_array  ;
 
           if (seq_div_qual == "sequential")  { var label = "moyenne des concentrations totales " + "(" + year + ")", unit = "ug/l" ; }
-          else if (seq_div_qual == "counts") { var label = "nombre de pesticides détecttés / " + index_map + " : " + pest_map + " (" + year + ")",    unit = "pest." ; };
+          else if (seq_div_qual == "counts") { var label = "nombre de pesticides détectés / " + index_map + " : " + pest_map + " (" + year + ")",    unit = "pest." ; };
 
           div.innerHTML += '<p>' + label + '</p>';
 
@@ -874,7 +874,7 @@
         var req_value = $(this).attr("reqvalue"); // ex.
 
         index_geom = req_value;
-        area = req_value ;
+        area       = req_value ;
 
         console.log("switchtree / req_value : ", req_value ) ;
 

@@ -9,9 +9,9 @@ hr {
     margin-bottom: 8px;
 
 }
-text {
+/*text {
     font-size: medium;
-}
+}*/
 
 h2 {
     color: {{ app_colors.navbar }};
