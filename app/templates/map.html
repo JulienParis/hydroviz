@@ -132,7 +132,7 @@
     var zoom     = L.control.zoom( { position : "topright"} ).addTo(map);
     var controls = L.control.layers(
       baseLayers, overlays,
-      { position : "topright" }
+      { position : "bottomleft" }
     ).addTo(map);
 
 
@@ -816,7 +816,7 @@
 
 
       // SLIDER YEARS
-      $("#slider_years").on("input change", function() {
+      $(".slider_years").on("input change", function() {
 
         console.log(this) ;
 
@@ -837,7 +837,10 @@
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
 
-        //EmitRequestTree(df_ME, index_geom);
+        EmitRequestTree(df_ME, index_geom);
+
+        $(".slider_years").val(year_slide) ;
+        $(".slider_years").slider('refreh') ;
 
       });
 

@@ -26,7 +26,7 @@
      position: absolute;
      left: 300px;
      width: 0;
-     height: 60%;
+     height: 55%;
      margin-top:  5%;
      margin-left: -300px;
      overflow-y: auto;
@@ -164,13 +164,100 @@
     padding-left: 20pt;
     }
 
-  #slider_years{
-    margin-left: 10px;
+
+
+  input[type=range] {
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    width: 100%; /* Specific width is required for Firefox. */
+    background: transparent; /* Otherwise white in Chrome */
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+
+  input[type=range]:focus {
+    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  }
+
+  input[type=range]::-ms-track {
+    width: 100%;
+    cursor: pointer;
+
+    /* Hides the slider so custom styles can be added */
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+
+  input[type=range]::-webkit-slider-runnable-track {
+    width : 100%;
+    height: 8.4px;
+    cursor: pointer;
+    /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+    background: #3071a9;
+    border-radius: 3px;
+    border: 0.1px solid #010101;
+  }
+
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #367ebd;
+  }
+
+  input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+    background: {{ app_colors.btn_info }};
+    border-radius: 6px;
+    border: 0.1px solid #fff;
+  }
+
+  input[type=range]::-ms-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 16px 0;
+    color: transparent;
+  }
+  input[type=range]::-ms-fill-lower {
+    background: #2a6495;
+    /*border: 0.2px solid #010101;*/
+    /*border-radius: 2.6px;*/
+    /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+  }
+  /*input[type=range]:focus::-ms-fill-lower {
+    background: #3071a9;
+  }*/
+  input[type=range]::-ms-fill-upper {
+    background: {{ app_colors.btn_info }};
+    /*border: 0.1px solid #010101;*/
+    border-radius: 2.0px;
+    /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+  }
+  /*input[type=range]:focus::-ms-fill-upper {
+    background: {{ app_colors.btn_info }};
+  }*/
+
+
+  .slider_years{
+    margin-top: 10px;
+    margin-left : 10px;
     margin-right: 10px;
     padding: 0px;
+    width : auto;
+    height: auto;
+    border: none;
+    background-color: rgba(0,0,0,0);
   }
   #annee_selected{
     color: white;
+    font-size: larger;
+    padding-left: 0px;
   }
 </style>
 
@@ -211,10 +298,9 @@
         class="bstooltip active" data-toggle="tooltip" data-placement="bottom"
         title="montrer les options de représentations cartographiques des pesticides"
       >
-        <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2">
+        <a role="button" class=" collapse in" data-toggle="collapse" id="menu-toggle-2">
           <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-          <!-- filtres -->
-        </button>
+        </a>
       </li>
 
 
@@ -225,16 +311,24 @@
         <form class="navbar-form navbar-left"
               role="slider"
         >
-            <div class="row">
-              <label class="" for="slider_years">
-                Années
-              </label>
-              <div class="input-group">
-              <input class="form-control" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
-              <output class="" for="slider_years" id="annee_selected">
-                2007
-              </output>
+          <div class="row">
+
+            <!-- <div class="col-xs-3" for="slider_years">
+              Années
+            </div> -->
+
+            <div class="col-xs-9">
+              <input class="form-control slider_years" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
             </div>
+
+            <div class="col-xs-3">
+              <a>
+                <output class="" for="slider_years" id="annee_selected">
+                2007
+                </output>
+              </a>
+            </div>
+
           </div>
 
         </form>
@@ -469,8 +563,13 @@
         </a>
 
         <div class="collapse" id="collapseFonctions">
+          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="H" > H - Herbicides</a>
+          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="F" > F - Fongicides</a>
+          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="I" > I - Insecticides</a>
+          <hr>
+
           {% for fonction in var_dict.pest_fonctions|sort %}
-            <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="{{ fonction }}" > > {{ fonction }} - {{ var_dict.pest_fonc_lib[fonction]|safe }}</a>
+            <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="{{ fonction }}" > {{ fonction }} - {{ var_dict.pest_fonc_lib[fonction]|safe }}</a>
           {% endfor %}
         </div>
 
@@ -490,8 +589,11 @@
         </a>
 
         <div class="collapse" id="collapseFamilles">
+          <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="Divers (organiques)" > Divers (organiques) </a>
+          <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="Urées" > Urées </a>
+          <hr>
           {% for famille in var_dict.pest_familles|sort %}
-            <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="{{ famille }}" > > {{ famille }} </a>
+            <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="{{ famille }}" > {{ famille }} </a>
           {% endfor %}
         </div>
 
@@ -511,14 +613,16 @@
         </a>
 
         <div class="collapse" id="collapseDangers">
+
+          <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="I" > I - Toxique </a>
+          <hr>
           {% for danger in var_dict.pest_danger_types|sort %}
-            <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="{{ danger }}" > > {{ danger }} - </a>
+            <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="{{ danger }}" > {{ danger }} - </a>
           {% endfor %}
         </div>
 
       </li>
 
-      <hr>
 
       <!-- <hr> -->
 
@@ -539,7 +643,6 @@
 
       </li> -->
 
-      <hr>
 
       <br>
 

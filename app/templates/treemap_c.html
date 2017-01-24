@@ -85,14 +85,32 @@
 
 </style>
 
-<form
-  class="bstooltip active" data-toggle="tooltip" data-placement="left"
-  title="regrouper par catégories de pesticides"
->
-  <label><input type="radio" class="switchCategTree" name="mode" value="byFunctions" checked > par fonctions</label>
-  <label><input type="radio" class="switchCategTree" name="mode" value="byFamilies" > par familles</label>
-  <label><input type="radio" class="switchCategTree" name="mode" value="byTypes"    > par dangerosités</label>
-</form>
+<div class="row">
+
+
+
+  <div
+        class="col-xs-8 bstooltip active" data-toggle="tooltip" data-placement="left"
+        title="regrouper par catégories de pesticides"
+  >
+    <form>
+      <label><input type="radio" class="switchCategTree" name="mode" value="byFunctions" checked > par fonctions</label>
+      <label><input type="radio" class="switchCategTree" name="mode" value="byFamilies" > par familles</label>
+      <label><input type="radio" class="switchCategTree" name="mode" value="byTypes"    > par dangerosités</label>
+    </form>
+  </div>
+
+  <div
+        class="col-xs-4 bstooltip active" data-toggle="tooltip" data-placement="left"
+        title="changer d'année"
+  >
+    <div class="input-group">
+      <input class="form-control slider_years" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
+    </div>
+  </div>
+
+</div>
+
 
 <br>
 
@@ -111,10 +129,10 @@
 
 <p id="chart">
 
-<form>
+<!-- <form>
   <label><input type="radio" name="mode" value="sumByValue" checked> Valeur </label>
   <label><input type="radio" name="mode" value="sumByCount"> Nombre </label>
-</form>
+</form> -->
 
 <p>
 * cliquer sur une sous-catégorie pour voir en détail / cliquer sur la barre supérieure pour revenir à une vue globale
@@ -138,13 +156,13 @@
 
   var color = d3.scale.category20c();
 
-  function sumByCount(d) {
-    return d.children ? 0 : 1;
-  };
-
-  function sumByValue(d) {
-    return d.value;
-  };
+  // function sumByCount(d) {
+  //   return d.children ? 0 : 1;
+  // };
+  //
+  // function sumByValue(d) {
+  //   return d.value;
+  // };
 
 
   /////////////////////////////
@@ -154,7 +172,7 @@
     //console.log(d);
 
     var xPosition = d3.event.pageX - 250 ;
-    var yPosition = d3.event.pageY - 70 ;
+    var yPosition = d3.event.pageY - 150 ;
 
     d3.select("#tooltip_tree")
       .style("left", xPosition + "px")
@@ -194,7 +212,7 @@
     // remove previous treemap when updating
     if (isTree == true ) {
       d3.select(".svg_treemap").remove();
-    }
+    };
 
     isTree = true;
 

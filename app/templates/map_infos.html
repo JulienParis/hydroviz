@@ -25,14 +25,14 @@
   }
 
   .jumbotron h1 {
-      color: white;
+      color    : white;
       font-size: 35px;
   }
 
   .jumbotron .list-group {
       background-color: mediumaquamarine;
-      border-color: white;
-      border-radius: 10px;
+      border-color    : white;
+      border-radius   : 10px;
   }
 
   .jumbotron .list-group-item {
@@ -99,7 +99,7 @@
     /* for the animation */
     transition: margin 0.3s ease;
     padding-right: 10px ;
-    margin-top   : 250px;
+    margin-top   : 75px;
     z-index      : 5;
   }
 
@@ -154,7 +154,26 @@
     <div  class="col-sm-12"
     >
 
+      <a
+        class="indent1 bstooltip" data-toggle="tooltip" data-placement="left"
+        title="visualiser la répartition des pesticides pour cette masse d'eau"
+      >
+        <a role="button"
+            class="switchtree"
+            id="reqTree_ME"
+            reqvalue="TOT_FRANCE"
+            data-toggle="modal"
+            data-target="#mod_pest">
+
+          <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
+          répartition des pesticides
+        </a>
+      </a>
+
+      <hr>
+
       <a class="indent1"  role="button" data-toggle="collapse" data-target="#collapseInfosNappe" aria-expanded="false" aria-controls="collapseFonctions">
+        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
         infos nappe phréatique <span class="caret"></span>
       </a>
 
@@ -168,7 +187,6 @@
         <li> Nature de l'écoulement : <a href="#" class="" id="NatureEcou" > - </a></li>
       </div>
 
-      <hr>
 
       <!-- <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseInfosPest" aria-expanded="false" aria-controls="collapseFonctions">
         infos pesticides <span class="caret"></span>
@@ -182,19 +200,7 @@
           </a>
         </li> -->
 
-        <a
-          class="indent1 bstooltip" data-toggle="tooltip" data-placement="left"
-          title="visualiser la répartition des pesticides pour cette masse d'eau"
-        >
-          <a role="button"
-              class="switchtree"
-              id="reqTree_ME"
-              reqvalue="TOT_FRANCE"
-              data-toggle="modal"
-              data-target="#mod_pest">
-            répartition des pesticides
-          </a>
-        </a>
+
 
         <!-- <li> FONCTIONS :    <a href="#" class="" id="FONCTIONS" > - </a></li>
         <li> FAMILLES :     <a href="#" class="" id="FAMILLES" > - </a></li>
@@ -207,7 +213,7 @@
 
 </div>
 
-<div class="sd_buttons" style="padding-top: 0px;">
+<!-- <div class="sd_buttons" style="padding-top: 0px;">
 
   <button class="btn btn-info btn-sm custom-btn"
           onclick="toggleSidebarInfos()">
@@ -215,7 +221,7 @@
     Fermer
   </button>
 
-</div>
+</div> -->
 
 
 <script>
