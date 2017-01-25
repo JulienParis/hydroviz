@@ -60,6 +60,22 @@
   font-size: 80%
   }
 
+  .tooltip_map {
+      position  : absolute;
+      text-align: center;
+      color : white;
+      width : 100px;
+      height: auto;
+      padding: 2px;
+      font   : 10px sans-serif;
+      background: #7841a9 ;
+      opacity: .8;
+      border : 0px;
+      border-radius : 3px;
+      pointer-events: none;
+      z-index : inherit;
+  }
+
 </style>
 
 
@@ -75,6 +91,29 @@
 
 
 <script>
+
+  var dict_categs_legend = {
+    "FUNCTIONS" : { "H"   : "herbicides",
+                    "I"   : "insecticides" ,
+                    "F"   : "fongicides",
+                    "I,A" : "insecticides, acaricides",
+                    "Reg" : "régulateurs de croissance",
+                    "I,N" : "insecticides, nématicides",
+                    "F,N" : "fongicides, nématicides",
+                    "Ro"  : "rodenticides",
+                    "I,A,F,H" : "insecticides, acaricides, fongicides, herbicides",
+                    "I,Reg" : "insecticides, régulateurs de croissance",
+                    "I,A,M" : "insecticides, acaricides, mollusticides",
+                    "RepO"  : "répulsif",
+                    "no ref": "fonction non identifiée"
+                    },
+    "FAMILLES"  : {},
+    "TYPES"     : { "I"     : "toxique",
+                    "II"    : "modérément toxique",
+                    "III"   : "légèrement toxique",
+                    "no ref": "dangerosité non identifiée"
+                    }
+  };
 
   // CHECK WINDOW SIZE
   $(window).load(function() {
@@ -126,9 +165,9 @@
     var overlays = {
       "nappes phréatiques" : ME_layer,
       "départements"       : admin_layer,
-      "stations de mesure" : stations_layer_cluster,
+      // "stations de mesure" : stations_layer_cluster,
       "eaux de surface"    : rivers_layer,
-      "préfectures"        : cities_layer,
+      // "préfectures"        : cities_layer,
     };
 
     var zoom     = L.control.zoom( { position : "topright"} ).addTo(map);
@@ -137,6 +176,10 @@
       { position : "bottomleft" }
     ).addTo(map);
 
+
+    // var div_tooltip_map = d3.select("body").append("div")
+    //     .attr("class", "tooltip_map")
+    //     .style("opacity", 0);
 
 
     var cities_json ;
@@ -300,7 +343,7 @@
           var grades = min_max_array  ;
 
           if (seq_div_qual == "sequential")  { var label = "moyenne des concentrations totales " + "(" + year + ")", unit = "ug/l" ; }
-          else if (seq_div_qual == "counts") { var label = "nombre de pesticides détectés / " + index_map + " : " + pest_map + " (" + year + ")",    unit = "pest." ; };
+          else if (seq_div_qual == "counts") { var label = "nombre de pesticides détectés / " + pest_map + " : " + dict_categs_legend[index_map][pest_map] + " (" + year + ")", unit = "pest." ; };
 
           div.innerHTML += '<p>' + label + '</p>';
 
@@ -375,20 +418,35 @@
       };
     };
 
-    function enterLayer(){
+    function enterLayer(e){
       //this.bringToFront();
       this.setStyle({
         weight : dft_weight + 3,
         opacity: 1
       });
+
+    //   div_tooltip_map.transition()
+    //       .duration(200)
+    //       .style("opacity", .9);
+    //   div_tooltip_map.html(" test : " + e.target.feature.properties.NomMasseDE + "<br>" )
+    //       .style("left", (d3.event.pageX - 30) + "px")
+    //       .style("top",  (d3.event.pageY - 30) + "px")
     };
 
-    function leaveLayer(){
+    function leaveLayer(e){
       //this.bringToBack();
       this.setStyle({
         weight : dft_weight,
         opacity: dft_opacity
       });
+
+      // div_tooltip_map.transition()
+      //     .duration(500)
+      //     .style("opacity", 0);
+      // div_tooltip_map.html("")
+      //     .style("left", "0px")
+      //     .style("top",  "0px");
+
       // rivers_layer.eachLayer( function(layer) {
       //   layer.bringToBack()
       //});
@@ -807,8 +865,8 @@
         };
 
         // makeTreeMap (tree_FUNCTIONS);
-        d3.select('#pest_proportions').html(index_geom + " (en " + year + ")");
-        makeTreeMap ( dataset_trees, radio_tree )
+        d3.select('#pest_proportions').html(index_geom); // + " (en " + year + ")");
+        makeTreeMap ( dataset_trees, radio_tree );
 
       }); // <-- end : io_tree_from_server
 
@@ -855,6 +913,7 @@
         console.log("slider_years / year : ", year_slide) ;
 
         document.querySelector('#annee_selected').value = year_slide ;
+        document.querySelector('#annee_selected2').value = year_slide ;
 
         var req_value = year_slide ;
         var req_type  = "year";

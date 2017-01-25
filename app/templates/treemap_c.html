@@ -57,30 +57,37 @@
     fill-opacity: 1;
   }
 
-  #tooltip_tree {
-    position: absolute;
-    width: 350px;
-    height: auto;
-    padding: 10px;
+  #tooltip_tree, #tooltip_tree_parent {
+    position        : absolute;
+    height          : auto;
+    padding         : 10px;
     background-color: white;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
-    border-radius: 10px;
+    border-radius     : 10px;
     -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
     pointer-events: none;
   }
 
-  #tooltip_tree.hidden {
+  #tooltip_tree{
+    width : 300px;
+  }
+
+  #tooltip_tree_parent{
+    width : 200px;
+  }
+
+  #tooltip_tree.hidden, #tooltip_tree_parent.hidden {
     display: none;
   }
 
-  #tooltip_tree p {
-    margin: 0;
+  #tooltip_tree p, #tooltip_tree_parent p {
+    margin     : 0;
     font-family: sans-serif;
-    font-size: 16px;
-    line-height: 20px;
+    font-size  : 12px;
+    line-height: 15px;
   }
 
 </style>
@@ -88,25 +95,27 @@
 <div class="row">
 
 
-
-  <div
-        class="col-xs-7 bstooltip active" data-toggle="tooltip" data-placement="left"
-        title="regrouper par catégories de pesticides"
-  >
+  <div  class="col-xs-7 bstooltip active" data-toggle="tooltip" data-placement="left"
+        title="regrouper par catégories de pesticides" >
     <form>
-      <label><input type="radio" class="switchCategTree" name="mode" value="byFunctions" checked > par fonctions</label>
-      <label><input type="radio" class="switchCategTree" name="mode" value="byFamilies" > par familles</label>
-      <label><input type="radio" class="switchCategTree" name="mode" value="byTypes"    > par dangerosités</label>
+      <label><input type="radio" class="switchCategTree" name="mode" value="byFunctions" checked > par fonction</label>
+      <label><input type="radio" class="switchCategTree" name="mode" value="byFamilies"          > par famille</label>
+      <label><input type="radio" class="switchCategTree" name="mode" value="byTypes"             > par dangerosité</label>
     </form>
   </div>
 
-  <div
-        class="col-xs-5 bstooltip active" data-toggle="tooltip" data-placement="left"
-        title="changer d'année"
-  >
+  <div  class="col-xs-3 bstooltip active" data-toggle="tooltip" data-placement="left"
+        title="changer d'année">
     <div class="input-group">
       <input class="form-control slider_years" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
     </div>
+
+  </div>
+
+  <div class="col-xs-1 label label-default " id="label_years_nav">
+    <output for="slider_years" id="annee_selected2">
+      2007
+    </output>
   </div>
 
 </div>
@@ -125,10 +134,16 @@
   <hr>
   <p><span   id="code_famille"></span></p>
   <p><span   id="fonctions"></span></p>
-  <hr>
-  <p><span   id="link_ext"></span></p>
-
+  <!-- <hr>
+  <p><span   id="link_ext"></span></p> -->
 </div>
+
+
+<div id="tooltip_tree_parent" class="hidden">
+  <p><strong id="pest_categ"></strong></p>
+  <p>(cliquer sur la catégorie)</p>
+</div>
+
 
 <p id="chart">
 
@@ -138,9 +153,11 @@
 </form> -->
 
 <p>
-* cliquer sur une sous-catégorie pour voir en détail / cliquer sur la barre supérieure pour revenir à une vue globale
+* les rectangles en rouge représentent les pesticides dont la mesure dépasse la norme autorisée
 <br>
-* survoler un pesticide pour afficher ses infos
+** cliquer sur une sous-catégorie pour voir en détail / cliquer sur la barre supérieure pour revenir à la vue globale
+<br>
+*** survoler un pesticide pour afficher ses infos
 </p>
 
 
@@ -148,9 +165,28 @@
 
 <script>
 
-  // var dict_infos = {
-  //   byPest      : {{ var_dict.pest_CD_infos|tojson }}
-  // };
+  var dict_categs = {
+    "byFunctions" : { "H"   : "herbicides",
+                      "I"   : "insecticides" ,
+                      "F"   : "fongicides",
+                      "I,A" : "insecticides, acaricides",
+                      "Reg" : "régulateurs de croissance",
+                      "I,N" : "insecticides, nématicides",
+                      "F,N" : "fongicides, nématicides",
+                      "Ro"  : "rodenticides",
+                      "I,A,F,H" : "insecticides, acaricides, fongicides, herbicides",
+                      "I,Reg" : "insecticides, régulateurs de croissance",
+                      "I,A,M" : "insecticides, acaricides, mollusticides",
+                      "RepO"  : "répulsif",
+                      "no ref": "fonction non identifiée"
+                    },
+    "byFamilies"  : {},
+    "byTypes"     : { "I"     : "toxique",
+                      "II"    : "modérément toxique",
+                      "III"   : "légèrement toxique",
+                      "no ref": "dangerosité non identifiée"
+                    }
+  };
 
   console.log(" >>> pest_infos : " );
 
@@ -179,34 +215,58 @@
 
     d3.select("#tooltip_tree")
       .style("left", xPosition + "px")
-      .style("top", yPosition + "px");
+      .style("top" , yPosition + "px");
 
-    //code_cas   code_famille  formule fonctions
-    d3.select("#tooltip_tree #pest_lib")
-       .text( byPest[ Number(d.name)].LB_PARAMETRE ); //+ " (code " + d.name + ")" ) ;
-    d3.select("#tooltip_tree #value")
-      .text("valeur mesurée  : " + d.value + " ug/L");
-    d3.select("#tooltip_tree #norme_dce")
-       .text( "norme autorisée : " + byPest[ Number(d.name)].NORME_DCE + " ug/L" ) ;
+    d3.select("#tooltip_tree_parent")
+      .style("left", xPosition + "px")
+      .style("top" , yPosition + "px");
 
-    d3.select("#tooltip_tree #code_cas")
-      .text( "code CAS : " + byPest[ Number(d.name)].CODE_CAS ) ;
-    d3.select("#tooltip_tree #code_famille")
-      .text( "famille : " + byPest[ Number(d.name)].CODE_FAMILLE ) ;
-    d3.select("#tooltip_tree #formule")
-      .text( "formule : " + byPest[ Number(d.name)].FORMULEB ) ;
-    d3.select("#tooltip_tree #fonctions")
-      .text( "fonctions : " + byPest[ Number(d.name)].FONCTIONS ) ;
 
-    d3.select("#tooltip_tree").classed("hidden", false);
+    if (!d._children) {
+
+      //code_cas   code_famille  formule fonctions
+      d3.select("#tooltip_tree #pest_lib")
+         .text( byPest[ Number(d.name) ].LB_PARAMETRE ); //+ " (code " + d.name + ")" ) ;
+      d3.select("#tooltip_tree #value")
+        .text("valeur mesurée  : " + d.value + " ug/L");
+      d3.select("#tooltip_tree #norme_dce")
+         .text( "norme autorisée : " + byPest[ Number(d.name) ].NORME_DCE + " ug/L" ) ;
+
+      d3.select("#tooltip_tree #code_cas")
+        .text( "code CAS : " + byPest[ Number(d.name) ].CODE_CAS ) ;
+      d3.select("#tooltip_tree #code_famille")
+        .text( "famille : " + byPest[ Number(d.name) ].CODE_FAMILLE ) ;
+      d3.select("#tooltip_tree #formule")
+        .text( "formule : " + byPest[ Number(d.name) ].FORMULEB ) ;
+      d3.select("#tooltip_tree #fonctions")
+        .text( "fonctions : " + byPest[ Number(d.name) ].FONCTIONS ) ;
+
+      d3.select("#tooltip_tree").classed("hidden", false);
+    }
+
+    else {
+      d3.select("#tooltip_tree_parent #pest_categ")
+        //.text( d.name + " / " + dict_categs[categSelected][d.name] )
+        .text( function () {
+          var txt ;
+          if (dict_categs[categSelected][d.name]) { txt = d.name + " : " + dict_categs[categSelected][d.name] }
+          else { txt = d.name };
+          return txt
+          }
+        );
+      d3.select("#tooltip_tree_parent").classed("hidden", false);
+    };
+
   };
 
   function mouseout_ () {
     d3.select("#tooltip_tree").classed("hidden", true);
+    d3.select("#tooltip_tree_parent").classed("hidden", true);
   };
 
 
 
+  var categSelected ;
   var isTree = false ;
 
   // MAIN TREEMAP FUNCTION : byCateg = "byFamilies", "byFunctions", "byTypes"
@@ -218,6 +278,7 @@
     };
 
     isTree = true;
+    categSelected = byCateg ;
 
     // make a clone of desired tree set
     var root = jQuery.extend(true, {}, dataset_trees[ byCateg ] ) ;
@@ -252,9 +313,9 @@
 
     var svg = d3.select("#chart").append("svg")
         .attr("class", "svg_treemap")
-        .attr("width", width + margin.left + margin.right)
+        .attr("width" , width  + margin.left + margin.right)
         .attr("height", height + margin.bottom + margin.top)
-        .style("margin-left", -margin.left + "px")
+        .style("margin-left" , -margin.left  + "px")
         .style("margin.right", -margin.right + "px")
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -345,6 +406,12 @@
           .on("mousemove", mousemove_ )
           .on("mouseout",  mouseout_  );
 
+      g.filter(function(d) { return d._children})
+          // .on("mouseover", function(d) { console.log(d);} );
+          .on("mousemove", mousemove_ )
+          .on("mouseout",  mouseout_  );
+
+
       g.selectAll(".child")
           .data(function(d) { return d._children || [d]; })
         .enter().append("rect")
@@ -368,7 +435,17 @@
 
       // colors rect
       g.selectAll("rect")
-          .style("fill", function(d) { return color(d.parent.name); });
+          // .style("fill", function(d) { return color(d.parent.name); });
+          .style("fill", overNormColor );
+
+      function overNormColor(d) {
+        if (byPest[Number(d.name)]) {
+          return d.value - byPest[Number(d.name)].NORME_DCE > 0 ? "red" : color(d.parent.name) ;
+        } else {
+          color(d.parent.name)
+        }
+      };
+
 
       function transition(d) {
         if (transitioning || !d) return;
