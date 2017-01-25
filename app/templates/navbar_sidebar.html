@@ -9,6 +9,14 @@
     --width-sidebar: 150px;
   }
 
+  .divider-vertical {
+      height: 50px;                   /* any height */
+      border-left: 2px solid white;   /* right or left is the same */
+      float: left;                     /* so BS grid doesn't break */
+      opacity: 0.5;                    /* optional */
+      margin: 0 15px;                  /* optional */
+  }
+
   #wrapper {
      padding-left: 0;
      -webkit-transition: all 0.5s ease;
@@ -165,7 +173,7 @@
     }
 
 
-
+  /* reset the slider */
   input[type=range] {
     -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
     width: 100%; /* Specific width is required for Firefox. */
@@ -190,19 +198,57 @@
     color: transparent;
   }
 
+  /* set cursor */
+  /* Special styling for WebKit/Blink */
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid #000000;
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+    background: #ffffff;
+    cursor: pointer;
+    margin-top: -6px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+  }
 
+  /* All the same stuff for Firefox */
+  input[type=range]::-moz-range-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+    background: #ffffff;
+    cursor: pointer;
+  }
+
+  /* All the same stuff for IE */
+  input[type=range]::-ms-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+    background: #ffffff;
+    cursor: pointer;
+  }
+
+
+
+  /* set the track */
   input[type=range]::-webkit-slider-runnable-track {
     width : 100%;
     height: 8.4px;
     cursor: pointer;
     /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
-    background: #3071a9;
+    background: {{ app_colors.btn_info }} ;
     border-radius: 3px;
-    border: 0.1px solid #010101;
+    border: 0.1px solid #fff;
   }
 
   input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #367ebd;
+    background: {{ app_colors.btn_info }} ;
   }
 
   input[type=range]::-moz-range-track {
@@ -254,11 +300,18 @@
     border: none;
     background-color: rgba(0,0,0,0);
   }
+
+  #label_years_nav{
+    background-color: {{ app_colors.btn_info }};
+  }
+
   #annee_selected{
     color: white;
     font-size: larger;
     padding-left: 0px;
+    padding-top: 3px;
   }
+
 </style>
 
 
@@ -282,32 +335,31 @@
     <ul class="nav navbar-nav">
 
 
-      <li>
-        <a
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="A quoi sert HydroViz ?"
+      <li
+          class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="A quoi sert HydroViz ?"
+      >
+        <a  role="button"
+            data-toggle="modal"
+            data-target="#mod_intro"
         >
           <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 
         </a>
       </li>
 
+      <li class="divider-vertical"></li>
 
-
-      <li
-        class="bstooltip active" data-toggle="tooltip" data-placement="bottom"
-        title="montrer les options de représentations cartographiques des pesticides"
-      >
+      <li class="bstooltip active" data-toggle="tooltip" data-placement="bottom"
+        title="montrer les options de représentations cartographiques des pesticides" >
         <a role="button" class=" collapse in" data-toggle="collapse" id="menu-toggle-2">
           <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
         </a>
       </li>
 
 
-      <li
-        class="bstooltip active" data-toggle="tooltip" data-placement="bottom"
-        title="choisir une année"
-      >
+      <li class="bstooltip active" data-toggle="tooltip" data-placement="bottom"
+          title="choisir une année" >
         <form class="navbar-form navbar-left"
               role="slider"
         >
@@ -321,12 +373,10 @@
               <input class="form-control slider_years" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
             </div>
 
-            <div class="col-xs-3">
-              <a>
-                <output class="" for="slider_years" id="annee_selected">
+            <div class="col-xs-3 label label-default " id="label_years_nav">
+              <output for="slider_years" id="annee_selected">
                 2007
-                </output>
-              </a>
+              </output>
             </div>
 
           </div>
@@ -343,10 +393,11 @@
     <ul class="nav navbar-nav navbar-right">
 
 
-      <li>
-        <a
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="Méthodologie"
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="Méthodologie" >
+        <a  role="button"
+            data-toggle="modal"
+            data-target="#mod_methodo"
         >
           <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
 
@@ -355,10 +406,11 @@
 
 
 
-      <li>
-        <a
-          class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-          title="Lexiques"
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="Lexiques" >
+        <a  role="button"
+            data-toggle="modal"
+            data-target="#mod_lexiques"
           >
           <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
 
@@ -366,10 +418,11 @@
       </li>
 
 
-      <li>
-        <a
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="Plus de ressources pour s'informer sur la pollution aux pesticides"
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="Plus de ressources pour s'informer sur la pollution aux pesticides">
+        <a  role="button"
+            data-toggle="modal"
+            data-target="#mod_resources"
         >
           <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
 
@@ -387,18 +440,20 @@
         </form>
       </li> -->
 
-      <li>
+      <!-- <li>
         <a>
           <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
         </a>
-      </li>
+      </li> -->
+
+      <li class="divider-vertical"></li>
 
 
-
-      <li>
-        <a
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="Infos sur licences des bases de données et les programmes utilisés"
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="Infos sur licences des bases de données et les programmes utilisés">
+        <a role="button"
+            data-toggle="modal"
+            data-target="#mod_licences"
         >
           <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
 

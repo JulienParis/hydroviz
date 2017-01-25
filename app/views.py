@@ -26,7 +26,9 @@ src_carto_files = {
     "topo_bassins"      : "Hydroecoregion1.json",
     #"topo_rivieres"     : "rivieres_lessFields_009.json",
     "topo_rivieres"     : "rivieres_lessFields_009_017.json",
+    "geo_villes"        : "villes_web_carto.geojson",
 }
+
 for k, v in src_carto_files.iteritems() :
     src_carto_files[k] = "data/carto_web/" + v
 
@@ -34,7 +36,8 @@ dft_basemaps = {
     "admin"    : src_carto_files["topo_departements"],
     "ME"       : src_carto_files["topo_ME_agg"],
     "stations" : src_carto_files["topo_stations"],
-    "rivers"   : src_carto_files["topo_rivieres"]
+    "rivers"   : src_carto_files["topo_rivieres"],
+    "cities"   : src_carto_files["geo_villes"]
 }
 
 
@@ -196,7 +199,7 @@ def send_AV_tree( request_client, df_src, slice_year, area_query_index ) :
     print
 
     ### get the slice from pandas dataframe          --> slice_df.slice_AV_year
-    slice_df = GetDataSlice( df_src, slice_year ) 
+    slice_df = GetDataSlice( df_src, slice_year )
 
     ### get hierarch tree for FUNCTIONS / FAMILLES / TYPES -->
     slice_df.AV_tree_by_func_fam_type( geom_index = area_query_index )

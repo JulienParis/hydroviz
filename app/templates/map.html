@@ -91,6 +91,7 @@
     var ME_layer     = new L.layerGroup();
     var rivers_layer = new L.layerGroup();
     var admin_layer  = new L.layerGroup();
+    var cities_layer = new L.layerGroup();
 
     //var stations_layer = new L.layerGroup();
     var stations_layer_cluster = L.markerClusterGroup({
@@ -112,7 +113,7 @@
     var map = L.map('map', {
       center     : [47, 3],
       zoom       : 6,
-      layers     : [ grayscale, ME_layer, rivers_layer ], // active layers
+      layers     : [ grayscale, ME_layer, rivers_layer, cities_layer ], // active layers
       zoomControl:false
     });
 
@@ -127,6 +128,7 @@
       "départements"       : admin_layer,
       "stations de mesure" : stations_layer_cluster,
       "eaux de surface"    : rivers_layer,
+      "préfectures"        : cities_layer,
     };
 
     var zoom     = L.control.zoom( { position : "topright"} ).addTo(map);
@@ -134,6 +136,10 @@
       baseLayers, overlays,
       { position : "bottomleft" }
     ).addTo(map);
+
+
+
+    var cities_json ;
 
 
     // TOPOJSON HANDLING - TOPOJSON OBJECTS FOR LEAFLET
@@ -156,6 +162,8 @@
     var topoLayer_rivers   = new L.TopoJSON();
     var topoLayer_admin    = new L.TopoJSON();
     var topoLayer_stations = new L.TopoJSON();
+
+    var geoLayer_cities    = new L.GeoJSON();
 
     // VARIABLES DATA / DATA REQUESTS
     var df_ME       = "df_AV_ME"    ;
@@ -419,9 +427,9 @@
 
         toggledLast = props ;
 
-        console.log(props);
+        //console.log(props);
 
-        d3.select('#sb_title').html(props.CdMasseDEa + " : " + props.NomMasseDE);
+        d3.select('#sb_title').html( props.NomMasseDE + " (" + props.CdMasseDEa + ")");
 
         d3.select('#reqTree_ME').attr("reqvalue", props.CdMasseDEa);
 
@@ -613,6 +621,26 @@
       $.getJSON( "{{ url_for( 'static', filename  = basemaps.rivers ) }}" )
         .done(addTopoData_rivers);
 
+      //load main cities /////////////////////////////////////////////
+      // $.getJSON( "{{ url_for( 'static', filename  = basemaps.cities ) }}" )
+      //   .done(addGeoDataCities);
+
+      // LOAD CITIES DATAS
+      function addGeoDataCities(geooData){
+        console.log(" - leaflet -- starting / addGeoDataCities ");
+        console.log(" - leaflet -- addGeoDataCities / datas : ", geooData);
+        geoLayer_cities.addData(geooData);
+        geoLayer_cities.addTo(cities_layer);
+
+        geoLayer_cities.eachLayer(
+          function (layer) {
+            //handleLayer(layer, null , df_rivers);
+            layer.bringToFront();
+          });
+
+        console.log(" - leaflet -- finished / addGeoDataCities ");
+
+      };
 
       // PROCESS TOPOJSON // WARNING : OVERWRITES previous TOPOLAYER object
       function addTopoData_ME(topoData){
@@ -704,7 +732,8 @@
 
         //var req_query            = pest ; //data_slice.request_query   ; // "XXXXXX" for instance
 
-        console.log(" *** io_slice_from_server / data_slice (raw) : "  , data_slice ) //, " - req_query : ", req_query ) ;
+        console.log(" *** io_slice_from_server / data_slice (raw) : "  ) //, " - req_query : ", req_query ) ;
+        //console.log(data_slice);
 
         var data_MOYPTOT         = data_slice.slice_MOYPTOT.data    ;
         //var data_MOYPTOT_minmax  = data_slice.slice_MOYPTOT.min_max ;
@@ -768,7 +797,8 @@
         var tree_FUNCTIONS = JSON.parse(tree_pests.tree_FUNCTIONS) ;
         var tree_TYPES     = JSON.parse(tree_pests.tree_TYPES) ;
 
-        console.log( " *** io_tree_from_server / tree_FAMILLES", tree_FAMILLES );
+        console.log( " *** io_tree_from_server / tree_FAMILLES" );
+        //console.log(tree_FAMILLES);
 
         dataset_trees = {
           "byFamilies"  : tree_FAMILLES,
@@ -818,7 +848,7 @@
       // SLIDER YEARS
       $(".slider_years").on("input change", function() {
 
-        console.log(this) ;
+        //console.log(this) ;
 
         var year_slide = this.value ;
 
@@ -840,7 +870,7 @@
         EmitRequestTree(df_ME, index_geom);
 
         $(".slider_years").val(year_slide) ;
-        $(".slider_years").slider('refreh') ;
+        //$(".slider_years").slider('refreh') ;
 
       });
 
@@ -865,6 +895,8 @@
 
         refreshLegend( req_df_, categ_map ) ;
         refreshMap (   req_df_, index_map, pest_map, categ_map );
+
+        console.log("");
 
       });
 

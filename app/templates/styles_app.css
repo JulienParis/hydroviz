@@ -41,6 +41,7 @@ a:hover{
   text-decoration : none;
 }
 
+
 /* NAVBAR & DROPDOWNS */
 .navbar {
     background-color: {{ app_colors.navbar }} ;

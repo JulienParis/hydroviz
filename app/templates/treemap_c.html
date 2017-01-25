@@ -90,7 +90,7 @@
 
 
   <div
-        class="col-xs-8 bstooltip active" data-toggle="tooltip" data-placement="left"
+        class="col-xs-7 bstooltip active" data-toggle="tooltip" data-placement="left"
         title="regrouper par catégories de pesticides"
   >
     <form>
@@ -101,7 +101,7 @@
   </div>
 
   <div
-        class="col-xs-4 bstooltip active" data-toggle="tooltip" data-placement="left"
+        class="col-xs-5 bstooltip active" data-toggle="tooltip" data-placement="left"
         title="changer d'année"
   >
     <div class="input-group">
@@ -125,6 +125,9 @@
   <hr>
   <p><span   id="code_famille"></span></p>
   <p><span   id="fonctions"></span></p>
+  <hr>
+  <p><span   id="link_ext"></span></p>
+
 </div>
 
 <p id="chart">
@@ -152,7 +155,7 @@
   console.log(" >>> pest_infos : " );
 
   byPest = {{ var_dict.pest_CD_infos|tojson }};
-  console.log(" >>> pest_infos : ", byPest );
+  //console.log(" >>> pest_infos : ", byPest );
 
   var color = d3.scale.category20c();
 
@@ -230,9 +233,8 @@
         formatNumber = d3.format(",d"),
         transitioning;
 
-    //console.log("$('#ModalLabelPesticides').width() :", $('#ModalLabelPesticides').width());
-    console.log("treemap width :", width);
-    console.log("treemap height :", height);
+    // console.log("treemap width :", width);
+    // console.log("treemap height :", height);
 
     var x = d3.scale.linear()
         .domain([0, width])
@@ -273,8 +275,8 @@
 
 
     console.log(" >>>> makeTreeMap C / data :");
-    console.log(root);
-    console.log();
+    //console.log(root);
+    console.log("");
 
     initialize(root);
     accumulate(root);
