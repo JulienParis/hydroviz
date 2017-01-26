@@ -11,7 +11,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title text-center" id="ModalIntro">
-          Qu'est-ce qu'Hydroviz ?
+          Qu'est-ce qu'HydroViz ?
         </h3>
       </div>
 
@@ -34,11 +34,35 @@
         <div class="collapse indent1" id="intro_goal">
           <div >
             <br>
+            <strong class="lead text-center">
+              "Moins de 1% de l'eau sur Terre est douce et liquide"
+            </strong>
+            (
+            <a class="a_" target="_blank" href="http://www.solidarites.org/phocadownload/publications/publications_techniques/solidarites_2016_barometre-eau_web.pdf"> source </a>
+            ).
+
+            <br>
+
+            <a class="a_ text-center" role="button" data-toggle="collapse" data-target="#intro_video" aria-expanded="false" aria-controls="intro_video">
+              <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+              voir la vidéo de DATA GUEULE "eau rage, eau des espoirs"<span class="caret"></span>
+            </a>
+            <div class="collapse text-center" id="intro_video">
+              <br><br>
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/wH9dMNWjL2s" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <br><br>
             La pollution aux pesticides des nappes d'eau souterraines est un sujet complexe mais qui nous concerne tous :
-            <strong>les nappes phréatiques représentent en effet les plus grandes réserves d'eau douce,
-              laquelle sert à la fois à l'irrigation des cultures, à la consommation en tant qu'eau potable, et à la bonne santé des écosystèmes naturels
+            <strong>les nappes phréatiques représentent en effet à l'échelle mondiale environ 30% des réserves d'eau douce,
+              après les glaciers (68%), mais bien plus importantes que les cours d'eau de surface ou l'eau contenue dans l'atmosphère
+              (
+              <a class="a_" target="_blank" href="http://www.solidarites.org/phocadownload/publications/publications_techniques/solidarites_2016_barometre-eau_web.pdf"> source </a>
+              ).
+              Ces réserves servent à la fois à l'irrigation des cultures, à la consommation en tant qu'eau potable, et à la bonne santé des écosystèmes naturels
             </strong>
             <br><br>
+
           </div>
         </div>
 
@@ -57,15 +81,22 @@
             <strong class="lead">
               HYDROVIZ s'adresse à la fois au grand public, aux collectivités, ainsi qu'aux services techniques publics ou aux organisations de la société civile.
             </strong>
-          <br><br>
+          <br>
+          <br>
           <div >
-            <strong class="a_">HYDROVIZ possède un design général qui se veut minimal</strong>, afin qu'il soit le plus accessible possible.
-            Ainsi HYDROVIZ permet de visualiser très simplement les concentrations de pesticides sur la France entière et votre région,
-            ou encore de vérifier si les taux mesurés dépassent les normes autorisées.
-            <br>
-            HYDROVIZ permet également d'accéder à des <strong class="a_">informations précises sur chacun des pesticides détectés</strong> :
-            toxicité, fonction, famille de molécules...
-            <br>
+            <strong class="a_">HYDROVIZ possède un design général minimal</strong>
+            afin que les données sur la pollution de nos réserves d'eau douce soient accessibles et compréhensibles par tous.
+            Ainsi HYDROVIZ permet de visualiser très simplement <strong class="a_">l'évolution dans le temps </strong>des niveaux de concentrations de pesticides sur la France entière ou votre région :
+            <br><br>
+            <ul>
+              <li>voir <strong class="a_">combien de pesticides différents</strong> ont été détectés par catégories dans chacune des nappes ;</li>
+              <li><strong class="a_">comparer les taux mesurés</strong> par fonctions ou par familles de pesticides ;</li>
+              <li>vérifier si les taux mesurés dépassent les <strong class="a_">normes autorisées</strong> ;</li>
+              <li>fournir des <strong class="a_">informations précises sur chacun des pesticides détectés</strong> :
+                  toxicité, fonction, famille de molécules, formule chimique, norme autorisée...
+              </li>
+            </ul>
+
           </div>
           <br>
         </div>
@@ -99,16 +130,18 @@
               <ul>
                 <li class="bstooltip tooltip_img" data-toggle="tooltip" data-placement="left"
                     title="<img src='{{ url_for('static', filename='images/tooltip_filters.jpg') }}' >" >
-                  <strong class="a_">Des filtres sur la gauche</strong> de l'écran afin de choisir la catégories voulue.</li>
+                  <strong class="a_">Des filtres sur la gauche</strong>
+                  de l'écran afin de choisir parmi les différentes catégories.</li>
                 <li class="bstooltip tooltip_img" data-toggle="tooltip" data-placement="left"
                     title="<img src='{{ url_for('static', filename='images/tooltip_infomap.jpg') }}' >" >
-                  <strong class="a_">Une fenêtre informative sur la droite</strong> de l'écran permet de lire les informations spécifiques à la nappe phréatique (masse d'eau) sélectionnée</li>
+                  <strong class="a_">Une fenêtre informative sur la droite</strong>
+                  de l'écran permet de lire les informations spécifiques à la nappe phréatique (masse d'eau) sélectionnée.</li>
               </ul>
             </li>
             <li class="bstooltip tooltip_img" data-toggle="tooltip" data-placement="left"
                 title="<img src='{{ url_for('static', filename='images/tooltip_treemap.jpg') }}' >" >
               <strong class="a_">une représentation hiérarchique ("treemap")</strong> des pesticides permettant d'avoir des informations plus spécifiques sur les produits détectés :
-              les pesticides sont alors regroupés par fonctions, familles, et dangerosité.
+              les pesticides sont alors regroupés par fonctions, familles, ou dangerosité.
             </li>
 
           </ol>
@@ -128,7 +161,7 @@
         <div class="collapse indent1" id="intro_dev">
           <br>
           <strong class="lead text-center">
-            HYDROVIZ a été développé entre le décembre 2016 et janvier 2017 par <br>
+            HYDROVIZ a été développé entre décembre 2016 et janvier 2017 par <br>
             <a class="a_" target="_blank" href="http://jpylab.com">Julien Paris </a>
             et Florian Melki.
           </strong>
@@ -157,7 +190,7 @@
         </div>
 
         <hr>
-        <div>
+        <div class="indent1">
           Vous trouverez plus d'informations sur les termes utilisés, la méthodologie, les sources, les licences utilisées ainsi que des ressources supplémentaires dans la barre de navigation en haut de l'écran.
         </div>
       </div>
