@@ -5,8 +5,9 @@ body {
 }
 
 hr {
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-top-style: dashed;
 }
 /*text {
     font-size: medium;
@@ -18,11 +19,11 @@ h2 {
 }
 
 h3 {
-    color: teal;
+    color: {{ app_colors.navbar }} ;
 }
 
 h4 {
-    color: {{ app_colors.navbar }};
+    color: {{ app_colors.btn_info }};
     font-size: 14px;
 }
 
@@ -38,6 +39,24 @@ a {
 a:hover{
   color: {{ app_colors.btn_info }};
   text-decoration : none;
+}
+
+.a_ {
+  color: {{ app_colors.btn_info }} ;
+}
+
+.a_:hover {
+  text-decoration: underline;;
+}
+
+a.aFake {
+  color : #333;
+}
+
+.lead {
+    margin-bottom: 16px;
+    line-height: 1.2;
+    font-size: 1.2;
 }
 
 
@@ -77,11 +96,14 @@ a:hover{
 }
 
 
+/* CUSTOM TOOLTIPS */
 .tooltip .tooltip-inner {
-    background-color: {{ app_colors.btn_info }} ;
+    max-width: 275px;
+    max-height: 450px;
     color: #fff;
     font-size : 12px;
     font-weight : bold ;
+    background-color: {{ app_colors.btn_info }} ;
 }
 
 .tooltip.right .tooltip-arrow {

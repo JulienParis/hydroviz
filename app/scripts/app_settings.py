@@ -29,7 +29,7 @@ colors = {
             "orange_" : {"hex" : "#fe5a34"},
             "purple_" : {"hex" : "#7841a9"},
             "dark_"   : {"hex" : "#3e0963"},
-            "water_"  : {"hex" : "#1d91c0", "rgba" : "rgba(29,145,192, 0.8)" }
+            "water_"  : {"hex" : "#1d91c0", "rgba" : "rgba(29,145,192, 0.9)" }
 }
 
 app_colors = {

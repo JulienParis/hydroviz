@@ -92,6 +92,7 @@
 
 <script>
 
+
   var dict_categs_legend = {
     "FUNCTIONS" : { "H"   : "herbicides",
                     "I"   : "insecticides" ,
@@ -114,6 +115,8 @@
                     "no ref": "dangerosité non identifiée"
                     }
   };
+
+
 
   // CHECK WINDOW SIZE
   $(window).load(function() {
@@ -152,7 +155,7 @@
     var map = L.map('map', {
       center     : [47, 3],
       zoom       : 6,
-      layers     : [ grayscale, ME_layer, rivers_layer, cities_layer ], // active layers
+      layers     : [ grayscale, ME_layer, cities_layer ], // active layers
       zoomControl:false
     });
 
@@ -261,6 +264,7 @@
     var dft_null_color    = "#f0f0f0" ;
     var dft_stroke_color  = "white"   ;
     var dft_rivers_color  = "#081d58" ;
+    var z_index_dft       = 3 ;
 
 
 
@@ -372,7 +376,11 @@
 
 
     // VIZUALISATION OF DATA ON LAYERS
-    function handleLayer(layer, value_fill, req_df, seq_div_qual ){
+    function handleLayer(layer, value_fill, req_df, seq_div_qual, z_index ){
+
+
+      // layer.setZIndex(10); // not working (just works on Tiles)
+
 
       var stroke_color  = dft_stroke_color ;
       var stroke_weight = dft_weight ;
@@ -386,11 +394,6 @@
         var colorScale = chooseColorScale( seq_div_qual );
         var fillColor  = colorScale(value_fill).hex();
 
-        // if ( layer_name == df_ME ) {
-        //   var fillColor = colorScale_ME(value_fill).hex();
-        // } else if (layer_name == df_dpt ) {
-        //   var fillColor = colorScale_dpt(value_fill).hex();
-        // }
       }
 
       else { /// <-- rivers for now
@@ -464,11 +467,47 @@
 
     // display infos on click
     var toggledLast ;
-    function displayInfos(props) {
 
-      //var props = e.target.feature.properties;
-      // if ( ) { }
-      // else if () {};
+    var root_ME_SANDRE = "http://www.sandre.eaufrance.fr/fiche-geo?id=rdytcq/dataset/244/MasseDEauSouterraine/" ;
+
+    var ME_infos_dict = {
+      "Karstique" : { "def"     : "Le caractère karstique est attribué aux masses d’eau souterraine qui comportent des karsts actifs, fonctionnels (fonctionnement hydraulique particulier avec une organisation spécifique du drainage). Les masses d’eau de ce type sont caractérisées par la présence de zones de surface d’une extrême vulnérabilité et des écoulements souterrains particulièrement rapides",
+                      "def_val" : {"N": "non", "Y" : "oui"},
+                      "link"    : "http://www.sandre.eaufrance.fr/squelettes/consulter_fiche_attribut.php?dictionnaire=/db/sandre/Schemas/mdo/1.2/sandre_fmt_xml_mdo.xsd&entite=MasseDEauSouterraine&attribut=Karstique",
+                    },
+      "Niveau"    : { "def"     : "Dans le cas où 2 ou plusieurs masses d'eau souterraine sont superposées, l'attribut niveau permet de positionner les masses d'eau les une par rapport aux autres pour le polygone élémentaire concerné. La masse d'eau la plus profonde ayant le niveau le plus élevé. Le niveau commence à 1",
+                      "def_val" : { "0" : "",
+                                    "1" : "",
+                                    "2" : ""
+                                  },
+                      "link"    : "",
+                    },
+      "FrangeLitt" : {"def"     : "Les masses d’eau côtières et insulaires en relation avec l’eau de mer peuvent, en raison d’une surexploitation chronique ou temporaire (forte augmentation estivale des captages AEP), induire un risque d’intrusion saline des aquifères",
+                      "def_val" : {"N": "non", "Y" : "oui"},
+                      "link"    : "http://www.sandre.eaufrance.fr/squelettes/consulter_fiche_attribut.php?dictionnaire=/db/sandre/Schemas/mdo/1.2/sandre_fmt_xml_mdo.xsd&entite=MasseDEauSouterraine&attribut=FrangeLittorale",
+                    },
+      "TypeMasseD" : {"def"     : "Les classes de masse d’eau souterraine sont définies par l’arrêté du 12 janvier 2010 (publié au JORF n.0027 du 2 février 2010) relatif aux méthodes et aux critères à mettre en œuvre pour délimiter et classer les masses d'eau et dresser l'état des lieux prévu à l'article R. 212-3 du code de l'environnement.",
+                      "def_val" : { "A"  : "Alluvial",
+                                    "DS" : "Dominante sédimentaire non alluviale",
+                                    "EV" : "Edifice volcanique",
+                                    "IP" : "Système hydraulique composite propre aux zones intensément plissées de montagne",
+                                    "S"  : "Socle",
+                                    "IL" : "Imperméable localement"
+                                  },
+                      "link"    : "http://www.sandre.eaufrance.fr/squelettes/consulter_fiche_attribut.php?dictionnaire=/db/sandre/Schemas/mdo/1.2/sandre_fmt_xml_mdo.xsd&entite=MasseDEauSouterraine&attribut=TypeMasseDEauSouterraine",
+                    },
+      "NatureEcou" : {"def"     : "La nature des écoulements d’une masse d’eau souterraine est définie par l’arrêté du 12 janvier 2010 (publié au JORF n.0027 du 2 février 2010) relatif aux méthodes et aux critères à mettre en œuvre pour délimiter et classer les masses d'eau et dresser l'état des lieux prévu à l'article R. 212-3 du code de l'environnement.",
+                      "def_val" : { "0" : "Inconnu",
+                                    "1" : "Entièrement libre",
+                                    "2" : "Entièrement captif",
+                                    "3" : "Une ou des partie(s) libre(s) et une ou des partie(s) captive(s), les écoulements sont majoritairement libres",
+                                    "4" : "Une ou des partie(s) libre(s) et une ou des partie(s) captive(s), les écoulements sont majoritairement captifs",
+                                  },
+                      "link"    : "http://www.sandre.eaufrance.fr/squelettes/consulter_fiche_attribut.php?dictionnaire=/db/sandre/Schemas/mdo/1.2/sandre_fmt_xml_mdo.xsd&entite=MasseDEauSouterraine&attribut=NatureEcoulement",
+                    },
+    };
+
+    function displayInfos(props) {
 
       // close sidebar
       if (toggledLast == props | toggled == -1 ) {
@@ -487,17 +526,34 @@
 
         //console.log(props);
 
-        d3.select('#sb_title').html( props.NomMasseDE + " (" + props.CdMasseDEa + ")");
+        d3.select('#sb_title').html( props.NomMasseDE ); //+ " (" + props.CdMasseDEa + ")");
 
         d3.select('#reqTree_ME').attr("reqvalue", props.CdMasseDEa);
 
-        d3.select('#CdMasseDEa').html(props.CdMasseDEa);
+        d3.select('#CdMasseDEa').html( props.CdMasseDEa )
+                                .attr( "href", root_ME_SANDRE + props.CdMasseDEa );
+
         // d3.select('#NomMasseDE').html(props.NomMasseDE);
-        d3.select('#TypeMasseD').html(props.TypeMasseD);
-        d3.select('#Karstique').html(props.Karstique);
-        d3.select('#FrangeLitt').html(props.FrangeLitt);
-        d3.select('#Niveau').html(props.Niveau);
-        d3.select('#NatureEcou').html(props.NatureEcou);
+
+        d3.select('#Niveau_').attr( "title", ME_infos_dict["Niveau"]["def"] );
+        d3.select('#Niveau').html(  props.Niveau );
+        d3.select('#TypeMasseD_').attr( "title", ME_infos_dict["TypeMasseD"]["def"] );
+        d3.select('#TypeMasseD').html( ME_infos_dict["TypeMasseD"]["def_val"][props.TypeMasseD] )
+                                .attr( "href", ME_infos_dict["TypeMasseD"]["link"] );
+        // d3.select('#TypeMasseD').html( props.TypeMasseD );
+        d3.select('#Karstique_').attr( "title", ME_infos_dict["Karstique"]["def"] );
+        d3.select('#Karstique').html(  ME_infos_dict["Karstique"]["def_val"][props.Karstique] )
+                                .attr( "href", ME_infos_dict["Karstique"]["link"] );
+        // d3.select('#Karstique').html(  props.Karstique );
+        d3.select('#FrangeLitt_').attr( "title", ME_infos_dict["FrangeLitt"]["def"] );
+        d3.select('#FrangeLitt').html( ME_infos_dict["FrangeLitt"]["def_val"][props.FrangeLitt] )
+                                .attr( "href", ME_infos_dict["FrangeLitt"]["link"] );
+        // d3.select('#FrangeLitt').html( props.FrangeLitt );
+        d3.select('#NatureEcou_').attr( "title", ME_infos_dict["NatureEcou"]["def"] );
+        d3.select('#NatureEcou').html( ME_infos_dict["NatureEcou"]["def_val"][props.NatureEcou] )
+                                .attr( "href", ME_infos_dict["NatureEcou"]["link"] );
+
+        // d3.select('#NatureEcou').html( props.NatureEcou );
 
         d3.select('#FONCTIONS').html( props.FUNCTIONS );
 
@@ -573,13 +629,9 @@
     // update layer data
     function refreshTopoLayer ( req_df, dataset ) {
 
-      if ( req_df == df_ME ){
-        topoLayer = topoLayer_water;
-      } else if ( req_df == df_dpt ) {
-        topoLayer = topoLayer_admin;
-      } else {
-        topoLayer = topoLayer_rivers;
-      };
+      if ( req_df == df_ME )       { topoLayer = topoLayer_water; }
+      else if ( req_df == df_dpt ) { topoLayer = topoLayer_admin; }
+      else                         { topoLayer = topoLayer_rivers; };
 
       console.log("refreshTopoLayer / start for req_df :", req_df );
 
@@ -618,13 +670,22 @@
 
       console.log("refreshMap / start for req_df :", req_df );
 
-      if      ( req_df == df_ME  ) { topoLayer = topoLayer_water; }
+      // choose topolayer
+      if ( req_df == df_ME  )      {
+        topoLayer = topoLayer_water;
+        // sort layers by Niveau --> draw higher (deeper) first
+        console.log("refreshMap / sort topoLayer...");
+        //
+        console.log( topoLayer );
+      }
       else if ( req_df == df_dpt ) { topoLayer = topoLayer_admin; }
       else                         { topoLayer = topoLayer_rivers; };
 
+      // iterate and update map
       topoLayer.eachLayer(
 
         function(layer) {
+
 
           if      (index_map == "MOYPTOT")         { value_ = layer.feature.properties.MOYPTOT   }
           //if      (index_map == "MOYPTOT_all_CAS") { value_ = layer.feature.properties.MOYPTOT_all_CAS  }
@@ -651,7 +712,12 @@
 
           //console.log("refreshMap / value_fill :", value_fill );
 
-          handleLayer( layer, value_fill , req_df, seq_div_qual );
+          // set z_index of current layer if
+          var z_index = z_index_dft;
+
+
+
+          handleLayer( layer, value_fill , req_df, seq_div_qual, z_index );
 
         });
 
@@ -725,7 +791,7 @@
         //topoLayer_rivers.eachLayer(handleLayer); /////////////////////////////////////
         topoLayer_rivers.eachLayer(
           function (layer) {
-            handleLayer(layer, null , df_rivers);
+            handleLayer(layer, null , df_rivers, z_index_dft);
             layer.bringToBack();
           }
         );
@@ -981,12 +1047,17 @@
 
   $(document).ready(function() { // <-- place at top to run stuff in order
 
+
+    $('#mod_intro').modal('toggle');
+
     //InitMap().then(ConnectSocketIO); // <-- with defer
     //ConnectSocketIO();
     InitMap( ConnectSocketIO ); // <-- with callback
 
     console.log(" - InitMap / finished ");
     console.log(" ");
+
+
 
   }); //<-- end : $(document).ready
 

@@ -5,12 +5,12 @@
       /*color: grey;*/
       /*border-color: black;*/
       /*border-bottom-width: 10px;*/
-      /*background-color: {{ app_colors.jumbotron }} ;*/
       padding-bottom: 25px;
       padding-right : 15px;
       padding-left  : 15px;
       padding-top   : 10px;
       border-radius : 3px;
+      background-color: {{ app_colors.navbar }} ;
 
   }
 
@@ -127,15 +127,15 @@
 
   <div class="row" >
 
-    <h3 id="sb_title"
-        class="col-xs-11 lead text-lowercase bstooltip"
-        style="margin-bottom: 10px"
+    <h4 id="sb_title"
+        class="col-xs-11 lead text-lowercase text-center bstooltip"
+        style="margin-bottom: 10px; color:white"
 
         data-toggle="tooltip" data-placement="left"
         title="propriétés de la masse d'eau sélectionnée"
         >
-      cliquer sur une masse d'eau pour voir ses infos
-    </h3>
+      cliquer sur une masse d'eau
+    </h4>
 
     <button type="button"
             class="col-xs-1 close"
@@ -154,10 +154,8 @@
     <div  class="col-sm-12"
     >
 
-      <h4
-        class="indent1 bstooltip" data-toggle="tooltip" data-placement="left"
-        title="visualiser la répartition des pesticides pour cette masse d'eau et pour l'année sélectionnée "
-      >
+      <h4 class="indent1 bstooltip" data-toggle="tooltip" data-placement="left"
+          title="voir la répartition des pesticides pour cette masse d'eau et pour l'année sélectionnée (carte hiérarchique)">
         <a role="button"
             class="switchtree"
             id="reqTree_ME"
@@ -172,19 +170,63 @@
 
       <hr>
 
-      <a class="indent1"  role="button" data-toggle="collapse" data-target="#collapseInfosNappe" aria-expanded="false" aria-controls="collapseFonctions">
-        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-        infos nappe phréatique <span class="caret"></span>
-      </a>
+      <h4 class="bstooltip" data-toggle="tooltip" data-placement="left"
+          title="cliquer sur une caractéristique pour plus d'informations (site SANDRE) " >
+        <a class="indent1"  role="button" data-toggle="collapse" data-target="#collapseInfosNappe" aria-expanded="false" aria-controls="collapseFonctions">
+          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+          infos nappe phréatique <span class="caret"></span>
+        </a>
+      </h4>
 
       <div class="collapse" id="collapseInfosNappe">
-        <li> Code masse d'eau :       <a href="#" class="" id="CdMasseDEa" > </a></li>
-        <!-- <li> NomMasseDE :             <a href="#" class="" id="NomMasseDE" ></a></li> -->
-        <li> Type masse d'eau :       <a href="#" class="" id="TypeMasseD" > - </a></li>
-        <li> Karstique :              <a href="#" class="" id="Karstique"  > - </a></li>
-        <li> Frange littorale :       <a href="#" class="" id="FrangeLitt" > - </a></li>
-        <li> Niveau masse d'eau :     <a href="#" class="" id="Niveau"     > - </a></li>
-        <li> Nature de l'écoulement : <a href="#" class="" id="NatureEcou" > - </a></li>
+
+        <dl class="dl-horizontal">
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="code de la masse d'eau" >
+              Code de la masse d'eau
+            </a></dt>
+          <dd>
+            <a target="_blank" id="CdMasseDEa" class="bstooltip" data-toggle="tooltip" data-placement="top" title="cliquer pour plus d'infos sur le site SANDRE" > - </a>
+          </dd>
+
+          <!-- <li> NomMasseDE :             <a href="#" class="" id="NomMasseDE" ></a></li> -->
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" id="TypeMasseD_">
+              Type de masse d'eau
+            </a></dt>
+          <dd>
+            <a target="_blank" id="TypeMasseD" class="bstooltip" data-toggle="tooltip" data-placement="top" title="cliquer pour plus d'infos sur le site SANDRE" > - </a>
+          <dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" id="Niveau_">
+              Niveau masse d'eau
+            </a></dt>
+          <dd>
+            <a target="_blank" id="Niveau" class="bstooltip" data-toggle="tooltip" data-placement="top" title="cliquer pour plus d'infos sur le site SANDRE" > - </a>
+          </dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" id="FrangeLitt_">
+              Frange littorale
+            </a></dt>
+          <dd>
+            <a target="_blank" id="FrangeLitt" class="bstooltip" data-toggle="tooltip" data-placement="top" title="cliquer pour plus d'infos sur le site SANDRE"> - </a>
+          </dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" id="Karstique_">
+              Karstique
+            </a></dt>
+          <dd>
+            <a target="_blank" id="Karstique" class="bstooltip" data-toggle="tooltip" data-placement="top" title="cliquer pour plus d'infos sur le site SANDRE" > - </a>
+          </dt>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" id="NatureEcou_">
+              Nature de l'écoulement
+            </a></dt>
+          <dd>
+            <a target="_blank" id="NatureEcou" class="bstooltip" data-toggle="tooltip" data-placement="top" title="cliquer pour plus d'infos sur le site SANDRE"> - </a>
+          </dd>
+
+        </dl>
+
       </div>
 
 

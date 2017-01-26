@@ -18,41 +18,44 @@
   }
 
   #wrapper {
-     padding-left: 0;
-     -webkit-transition: all 0.5s ease;
-     -moz-transition: all 0.5s ease;
-     -o-transition: all 0.5s ease;
-     transition: all 0.5s ease;
-     overflow: hidden;
+    margin-left: 10px;
+    padding-left: 0px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    overflow: hidden;
   }
   #wrapper.toggled {
-     padding-left: 200px;
-     overflow: scroll;
+    padding-left: 200px;
+    overflow: scroll;
   }
   #sidebar-wrapper {
-     z-index: 1000;
-     position: absolute;
-     left: 300px;
-     width: 0;
-     height: 55%;
-     margin-top:  5%;
-     margin-left: -300px;
-     overflow-y: auto;
-     overflow-x: hidden;
-     background: {{ app_colors.navbar }};
-     -webkit-transition: all 0.5s ease;
-     -moz-transition: all 0.5s ease;
-     -o-transition: all 0.5s ease;
-     transition: all 0.5s ease;
+    z-index: 5;
+    border-radius: 3px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    position: absolute;
+    left: 300px;
+    width: 0;
+    height: 60%;
+    margin-top:  5%;
+    margin-left: -290px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: {{ app_colors.navbar }};
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
   }
   #wrapper.toggled #sidebar-wrapper {
-     width: 300px;
+    width: 300px;
   }
   #page-content-wrapper {
-     position: absolute;
-     padding: 15px;
-     width: 100%;
-     overflow-x: hidden;
+    position: absolute;
+    padding: 15px;
+    width: 100%;
+    overflow-x: hidden;
   }
   .xyz{
      min-width: 360px;
@@ -305,6 +308,10 @@
     background-color: {{ app_colors.btn_info }};
   }
 
+  .label-default{
+    background-color: {{ app_colors.btn_info }};
+  }
+
   #annee_selected, #annee_selected2 {
     color: white;
     font-size: larger;
@@ -315,7 +322,7 @@
 </style>
 
 
-
+<!-- NAVBAR TOP -->
 <nav class="navbar no-margin" id="navbar-text" >
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header fixed-brand">
@@ -335,10 +342,8 @@
     <ul class="nav navbar-nav">
 
 
-      <li
-          class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-          title="A quoi sert HydroViz ?"
-      >
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="qu'est-ce qu'HydroViz ?" >
         <a  role="button"
             data-toggle="modal"
             data-target="#mod_intro"
@@ -492,7 +497,7 @@
 
 
 
-<!-- Sidebar -->
+<!-- SIDEBAR LEFT -->
 
 <div id="wrapper" class="toggled-2">
 
@@ -500,18 +505,28 @@
 
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
 
-      <!-- <li>
-        <button class="navbar-toggle collapse" data-toggle="collapse" id="menu-toggle-2">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </li> -->
-
       <br>
 
-      <li
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="répartition des pesticides sur toute la France"
-      >
+      <!-- MAIN FILTERS TITLE  -->
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="data visualisations et filtres cartographiques sur les mesures de pesticides sur la France entière">
+
+            <span class="fa-stack fa-lg pull-left" style="color: #7841a9">
+              <i class="fa fa-map fa-stack-1x" aria-hidden="true"></i>
+            </span>
+            <a style="color: #7841a9 ; font-size: 16px">
+              <strong class="text-uppercase">
+                Pesticides en France
+              </strong>
+            </a>
+      </li>
+
+      <br>
+      <hr><hr>
+
+      <!-- DEPLOY TREEMAP  -->
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="cliquer pour voir la répartition des pesticides sur toute la France (carte hiérarchique)">
         <a role="button"
             class="switchtree"
             reqvalue="TOT_FRANCE"
@@ -519,97 +534,31 @@
             data-target="#mod_pest"
             >
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x" aria-hidden="true"></i></span>
-          <strong
-          >
-            Pesticides - toute la France
+          <strong>
+            Répartition des pesticides
           </strong>
         </a>
       </li>
 
       <hr>
 
-      <li
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="voir les niveaux de concentrations totales moyennes des pesticides sur toute la France"
-      >
+      <!-- CONCENTRATIONS TOTALES  -->
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="cliquer pour voir les niveaux de CONCENTRATIONS TOTALES MOYENNES des pesticides sur toute la France">
         <a role="button" class="switchmap" reqtype="MOYPTOT" reqvalue="XXXXXX" >
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-bar-chart fa-stack-1x" aria-hidden="true"></i></span>
-          Concentrations totales
+          <strong>
+            Concentrations totales
+          </strong>
         </a>
       </li>
 
       <hr>
       <hr>
 
-
-      <!-- <li>
-
-        <a role="button" data-toggle="collapse" data-target="#collapseAnnees" aria-expanded="false" aria-controls="collapseAnnees">
-          <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x" aria-hidden="true"></i></span>
-          <strong>Années</strong>
-          <span class="caret"></span>
-        </a>
-
-        <div class="collapse" id="collapseAnnees">
-          <hr>
-          % for annee in var_dict.annees %
-            <a href="#" class="request indent2" reqtype="year" reqvalue="{{ annee }}" >{{ annee }}</a>
-          % endfor %
-        </div>
-
-      </li> -->
-
-      <!-- <hr> -->
-
-      <!-- <li>
-
-        <a role="button" data-toggle="collapse" data-target="#collapsePesticides" aria-expanded="false" aria-controls="collapsePesticides">
-          <span class="fa-stack fa-lg pull-left"><i class="fa fa-warning fa-stack-1x" aria-hidden="true"></i></span>
-          <strong>Pesticides (nombre)</strong>
-          <span class="caret"></span>
-        </a>
-
-        <div class="collapse" id="collapsePesticides">
-
-          <hr>
-
-          <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseFonctions" aria-expanded="false" aria-controls="collapseFonctions">
-            par fonctions <span class="caret"></span>
-          </a>
-          <div class="collapse" id="collapseFonctions">
-            {% for fonction in var_dict.pest_fonctions|sort %}
-              <a href="#" class="switchmap indent2" reqtype="FUNCTIONS" reqvalue="{{ fonction }}" > > {{ fonction }} - {{ var_dict.pest_fonc_lib[fonction]|safe }}</a>
-            {% endfor %}
-          </div>
-
-          <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseDangers" aria-expanded="false" aria-controls="collapseDangers">
-            par dangerosité <span class="caret"></span>
-          </a>
-          <div class="collapse" id="collapseDangers">
-            {% for danger in var_dict.pest_danger_types|sort %}
-              <a href="#" class="switchmap indent2" reqtype="TYPES" reqvalue="{{ danger }}" > > {{ danger }} - </a>
-            {% endfor %}
-          </div>
-
-          <a class="indent1" role="button" data-toggle="collapse" data-target="#collapseFamilles" aria-expanded="false" aria-controls="collapseFamilles">
-            par familles <span class="caret"></span>
-          </a>
-          <div class="collapse" id="collapseFamilles">
-            {% for famille in var_dict.pest_familles|sort %}
-              <a href="#" class="switchmap indent2" reqtype="FAMILLES" reqvalue="{{ famille }}" > > {{ famille }} </a>
-            {% endfor %}
-          </div>
-
-
-        </div>
-
-      </li> -->
-
-
-      <li
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="sélectionner une FONCTION de pesticides pour voir le nombre de pesticides correspondants détectés"
-      >
+      <!--  DENUMBERING BY FUNCTIONS  -->
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="sélectionner une FONCTION de pesticides pour voir le nombre de pesticides correspondants détectés">
 
         <a role="button" data-toggle="collapse" data-target="#collapseFonctions" aria-expanded="false" aria-controls="collapseFonctions">
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-gear fa-stack-1x" aria-hidden="true"></i></span>
@@ -632,10 +581,9 @@
 
       <hr>
 
-      <li
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="sélectionner une FAMILLE de molécules pour voir le nombre de pesticides correspondants détectés"
-      >
+      <!--  DENUMBERING BY FAMILIES  -->
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="sélectionner une FAMILLE de molécules pour voir le nombre de pesticides correspondants détectés">
 
         <a role="button" data-toggle="collapse" data-target="#collapseFamilles" aria-expanded="false" aria-controls="collapseFamilles">
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-dot-circle-o fa-stack-1x" aria-hidden="true"></i></span>
@@ -656,10 +604,9 @@
 
       <hr>
 
-      <li
-        class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-        title="sélectionner un type de DANGEROSITE de pesticides pour voir le nombre de pesticides correspondants détectés"
-      >
+      <!--  DENUMBERING BY FUNCTIONS  -->
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="sélectionner un type de DANGEROSITE de pesticides pour voir le nombre de pesticides correspondants détectés">
 
         <a role="button" data-toggle="collapse" data-target="#collapseDangers" aria-expanded="false" aria-controls="collapseDangers">
           <span class="fa-stack fa-lg pull-left"><i class="fa fa-warning fa-stack-1x" aria-hidden="true"></i></span>
@@ -679,7 +626,27 @@
       </li>
 
 
-      <!-- <hr> -->
+      <hr>
+      <hr>
+
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="sélectionner un niveau de profondeur">
+
+        <a role="button" data-toggle="collapse" data-target="#collapseNiv" aria-expanded="false" aria-controls="collapseNiv">
+          <span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x" aria-hidden="true"></i></span>
+          <strong>Niveaux</strong>
+          <span class="caret"></span>
+        </a>
+
+        <div class="collapse" id="collapseNiv">
+          <a class="request indent2" reqtype="niv" reqvalue="all" >tous les niveaux</a>
+          <hr>
+          {% for N in range(10) %}
+            <a class="request indent2" reqtype="niv" reqvalue="{{ N }}" >{{ N }}</a>
+          {% endfor %}
+        </div>
+
+      </li>
 
       <!-- <li>
 
