@@ -1,0 +1,72 @@
+<div class="modal fade in "
+      id="mod_howto"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="mod_howto">
+
+  <div class="modal-dialog modal-lg" role="document">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title text-center" id="ModalHowTo">
+          Comment utiliser HydroViz ?
+        </h3>
+      </div>
+
+      <div class="modal-body">
+
+        <h4 class="lead">
+          HYDROVIZ est une application interactive épurée dont toutes les fonctionnalités sont liées les unes aux autres :
+          cartographie, affichage des informations sur les régions ou les pesticides, analyse des quantités et des catégories de polluants.
+        </h4>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#intro_features_" aria-expanded="true" aria-controls="intro_features_">
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+            comment utiliser HYDROVIZ ? <span class="caret"></span>
+          </a>
+        </div>
+
+        <div class="collapse indent1" id="intro_features_">
+          {% include "_howto.html" %}
+        </div>
+
+        <hr>
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#intro_dev_" aria-expanded="true" aria-controls="intro_dev_">
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+            le développement d'HYDROVIZ <span class="caret"></span>
+          </a>
+        </div>
+
+        <div class="collapse indent1" id="intro_dev_">
+          {% include "_dev_history.html" %}
+        </div>
+
+
+        <hr>
+
+        <div class="indent1">
+          Vous trouverez plus d'informations sur les termes utilisés, la méthodologie, les sources, les licences utilisées ainsi que des ressources supplémentaires dans la barre de navigation en haut de l'écran.
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info btn-sm custom-btn" data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          Fermer
+        </button>
+      </div>
+
+    </div> <!-- end modal-content -->
+
+  </div>
+
+</div>

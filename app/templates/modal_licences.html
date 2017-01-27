@@ -10,14 +10,244 @@
 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title" id="ModalLicences">
+        <h3 class="modal-title text-center" id="ModalLicences">
           Licences
         </h3>
       </div>
 
       <div class="modal-body">
 
-        LICENCES APPLI HERE
+        <h4 class="lead">
+          HYDROVIZ est entièrement développé en open source :
+          les données, les bibliothèques de code, l'architecture de l'application, les outils de datavisulation, les fonds de carte
+          sont tous sous licences libres.
+        </h4>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lic_archi" aria-expanded="false" aria-controls="lic_archi">
+            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
+            Architecture de l'application <span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="lic_archi">
+          <br>
+            L'application est principalement écrite en Python et en JavaScript :
+            le serveur est développé avec Flask,
+            les requêtes client-serveur avec SocketIO / flask-SocketIO,
+            l'analyse et le nettoyage de données avec les bibliothèques Python Pandas et GeoPandas
+          <br><br>
+          <hr>
+          <dl class="dl-horizontal">
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_python.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://www.python.org">
+              Python
+              </a>
+              : langage de programmation
+            </dd>
+            <hr>
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_flask.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://flask.pocoo.org">
+              Flask
+              </a>
+              : framework serveur en Python
+            </dd>
+            <hr>
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_pandas.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://pandas.pydata.org">
+              Pandas / GeoPandas
+              </a>
+              : analyse de données
+            </dd>
+            <hr>
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_js.jpg') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="https://www.javascript.com">
+              JavaScript (et JQuery)
+              </a>
+              : langages de programmation
+            </dd>
+            <hr>
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_socketio.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://socket.io">
+              SocketIO / flask-socketIO
+              </a>
+              : requêtes asynchrones serveur-client (en Python et javascript)
+            </dd>
+
+
+          </dl>
+
+
+        </div>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lic_design" aria-expanded="false" aria-controls="lic_design">
+            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
+            Design de l'application <span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="lic_design">
+          <br>
+            Les outils de datavisualisation sont principalement :
+            Bootstrap,
+            D3.js,
+            <!-- Chroma.js, -->
+            et Leaflet
+          <br><br>
+          <hr>
+          <dl class="dl-horizontal">
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_bootstrap.jpg') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://getbootstrap.com">
+              Bootstrap
+              </a>
+              : framework client
+            </dd>
+            <hr>
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_d3.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="https://d3js.org">
+              D3.js (Data Driven Documents)
+              </a>
+              : bibliothèque de data visualisation en javascript
+            </dd>
+            <hr>
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_leaflet.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://leafletjs.com">
+              Leaflet
+              </a>
+              : bibliothèque de cartographie en javascript
+            </dd>
+            <!-- <hr>
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_chroma.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://gka.github.io/chroma.js/">
+              Chroma.js
+              </a>
+              : bibliothèque de palettes de couleurs en javascript
+            </dd> -->
+
+          </dl>
+
+        </div>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lic_data" aria-expanded="false" aria-controls="lic_data">
+            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
+            Bases de données (sources)<span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="lic_data">
+          <br>
+            Les données servant à la datavisualisation ont comme sources principales :
+            Etalab (portail open data national),
+            Open Street Map
+          <br><br>
+          <hr>
+          <dl class="dl-horizontal">
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_etalab.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="https://www.etalab.gouv.fr">
+              Etalab
+              </a>
+              : portail opendata
+            </dd>
+            <hr>
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_osm.jpg') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="https://www.openstreetmap.org">
+              Open Street Map
+              </a>
+              : fonds de cartes
+            </dd>
+
+          </dl>
+
+        </div>
+
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lic_repo" aria-expanded="false" aria-controls="lic_repo">
+            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
+            Code source et hébergement<span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="lic_repo">
+          <br>
+            Le code source est en open source sur la plateforme GitLab,
+            l'hébergement de l'application est faite grâce au service Digital Ocean
+          <br><br>
+          <hr>
+          <dl class="dl-horizontal">
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_gitlab.svg') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="https://gitlab.com/Julien_P/concours_pesticides">
+              GitLab
+              </a>
+              : code source
+            </dd>
+            <hr>
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_digitalocean.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://digitalocean.com">
+              Digital Ocean
+              </a>
+              : hébergement cloud
+            </dd>
+
+          </dl>
+
+        </div>
+
 
       </div>
 

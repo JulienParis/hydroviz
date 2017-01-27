@@ -72,7 +72,7 @@
   }
 
   #tooltip_tree{
-    width : 300px;
+    width : 350px;
   }
 
   #tooltip_tree_parent{
@@ -95,7 +95,7 @@
 <div class="row">
 
 
-  <div  class="col-xs-7 bstooltip active" data-toggle="tooltip" data-placement="left"
+  <div  class="col-xs-7 bstooltip active" data-toggle="tooltip" data-placement="right"
         title="regrouper par catégories de pesticides" >
     <form>
       <label><input type="radio" class="switchCategTree" name="mode" value="byFunctions" checked > par fonction</label>
@@ -124,19 +124,28 @@
 <br>
 
 <div id="tooltip_tree" class="hidden">
-  <p><strong id="pest_lib"></strong></p>
+
+  <div class="text-center">
+    <h4 class="text-uppercase"><strong id="pest_lib"></strong></h4>
+    <h6 id="link_agritox"></h6>
+  </div>
+
   <hr>
-  <p><span   id="value"></span></p>
-  <p><span   id="norme_dce"></span></p>
-  <hr>
-  <p><span   id="code_cas"></span></p>
-  <p><span   id="formule"></span></p>
-  <hr>
-  <p><span   id="code_famille"></span></p>
-  <p><span   id="fonctions"></span></p>
-  <p><span   id="types"></span></p>
-  <!-- <hr>
-  <p><span   id="link_ext"></span></p> -->
+
+  <div>
+    <dl class="dl-horizontal">
+      <div id="value">        </div>
+      <div id="norme_dce">    </div>
+      <hr>
+      <div id="code_cas">     </div>
+      <div id="formule">      </div>
+      <hr>
+      <div id="code_famille"> </div>
+      <div id="fonctions">    </div>
+      <div id="types">        </div>
+    </dl>
+  </div>
+
 </div>
 
 
@@ -153,18 +162,28 @@
   <label><input type="radio" name="mode" value="sumByCount"> Nombre </label>
 </form> -->
 
-<p>
-* les rectangles en rouge représentent les pesticides dont la mesure dépasse la norme autorisée
-<br>
-** cliquer sur une sous-catégorie pour voir en détail / cliquer sur la barre supérieure pour revenir à la vue globale
-<br>
-*** survoler un pesticide pour afficher ses infos
-</p>
+<h5>
+  * les rectangles en rouge représentent les pesticides dont la mesure dépasse la norme autorisée
+  <br>
+  ** cliquer sur une sous-catégorie pour voir en détail / cliquer sur la barre supérieure pour revenir à la vue globale
+  <br>
+  *** survoler un pesticide pour afficher ses infos / cliquer pour plus d'informations sur la base de données
+  <a class="a_" target="_blank" href="http://www.agritox.anses.fr/php/fiches.php">
+    AGRITOX
+  </a>
+</h5>
+
 
 
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script></script>
+{% include "dict_agritox.html" %}
 
 <script>
+
+  var root_agritox = "http://www.agritox.anses.fr/php/sa.php?sa=" ;
+
+  var is_link     = '<span class="glyphicon glyphicon-new-window"></span> cliquer pour voir la référence dans AGRITOX' ;
+  var no_link     = '<span class="glyphicon glyphicon-new-window"></span> pas de référence trouvée dans AGRITOX' ;
 
   var dict_categs = {
     "byFunctions" : { "H"   : "herbicides",
@@ -208,6 +227,21 @@
   // };
 
 
+
+
+  // find code in agritox database
+  function find_agritox_code (d) {
+
+    var lib = byPest[ Number(d.name) ].LB_PARAMETRE.toUpperCase().latinize() ;
+    // console.log("--- to_agritox / lib : ", lib);
+
+    var lib_agritox_code = agritox_dict_lib_cod[lib];
+    // console.log("--- to_agritox / lib_agritox_code : ", lib_agritox_code);
+
+    return lib_agritox_code ;
+
+  };
+
   /////////////////////////////
   // cf : http://bl.ocks.org/tgk/6044254
   function mousemove_ (d) {
@@ -225,29 +259,46 @@
       .style("left", xPosition + "px")
       .style("top" , yPosition + "px");
 
+    // var dl  = '<dl class="dl-horizontal">' ;
+    var dt  = '<dt>' ;
+    var dt_ = '</dt>' ;
+    var dd  = '<dd>' ;
+    var dd_ = '</dd>' ;
+    // var dl_ = '</dl>' ;
 
     if (!d._children) {
 
       //code_cas   code_famille  formule fonctions
       d3.select("#tooltip_tree #pest_lib")
-         .text( byPest[ Number(d.name) ].LB_PARAMETRE ); //+ " (code " + d.name + ")" ) ;
+         .html( byPest[ Number(d.name) ].LB_PARAMETRE ); //+ " (code " + d.name + ")" ) ;
       d3.select("#tooltip_tree #value")
-        .text("valeur mesurée  : " + d.value + " ug/L");
+            .html(      dt + "valeur mesurée"     + dt_ + dd + d.value + " ug/L"                      + dd_ );
       d3.select("#tooltip_tree #norme_dce")
-         .text( "norme autorisée : " + byPest[ Number(d.name) ].NORME_DCE + " ug/L" ) ;
+            .html(      dt + "norme autorisée"    + dt_ + dd + byPest[ Number(d.name) ].NORME_DCE + " ug/L" + dd_ ) ;
 
       d3.select("#tooltip_tree #code_cas")
-        .text( "code CAS : " + byPest[ Number(d.name) ].CODE_CAS ) ;
+            .html(      dt + "code CAS"           + dt_ + dd  + byPest[ Number(d.name) ].CODE_CAS     + dd_ ) ;
       d3.select("#tooltip_tree #code_famille")
-        .text( "famille : " + byPest[ Number(d.name) ].CODE_FAMILLE ) ;
+            .html(      dt + "famille"            + dt_ + dd  + byPest[ Number(d.name) ].CODE_FAMILLE + dd_ ) ;
       d3.select("#tooltip_tree #formule")
-        .text( "formule : " + byPest[ Number(d.name) ].FORMULEB ) ;
+            .html(      dt + "formule"            + dt_ + dd  + byPest[ Number(d.name) ].FORMULEB     + dd_ ) ;
       d3.select("#tooltip_tree #fonctions")
-        .text( "fonctions : " + byPest[ Number(d.name) ].FONCTIONS ) ;
+            .html(      dt + "fonctions"          + dt_ + dd  + byPest[ Number(d.name) ].FONCTIONS    + dd_ ) ;
       d3.select("#tooltip_tree #types")
-        .text( "dangerosité : " + byPest[ Number(d.name) ].Type + " : "  ) ;
+            .html(      dt + "dangerosité"        + dt_ + dd  + byPest[ Number(d.name) ].Type         + dd_ ) ;
+
+      agritox_code = find_agritox_code(d) ;
+
+      if (agritox_code != undefined) {
+        d3.select("#tooltip_tree #link_agritox")
+              .html( is_link ) ;
+      } else {
+        d3.select("#tooltip_tree #link_agritox")
+              .html( no_link ) ;
+      };
 
       d3.select("#tooltip_tree").classed("hidden", false);
+
     }
 
     else {
@@ -270,6 +321,25 @@
     d3.select("#tooltip_tree_parent").classed("hidden", true);
   };
 
+  function to_agritox (d) {
+
+    agritox_code = find_agritox_code(d) ;
+
+    if ( agritox_code != undefined ) {
+
+      // var url_agritox = root_agritox + d.name ;
+      var url_agritox = root_agritox + agritox_code ;
+      console.log("--- to_agritox / url_agritox : ", url_agritox);
+
+      var win = window.open(url_agritox, '_blank');
+      win.focus();
+
+    } else {
+
+    };
+
+    console.log("");
+  };
 
 
   var categSelected ;
@@ -410,7 +480,9 @@
       g.filter(function(d) { return !d._children})
           // .on("mouseover", function(d) { console.log(d);} );
           .on("mousemove", mousemove_ )
-          .on("mouseout",  mouseout_  );
+          .on("mouseout",  mouseout_  )
+          .on("click"   ,  to_agritox );
+          ;
 
       g.filter(function(d) { return d._children})
           // .on("mouseover", function(d) { console.log(d);} );
@@ -435,7 +507,10 @@
       g.append("text")
           .attr("dy", ".75em")
           .attr("font-size", "10px")
-          .text(function(d) { return d._children? d.name : byPest[ Number(d.name) ].LB_PARAMETRE ; })
+          .text(function(d) { return d._children? d.name :
+                                                  byPest[ Number(d.name) ].LB_PARAMETRE   ;
+                            }
+                )
           .call(text);
 
 

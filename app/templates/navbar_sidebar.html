@@ -341,17 +341,28 @@
 
     <ul class="nav navbar-nav">
 
+      <li class="divider-vertical"></li>
 
       <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
           title="qu'est-ce qu'HydroViz ?" >
         <a  role="button"
             data-toggle="modal"
-            data-target="#mod_intro"
-        >
+            data-target="#mod_intro">
           <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 
         </a>
       </li>
+
+      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="comment utiliser HydroViz ?" >
+        <a  role="button"
+            data-toggle="modal"
+            data-target="#mod_howto">
+          <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+
+        </a>
+      </li>
+
 
       <li class="divider-vertical"></li>
 
@@ -366,13 +377,8 @@
       <li class="bstooltip active" data-toggle="tooltip" data-placement="bottom"
           title="choisir une année" >
         <form class="navbar-form navbar-left"
-              role="slider"
-        >
+              role="slider">
           <div class="row">
-
-            <!-- <div class="col-xs-3" for="slider_years">
-              Années
-            </div> -->
 
             <div class="col-xs-9">
               <input class="form-control slider_years" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
@@ -402,75 +408,40 @@
           title="Méthodologie" >
         <a  role="button"
             data-toggle="modal"
-            data-target="#mod_methodo"
-        >
+            data-target="#mod_methodo">
           <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-
         </a>
       </li>
 
 
 
       <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-          title="Lexiques" >
+          title="Lexiques et ressources" >
         <a  role="button"
             data-toggle="modal"
-            data-target="#mod_lexiques"
-          >
-          <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-
-        </a>
-      </li>
-
-
-      <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-          title="Plus de ressources pour s'informer sur la pollution aux pesticides">
-        <a  role="button"
-            data-toggle="modal"
-            data-target="#mod_resources"
-        >
+            data-target="#mod_lexiques">
           <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
-
         </a>
       </li>
-
-      <!-- <li>
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="">
-          </div>
-          <button type="submit" class="btn">
-            <i class="fa fa-search" area-hidden="true"></i>
-          </button>
-        </form>
-      </li> -->
-
-      <!-- <li>
-        <a>
-          <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
-        </a>
-      </li> -->
-
-      <li class="divider-vertical"></li>
 
 
       <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
           title="Infos sur licences des bases de données et les programmes utilisés">
         <a role="button"
             data-toggle="modal"
-            data-target="#mod_licences"
-        >
+            data-target="#mod_licences">
           <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
-
         </a>
       </li>
+
+
+      <li class="divider-vertical"></li>
 
 
       <li>
         <a  href="https://gitlab.com/Julien_P/concours_pesticides" target="_blank"
             class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-            title="repo Gitlab"
-        >
+            title="repo Gitlab">
           <i class="fa fa-gitlab fa-lg" area-hidden="true"></i>
         </a>
       </li>
@@ -478,8 +449,7 @@
       <li>
         <a  href="https://twitter.com/jparis_py" target="_blank"
             class="bstooltip" data-toggle="tooltip" data-placement="bottom"
-            title="sur Twitter"
-        >
+            title="sur Twitter">
           <i class="fa fa-twitter fa-lg" area-hidden="true"></i>
         </a>
       </li>

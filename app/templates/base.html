@@ -113,9 +113,9 @@
 
     {% include "modal_pesticides.html" %}
     {% include "modal_intro.html" %}
+    {% include "modal_howto.html" %}
     {% include "modal_methodo.html" %}
     {% include "modal_lexiques.html" %}
-    {% include "modal_resources.html" %}
     {% include "modal_licences.html" %}
 
 
@@ -166,6 +166,15 @@
       $(this).remove();
         });
     }, 4000);
+
+
+    // tooltip with image inside
+    $('.tooltip_img').tooltip({
+        animated : 'fade',
+        placement: 'left',
+        html     : true
+    });
+
 
   </script>
 

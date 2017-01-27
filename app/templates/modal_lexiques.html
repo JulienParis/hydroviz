@@ -10,42 +10,191 @@
 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title" id="ModalLexiques">
-          Lexiques
+        <h3 class="modal-title text-center" id="ModalLexiques">
+          Lexiques et ressources
         </h3>
       </div>
 
       <div class="modal-body">
 
         <h4 class="lead">
-          Eléments de lexiques
+          Eléments de lexiques et ressources supplémentaires
+          pour approfondir votre recherche et l'analyse des données sur la pollution aux pesticides des nappes phréatiques.
         </h4>
 
         <hr>
 
         <div class="bstooltip" data-toggle="tooltip" data-placement="left"
             title="cliquer pour plus d'infos" >
-          <a class="a_" role="button" data-toggle="collapse" data-target="#sandre" aria-expanded="false" aria-controls="sandre">
-            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-            Sandre <span class="caret"></span>
-          </a>
-        </div>
 
-        <div class="collapse indent1" id="sandre">
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lex_sandre" aria-expanded="false" aria-controls="lex_sandre">
+            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
+            SANDRE :
+            <br>Service d'Administration National des Données et Référentiels sur l'Eau <span class="caret"></span>
+          </a>
+
+
+        </div>
+        <div class="collapse indent1" id="lex_sandre">
+
           <br>
-            <strong>
-              Sandre site
-            </strong>
-          <br><br>
+
+          <dl class="dl-horizontal">
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_sandre_mini2.jpg') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              Le Sandre a pour mission, d'établir et de mettre à disposition le référentiel des données sur l'eau du Système d'Information sur l'Eau (SIE).
+              Ce référentiel, composé de spécifications techniques et de listes de codes libres d'utilisation,
+              décrit les modalités d'échange des données sur l'eau à l'échelle de la France.
+              D'un point de vue informatique, le Sandre garantit l'interopérabilité des systèmes d'information relatifs à l'eau.
+              <br>
+              <strong>
+                <a class="a_" target="_blank" href="http://sandre.eaufrance.fr">
+                  site internet
+                </a>
+              </strong>
+            </dd>
+          </dl>
           <div >
             <ul>
-              <li>dictionnaire </li>
-              <li>lien é</li>
-              <li>lien 3</li>
-            </ul>
+              <li>
+                <a class="a_" target="_blank" href="http://sandre.eaufrance.fr/ftp/documents/fr/ddd/eee/1.1/sandre_dictionnaire_EEE_1.1.pdf">
+                dictionnaire des données / référentiel Masses d'eaufrance
+                </a>
 
+              </li>
+            </ul>
           </div>
+
+        </div>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lex_ef" aria-expanded="false" aria-controls="lex_ef">
+            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
+            Eau de France :
+            <br>service public d’information sur l’eau <span class="caret"></span>
+          </a>
+
+
+        </div>
+        <div class="collapse indent1" id="lex_ef">
+
           <br>
+
+          <dl class="dl-horizontal">
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_eaufrance.jpg') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              Eaufrance est un service public d’information sur l’eau et les milieux aquatiques.
+              Il a pour but de faciliter l’accès à l’information publique dans le domaine de l’eau en France.
+              <br>
+              <strong>
+                <a class="a_" target="_blank" href="http://www.eaufrance.fr">
+                  site internet
+                </a>
+              </strong>
+            </dd>
+          </dl>
+          <div >
+            <ul>
+              <li>
+                <a class="a_" target="_blank" href="http://www.ades.eaufrance.fr">
+                ADES
+                </a>
+                 est la banque nationale d’Accès aux Données sur les Eaux Souterraines
+                qui rassemble sur un site internet public www.ades.eaufrance.fr
+                des données quantitatives et qualitatives relatives aux eaux souterraines
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lex_anses" aria-expanded="false" aria-controls="lex_anses">
+            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
+            ANSES : <br>Agence nationale de sécurité sanitaire alimentation, de l'environnement et du travail <span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="lex_anses">
+          <br>
+          <dl class="dl-horizontal">
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_anses.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              L’Agence nationale de sécurité sanitaire de l’alimentation, de l’environnement et du travail (Anses)
+              a été créée le 1er juillet 2010. L’Anses est un établissement public à caractère administratif placé sous la tutelle
+              des ministères chargés de la Santé, de l'Agriculture, de l'Environnement, du Travail et de la Consommation.
+              <br>
+              <strong>
+                <a class="a_" target="_blank" href="http://www.anses.fr">
+                  site internet
+                </a>
+              </strong>
+            </dd>
+          </dl>
+          <div >
+            <ul>
+              <li>
+                <a class="a_" target="_blank" href="http://www.agritox.anses.fr/php/fiches.php">
+                Agritox / Base de données sur les substances actives phytopharmaceutiques
+                </a>
+                <br>
+                AGRITOX est une base de données créée en 1986 par l'INRA sur les propriétés physiques et chimiques,
+                la toxicité, l'écotoxicité, le devenir dans l'environnement et les données réglementaires des substances actives phytopharmaceutiques
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lex_toxnet" aria-expanded="false" aria-controls="lex_toxnet">
+            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
+            TOXNET : <br>base de données US sur les pesticides <span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="lex_toxnet">
+          <br>
+          <dl class="dl-horizontal">
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_toxnet.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              ...
+              <br>
+              <strong>
+                <a class="a_" target="_blank" href="https://toxnet.nlm.nih.gov">
+                  site internet
+                </a>
+              </strong>
+            </dd>
+          </dl>
+          <div >
+            <ul>
+              <li>
+                <a class="a_" target="_blank" href="http://www.agritox.anses.fr/php/fiches.php">
+                Toxnet / Base de données sur les substances actives phytopharmaceutiques
+                </a>
+                <br>
+                ...
+              </li>
+            </ul>
+          </div>
         </div>
 
 
