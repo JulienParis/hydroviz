@@ -37,10 +37,10 @@
 
   .jumbotron .list-group-item {
       padding-bottom: 3px;
-      padding-top: 3px;
+      padding-top   : 3px;
       background-color: inherit;
-      border-radius: 10px;
-      border-width: 0px;
+      border-radius : 10px;
+      border-width  : 0px;
   }
 
   .jumbotron .list-group-subtitle{
@@ -48,7 +48,7 @@
   }
 
   .scrollable {
-      max-height: 250px;
+      max-height: 375px;
       overflow-y: scroll;
   }
 
@@ -120,6 +120,10 @@
     }
   }
 
+  .badge{
+    background-color: {{ app_colors.btn_info }};
+  }
+
 </style>
 
 
@@ -128,7 +132,7 @@
   <div class="row" >
 
     <h4 id="sb_title"
-        class="col-xs-11 lead text-lowercase text-center bstooltip"
+        class="col-xs-11 lead text-center bstooltip"
         style="margin-bottom: 10px; color:white"
 
         data-toggle="tooltip" data-placement="left"
@@ -155,24 +159,124 @@
     >
 
       <h4 class="indent1 bstooltip" data-toggle="tooltip" data-placement="left"
-          title="voir la répartition des pesticides pour cette masse d'eau et pour l'année sélectionnée (carte hiérarchique)">
+          title="voir la répartition des pesticides pour cette masse d'eau / département et pour l'année sélectionnée (carte hiérarchique)">
         <a role="button"
             class="switchtree"
-            id="reqTree_ME"
+            id="reqTree_ME_dpt"
             reqvalue="TOT_FRANCE"
             data-toggle="modal"
             data-target="#mod_pest">
 
           <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
-          répartition des pesticides
+          répartition des pesticides pour
+          <span id="rep_pest_code"> toute la France </span>
         </a>
       </h4>
 
       <hr>
 
       <h4 class="bstooltip" data-toggle="tooltip" data-placement="left"
+          title="concentration moyenne totale, nombre de pesticides détectés..." >
+        <a class="indent1"  role="button" data-toggle="collapse" data-target="#collapseInfosPest" aria-expanded="false" aria-controls="collapseInfosPest">
+          <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+          données générales sur les pesticides <span class="caret"></span>
+        </a>
+      </h4>
+
+      <div class="collapse" id="collapseInfosPest">
+        <dl class="dl-horizontal">
+
+          <dt><a  class="bstooltip aFake" data-toggle="tooltip" data-placement="left"
+                  title="moyenne relevée pour une masse d'eau spécifique, ou moyenne des concentrations des différentes masses d'eau attenantes à un département" >
+              Concentration moyenne totale
+            </a></dt>
+          <dd>
+            <a target="_blank" id="MOYPTOT" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+          <hr>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+              herbicides
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_H" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+              fongicides
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_F" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+              insecticides
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_I" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+
+          <hr>
+
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+            divers organiques
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_divorg" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+            urées
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_urees" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+            azoles
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_azo" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+            organochlorés
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_orgchl" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+             triazines et métabolites
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_triaz" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+
+          <hr>
+
+          <dt><a class="bstooltip aFake" data-toggle="tooltip" data-placement="left" title="" >
+             très toxiques
+            </a></dt>
+          <dd>
+            <a target="_blank" id="nbr_tI" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+          </dd>
+
+        </dl>
+      </div>
+
+
+
+      <hr>
+
+      <h4 class="bstooltip" data-toggle="tooltip" data-placement="left"
           title="cliquer sur une caractéristique pour plus d'informations (site SANDRE) " >
-        <a class="indent1"  role="button" data-toggle="collapse" data-target="#collapseInfosNappe" aria-expanded="false" aria-controls="collapseFonctions">
+        <a  class="indent1"  role="button" id="collapserInfosNappe"
+            data-toggle="collapse" data-target="#collapseInfosNappe" aria-expanded="false" aria-controls="collapseInfosNappe">
           <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
           infos nappe phréatique <span class="caret"></span>
         </a>

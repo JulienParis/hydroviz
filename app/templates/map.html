@@ -3,7 +3,7 @@
 
   /* MAP CSS */
   #content {
-    padding-left: 0px;
+    padding-left : 0px;
     padding-right: 0px;
   }
   html,body,#map{
@@ -23,57 +23,57 @@
   }
   div .leaflet-bar a:first-child {
     border-top-right-radius: 0px;
-    border-top-left-radius: 4px;
+    border-top-left-radius : 4px;
     border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 4px;
+    border-bottom-left-radius : 4px;
     border-bottom : none;
-    border-right : 1px solid #ccc ;
+    border-right  : 1px solid #ccc ;
   }
   div .leaflet-bar a:last-child {
     border-top-right-radius: 4px;
-    border-top-left-radius: 0px;
+    border-top-left-radius : 0px;
     border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 0px;
+    border-bottom-left-radius : 0px;
   }
 
 
   .info {
-      padding: 6px 8px;
-      font: 14px/16px Arial, Helvetica, sans-serif;
-      background: white;
-      background: rgba(255,255,255,0.8);
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      border-radius: 5px;
+    padding: 6px 8px;
+    font   : 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
   }
   .info h4 {
       margin: 0 0 5px;
-      color: #777;
+      color : #777;
   }
 
   .legend span, .legend label {
-  display: block;
-  width: 40px;
-  height: 15px;
-  float: left;
-  /*opacity: 0.7;*/
-  text-align: center;
-  font-size: 80%
+    display: block;
+    width: 40px;
+    height: 15px;
+    float: left;
+    /*opacity: 0.7;*/
+    text-align: center;
+    font-size: 80%
   }
 
   .tooltip_map {
-      position  : absolute;
-      text-align: center;
-      color : white;
-      width : 100px;
-      height: auto;
-      padding: 2px;
-      font   : 10px sans-serif;
-      background: #7841a9 ;
-      opacity: .8;
-      border : 0px;
-      border-radius : 3px;
-      pointer-events: none;
-      z-index : inherit;
+    position  : absolute;
+    text-align: center;
+    color  : white;
+    width  : 100px;
+    height : auto;
+    padding: 2px;
+    font   : 10px sans-serif;
+    background: #7841a9 ;
+    opacity: .8;
+    border : 0px;
+    border-radius : 3px;
+    pointer-events: none;
+    z-index : inherit;
   }
 
 </style>
@@ -85,9 +85,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.9/chroma.min.js"></script>
 
 <!-- MARKER CLUSTER -->
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.0/dist/MarkerCluster.Default.css" />
+<!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.0/dist/MarkerCluster.Default.css" />
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.0/dist/MarkerCluster.css" />
-<script type='text/javascript' src='https://unpkg.com/leaflet.markercluster@1.0.0/dist/leaflet.markercluster.js'></script>
+<script type='text/javascript'         src='https://unpkg.com/leaflet.markercluster@1.0.0/dist/leaflet.markercluster.js'></script> -->
+
+<!-- GROUPED LAYERS -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/leaflet.groupedlayercontrol.css') }}" />
+<script type="text/javascript"         src="{{  url_for('static', filename='js/leaflet.groupedlayercontrol.js') }}"></script>
 
 
 <script>
@@ -133,14 +137,14 @@
     var ME_layer     = new L.layerGroup();
     var rivers_layer = new L.layerGroup();
     var admin_layer  = new L.layerGroup();
-    var cities_layer = new L.layerGroup();
+    // var cities_layer = new L.layerGroup();
 
     //var stations_layer = new L.layerGroup();
-    var stations_layer_cluster = L.markerClusterGroup({
-        spiderfyOnMaxZoom: false,
-        showCoverageOnHover: false,
-        zoomToBoundsOnClick: true
-    });
+    // var stations_layer_cluster = L.markerClusterGroup({
+    //     spiderfyOnMaxZoom: false,
+    //     showCoverageOnHover: false,
+    //     zoomToBoundsOnClick: true
+    // });
 
     // BASEMAP TILES
     var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -153,10 +157,10 @@
 
     // LEAFLET MAP OBJECT
     var map = L.map('map', {
-      center     : [47, 3],
+      center     : [47, 5],
       zoom       : 6,
-      layers     : [ grayscale, ME_layer, cities_layer ], // active layers
-      zoomControl:false
+      layers     : [ grayscale, ME_layer ], // active layers
+      zoomControl: false
     });
 
     // CREATE CONTROLS
@@ -165,19 +169,45 @@
       "Fond OSM" : streets
     };
 
+    var active_overlay   = "<span class='lay_ME  lay_radio'> nappes phréatiques</span>" ;
+    var inactive_overlay = "<span class='lay_dpt lay_radio'> départements</span><hr>" ;
+
     var overlays = {
-      "nappes phréatiques" : ME_layer,
-      "départements"       : admin_layer,
+      "<span class='lay_ME  lay_radio'> nappes phréatiques</span>" : ME_layer,
+      "<span class='lay_dpt lay_radio'> départements</span><hr>"   : admin_layer,
       // "stations de mesure" : stations_layer_cluster,
-      "eaux de surface"    : rivers_layer,
       // "préfectures"        : cities_layer,
+      "eaux de surface"    : rivers_layer,
     };
 
-    var zoom     = L.control.zoom( { position : "topright"} ).addTo(map);
-    var controls = L.control.layers(
-      baseLayers, overlays,
-      { position : "bottomleft" }
-    ).addTo(map);
+    // add zoom control
+    var zoom = L.control.zoom( { position : "topright"} )
+                        .addTo(map);
+    // add scale control
+    var scale_bar = L.control.scale( {  position : "bottomright",
+                                        imperial : false ,
+                                        maxWidth : 250,
+                                      } )
+                        .addTo(map);
+    // add layers control
+    // var controls = L.control
+    //   .layers( baseLayers, overlays,
+    //             { position  : "bottomleft", collapsed : false }
+    //           )
+    //   .addTo(map);
+
+
+
+
+
+    // map.on('overlayadd', onOverlayAdd);
+    //
+    // function onOverlayAdd(e){
+    //     console.log("::: onOverlayAdd", e);
+    //
+    //     active_overlay = e.name;
+    //
+    // };
 
 
     // var div_tooltip_map = d3.select("body").append("div")
@@ -185,7 +215,7 @@
     //     .style("opacity", 0);
 
 
-    var cities_json ;
+    // var cities_json ;
 
 
     // TOPOJSON HANDLING - TOPOJSON OBJECTS FOR LEAFLET
@@ -227,6 +257,9 @@
     var radio_tree = "byFunctions" ;
     var dataset_trees ;
 
+    var selected_layer = df_ME ;
+
+
     // CREATE GRADIENTS --> CHECK VARIATIONS FROM COLORBREWER
     var scale_limitMid         = {{ colorscaleLimits.limit_middle }} ;
     var scale_limitUp          = {{ colorscaleLimits.limit_up }} ;
@@ -247,7 +280,47 @@
     var min_max_array_diverg    = [-3.0, -1.0, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 1.0, 3.0] ;
 
 
+    // var df_ME_name     = "nappes phréatiques" ;
+    // var df_dpt_name    = "départements";
+    // var df_rivers_name = "eaux de surface";
 
+    var dict_overlays = {
+      "nappes phréatiques" : df_ME,
+      "départements"       : df_dpt,
+      "eaux de surface"    : df_rivers
+    };
+
+    // Overlay layers are grouped
+    // cf : https://github.com/ismyrnow/Leaflet.groupedlayercontrol
+    var groupedOverlays = {
+      "pesticides": {
+        "nappes phréatiques" : ME_layer,
+        "départements"       : admin_layer
+      },
+      "autres données": {
+        "eaux de surface"    : rivers_layer,
+      }
+    };
+    var options = {
+      // Make the "pesticides" group exclusive (use radio inputs)
+      exclusiveGroups: ["pesticides"],
+      // Show a checkbox next to non-exclusive group labels for toggling all
+      groupCheckboxes: false,
+      position       : "bottomleft",
+      collapsed      : false
+    };
+    // Use the custom grouped layer control, not "L.control.layers"
+    var layerControl = L.control
+                        .groupedLayers(baseLayers, groupedOverlays, options);
+    map.addControl(layerControl);
+
+    // change global variable selected_layer when radio control is checked
+    $('[name="leaflet-exclusive-group-layer-1"]').click( function() {
+      if ($(this).is(':checked')) {
+            console.log("radio layer checked : ", this.id , " = ", dict_overlays[this.id] );
+            selected_layer = dict_overlays[this.id]
+        }
+    });
 
     // var min_value_ME      = 0.0 ; /////////////////////////////////////////////////
     // var max_value_ME      = 5.0 ; /////////////////////////////////////////////////
@@ -325,7 +398,6 @@
 
     // CREATE LEGEND
     var legend ; // global empty variable
-    var selected_layer = df_ME ;
     //var scale_categ    = "sequential" ;
     //var categ          = "MOYPTOT"    ;
 
@@ -337,7 +409,7 @@
       var min_max_array = chooseMinMaxArray( seq_div_qual );
       // var min_max_array = chooseMinMaxArray( selected_layer );
 
-      console.log("createLegend / selected_layer :", selected_layer );
+      //console.log("createLegend / selected_layer :", selected_layer );
 
       legend = L.control({position: 'bottomright'});
 
@@ -363,7 +435,7 @@
           // second loop for text
           for (var i = 0; i < grades.length; i++) {
               div.innerHTML +=
-                  '<label>' + (grades[i + 1] ? '<' + grades[i]  : '>=' + grades[i] ) + '</label>';
+                  '<label>' + (grades[i + 1] ? '<=' + grades[i]  : '>=' + grades[i] ) + '</label>';
           }
           div.innerHTML += '<label>' + unit + '</label>';
 
@@ -428,12 +500,12 @@
         opacity: 1
       });
 
-    //   div_tooltip_map.transition()
-    //       .duration(200)
-    //       .style("opacity", .9);
-    //   div_tooltip_map.html(" test : " + e.target.feature.properties.NomMasseDE + "<br>" )
-    //       .style("left", (d3.event.pageX - 30) + "px")
-    //       .style("top",  (d3.event.pageY - 30) + "px")
+      //   div_tooltip_map.transition()
+      //       .duration(200)
+      //       .style("opacity", .9);
+      //   div_tooltip_map.html(" test : " + e.target.feature.properties.NomMasseDE + "<br>" )
+      //       .style("left", (d3.event.pageX - 30) + "px")
+      //       .style("top",  (d3.event.pageY - 30) + "px")
     };
 
     function leaveLayer(e){
@@ -458,16 +530,17 @@
     function zoomToFeature(e) {
 
       //map.fitBounds(e.target.getBounds());
-
       var props = e.target.feature.properties ;
-      //console.log(props);
+      //console.log("zoomToFeature / props : ", props);
+
       //toggleSidebarInfos();
       displayInfos(props);
+
     };
 
     // display infos on click
     var toggledLast ;
-
+    
     var root_ME_SANDRE = "http://www.sandre.eaufrance.fr/fiche-geo?id=rdytcq/dataset/244/MasseDEauSouterraine/" ;
 
     var ME_infos_dict = {
@@ -512,10 +585,10 @@
       // close sidebar
       if (toggledLast == props | toggled == -1 ) {
 
-        //$("#collapseInfosNappe").collapse('hide');
-        $("#collapseInfosPest").collapse('hide');
+        $("#collapseInfosNappe").collapse('hide');
+        //$("#collapseInfosPest").collapse('hide');
 
-        toggleSidebarInfos();
+        //toggleSidebarInfos();
 
       }
 
@@ -524,40 +597,84 @@
 
         toggledLast = props ;
 
+        badge  = "<span class='badge'>";
+        badge_ = "</span>"
+
+        d3.select('#MOYPTOT').html( badge + props.MOYPTOT.XXXXXX + " ug/L");
+
+        var pest = " pesticides différents" ;
+
+        d3.select('#nbr_F').html( badge + props.FUNCTIONS.F + badge_ + pest);
+        d3.select('#nbr_I').html( badge + props.FUNCTIONS.I + badge_ + pest);
+        d3.select('#nbr_H').html( badge + props.FUNCTIONS.H + badge_ + pest);
+
+        d3.select('#nbr_divorg').html( badge + props.FAMILLES["Divers (organiques)"] + badge_ + pest);
+        d3.select('#nbr_urees').html(  badge + props.FAMILLES["Urées"] + badge_ + pest);
+        d3.select('#nbr_azo').html(    badge + props.FAMILLES["Azoles"] + badge_ + pest);
+        d3.select('#nbr_orgchl').html( badge + props.FAMILLES["Organochlorés"] + badge_ + pest);
+        d3.select('#nbr_triaz').html(  badge + props.FAMILLES["Triazines et métabolites"] + badge_ + pest);
+
+        d3.select('#nbr_tI').html( badge + props.TYPES["I"] + badge_ + pest);
+
+
         //console.log(props);
+        if ( selected_layer == df_ME ) {
 
-        d3.select('#sb_title').html( props.NomMasseDE ); //+ " (" + props.CdMasseDEa + ")");
+          //var ME_name = props.NomMasseDE.toLowerCase() ;
 
-        d3.select('#reqTree_ME').attr("reqvalue", props.CdMasseDEa);
+          d3.select('#sb_title').html( props.NomMasseDE ); //+ " (" + props.CdMasseDEa + ")");
+          d3.select('#rep_pest_code').html( "la masse d'eau " + props.CdMasseDEa );
 
-        d3.select('#CdMasseDEa').html( props.CdMasseDEa )
-                                .attr( "href", root_ME_SANDRE + props.CdMasseDEa );
+          d3.select('#reqTree_ME_dpt').attr("reqvalue", props.CdMasseDEa);
 
-        // d3.select('#NomMasseDE').html(props.NomMasseDE);
+          d3.select('#CdMasseDEa').html( props.CdMasseDEa )
+                                  .attr( "href", root_ME_SANDRE + props.CdMasseDEa );
 
-        d3.select('#Niveau_').attr( "title", ME_infos_dict["Niveau"]["def"] );
-        d3.select('#Niveau').html(  props.Niveau );
-        d3.select('#TypeMasseD_').attr( "title", ME_infos_dict["TypeMasseD"]["def"] );
-        d3.select('#TypeMasseD').html( ME_infos_dict["TypeMasseD"]["def_val"][props.TypeMasseD] )
-                                .attr( "href", ME_infos_dict["TypeMasseD"]["link"] );
-        // d3.select('#TypeMasseD').html( props.TypeMasseD );
-        d3.select('#Karstique_').attr( "title", ME_infos_dict["Karstique"]["def"] );
-        d3.select('#Karstique').html(  ME_infos_dict["Karstique"]["def_val"][props.Karstique] )
-                                .attr( "href", ME_infos_dict["Karstique"]["link"] );
-        // d3.select('#Karstique').html(  props.Karstique );
-        d3.select('#FrangeLitt_').attr( "title", ME_infos_dict["FrangeLitt"]["def"] );
-        d3.select('#FrangeLitt').html( ME_infos_dict["FrangeLitt"]["def_val"][props.FrangeLitt] )
-                                .attr( "href", ME_infos_dict["FrangeLitt"]["link"] );
-        // d3.select('#FrangeLitt').html( props.FrangeLitt );
-        d3.select('#NatureEcou_').attr( "title", ME_infos_dict["NatureEcou"]["def"] );
-        d3.select('#NatureEcou').html( ME_infos_dict["NatureEcou"]["def_val"][props.NatureEcou] )
-                                .attr( "href", ME_infos_dict["NatureEcou"]["link"] );
+          // d3.select('#NomMasseDE').html(props.NomMasseDE);
 
-        // d3.select('#NatureEcou').html( props.NatureEcou );
+          d3.select('#Niveau_').attr( "title", ME_infos_dict["Niveau"]["def"] );
+          d3.select('#Niveau').html(  props.Niveau );
+          d3.select('#TypeMasseD_').attr( "title", ME_infos_dict["TypeMasseD"]["def"] );
+          d3.select('#TypeMasseD').html( ME_infos_dict["TypeMasseD"]["def_val"][props.TypeMasseD] )
+                                  .attr( "href", ME_infos_dict["TypeMasseD"]["link"] );
+          // d3.select('#TypeMasseD').html( props.TypeMasseD );
+          d3.select('#Karstique_').attr( "title", ME_infos_dict["Karstique"]["def"] );
+          d3.select('#Karstique').html(  ME_infos_dict["Karstique"]["def_val"][props.Karstique] )
+                                  .attr( "href", ME_infos_dict["Karstique"]["link"] );
+          // d3.select('#Karstique').html(  props.Karstique );
+          d3.select('#FrangeLitt_').attr( "title", ME_infos_dict["FrangeLitt"]["def"] );
+          d3.select('#FrangeLitt').html( ME_infos_dict["FrangeLitt"]["def_val"][props.FrangeLitt] )
+                                  .attr( "href", ME_infos_dict["FrangeLitt"]["link"] );
+          // d3.select('#FrangeLitt').html( props.FrangeLitt );
+          d3.select('#NatureEcou_').attr( "title", ME_infos_dict["NatureEcou"]["def"] );
+          d3.select('#NatureEcou').html( ME_infos_dict["NatureEcou"]["def_val"][props.NatureEcou] )
+                                  .attr( "href", ME_infos_dict["NatureEcou"]["link"] );
 
-        d3.select('#FONCTIONS').html( props.FUNCTIONS );
+          d3.select('#FONCTIONS').html( props.FUNCTIONS );
 
-        $("#collapseInfosNappe").collapse('show');
+          //$("#collapseInfosNappe").collapse('show');
+          $("#collapserInfosNappe").prop("disabled", false);
+          $("#collapseInfosNappe").collapse('show');
+
+        } else if (selected_layer == df_dpt) {
+
+          //var dpt_name = props.nom.toUpperCase() ;
+
+          d3.select('#sb_title').html( props.nom + " (" + props.code + ")" );
+          d3.select('#rep_pest_code').html( "le département " + props.code );
+
+          d3.select('#reqTree_ME_dpt').attr("reqvalue", props.code);
+
+          //hide and disable infos nappe
+          $("#collapseInfosNappe").collapse('hide');
+          $("#collapserInfosNappe").prop("disabled", true);
+
+          $("#collapseInfosPest").collapse('show');
+
+        };
+
+        //$("#collapseInfosPest").collapse('show');
+        //$("#collapseInfosNappe").collapse('show');
 
       }
 
@@ -673,8 +790,9 @@
       // choose topolayer
       if ( req_df == df_ME  )      {
         topoLayer = topoLayer_water;
+
         // sort layers by Niveau --> draw higher (deeper) first
-        console.log("refreshMap / sort topoLayer...");
+        // console.log("refreshMap / sort topoLayer...");
         //
         //console.log( topoLayer );
       }
@@ -714,7 +832,6 @@
 
           // set z_index of current layer if
           var z_index = z_index_dft;
-
 
 
           handleLayer( layer, value_fill , req_df, seq_div_qual, z_index );
@@ -801,8 +918,6 @@
 
       };
 
-      // modify Leaflet controls
-      $(".leaflet-control-layers").addClass("leaflet-control-layers-expanded") ;
 
       //return def.promise();
 
@@ -818,6 +933,7 @@
 
       // EMIT REQUEST SLICE TO SERVER
       function EmitRequestSlice(df_name) {
+        console.log(" *** EmitRequestSlice / df_name : ", df_name);
         socket.emit(
           'io_request_slice', {
             msg                 : req_client ,
@@ -830,6 +946,7 @@
 
       // EMIT REQUEST TREE TO SERVER
       function EmitRequestTree(df_name, area ) {
+        console.log(" *** EmitRequestTree / df_name : ", df_name, " - area : ", area);
         socket.emit(
           'io_request_tree', {
             msg                 : req_client ,
@@ -850,6 +967,7 @@
         //EmitRequestTree(df_ME, index_geom );
 
       });
+
 
       // IO - REFRESH DATAS AND MAP WHEN RECEIVING NEW DATA
       socket.on('io_slice_from_server', function( data_slice ) {
@@ -937,6 +1055,7 @@
       }); // <-- end : io_tree_from_server
 
 
+      // SWITCH TREE CATEGORY
       $(".switchCategTree").on("click", function() {
 
         categ_tree = $(this).attr("value") ;
@@ -955,7 +1074,7 @@
         var req_value = $(this).attr("reqvalue");
         var req_type  = $(this).attr("reqtype") ;
 
-        //console.log( "req_type : " + req_type + " / " + req_value + " (" + jQuery.type(req_value) + ")" );
+        console.log( "req_type : " + req_type + " / " + req_value ) //+ " (" + jQuery.type(req_value) + ")" );
 
         if ( req_type == "year") {
           year = req_value ;
@@ -964,7 +1083,7 @@
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
 
-        EmitRequestTree(df_ME, index_geom );
+        EmitRequestTree(df_ME, index_geom ); //////////////
 
       });
 
@@ -978,7 +1097,7 @@
 
         console.log("slider_years / year : ", year_slide) ;
 
-        document.querySelector('#annee_selected').value = year_slide ;
+        document.querySelector('#annee_selected').value  = year_slide ;
         document.querySelector('#annee_selected2').value = year_slide ;
 
         var req_value = year_slide ;
@@ -992,10 +1111,13 @@
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
 
-        EmitRequestTree(df_ME, index_geom);
+        // EmitRequestTree(df_ME, index_geom);
+        EmitRequestTree(selected_layer, index_geom);
 
         $(".slider_years").val(year_slide) ;
         //$(".slider_years").slider('refreh') ;
+
+        displayInfos(toggledLast) ;
 
       });
 
@@ -1011,15 +1133,19 @@
         if ( req_type == "MOYPTOT" ) { categ_map = "sequential" }
         else                         { categ_map = "counts" };
 
-        var req_df_ = df_ME   ; /////////
+        var req_df_ = selected_layer   ; /////////
 
         index_map = req_type  ;
         pest_map  = req_value ;
 
-        console.log("switchmap / req_value : ", req_value , " / req_type : ", req_type) ;
+        console.log("switchmap / req_value : ", req_value , " / req_type : ", req_type, " / req_df_ : ", req_df_ ) ;
 
         refreshLegend( req_df_, categ_map ) ;
-        refreshMap (   req_df_, index_map, pest_map, categ_map );
+        // refreshMap (   req_df_, index_map, pest_map, categ_map );
+
+        // refresh dpt and ME layers always together
+        refreshMap (   df_ME , index_map, pest_map, categ_map );
+        refreshMap (   df_dpt, index_map, pest_map, categ_map );
 
         console.log("");
 
@@ -1038,9 +1164,19 @@
 
         console.log("switchtree / req_value : ", req_value ) ;
 
-        EmitRequestTree( df_ME, area )
+        //EmitRequestTree( selected_layer, area ) //////////////////////////////////////////
+        EmitRequestTree( selected_layer, area ) //////////////////////////////////////////
 
       });
+
+
+      // map.on('baselayerchange', function(e) {
+      //   console.log(" :::: baselayerchange  : ");
+      // });
+
+      // $("[name='leaflet-base-layers']").change( function () {
+      //     alert('Layers selected: ' + $(this).parent().text());
+      // });
 
     }; // <-- end : ConnectSocketIO
 
@@ -1057,6 +1193,8 @@
     console.log(" - InitMap / finished ");
     console.log(" ");
 
+    // change control layer to radio buttons
+    // $('.lay_radio').parent().parent().input.attr("type", "radio");
 
 
   }); //<-- end : $(document).ready

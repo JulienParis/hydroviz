@@ -48,7 +48,7 @@ app_colors = {
     }
 
 ### variables for app sidebar
-width_sidebar   = 4
+width_sidebar   = 5
 width_full      = 12
 width_graph     = width_full - width_sidebar
 col_graph_class = "col-xs-"

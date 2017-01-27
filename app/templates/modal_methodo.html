@@ -4,7 +4,7 @@
       role="dialog"
       aria-labelledby="mod_methodo">
 
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
 
     <div class="modal-content">
 
@@ -17,7 +17,164 @@
 
       <div class="modal-body">
 
-        METHODO APPLI HERE
+        <h4 class="lead">
+          Notre premier défi était de rendre intelligible au grand public - en un coup d'oeil et avec un minimum d'outils - ces millions de mesures de concentrations. 
+          Notre second était de ne faire qu'un le minimum de calculs en amont : les données affichées à l'écran sont toutes extraites presque directement des jeux originaux.
+        </h4>
+        <hr>
+        <br>
+        <h5>
+          Plusieurs étapes ont été nécessaires pour aboutir à une data visualisation respectant au maximum l'intégrité des données originales,
+          et très peu de calculs ou d'aggrégations ont été opérés sur les données originales.
+          Cette méthodologie permettra à l'avenir une mise à jour simplifiée des données.
+        </h5>
+        <br>
+        <h5>
+          <ul>
+            <li>En amont les jeux de données ont d'abord été formatés et intégrés dans des jeux spécifiques (objets Pandas).
+            La technologie offerte par Python et la bibliothèque Pandas permettent de faire des opérations statistiques
+            très rapidement sans altérer la base de données, ou de regrouper les informations dans des tables dédiées.</li>
+            <li>Les données cartographiques ont été optimisées en amont pour une utilisation web (TopoJSON).</li>
+            <li>Le choix a été fait de jouer avec le facteur temps.</li>
+            <li>Enfin les systèmes de requêtes client (IO) ont été pensés pour renvoyer à l'utilisateur le plus rapidement possible
+              les données les plus légères et les plus synthétiques.</li>
+          </ul>
+        </h5>
+        <br>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#met_prep" aria-expanded="false" aria-controls="met_prep">
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            Préparation des données <span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="met_prep">
+          <br>
+
+          <dl class="dl-horizontal">
+
+            <dt>Données statistiques</dt>
+            <dd>
+              Les différents jeux de tableaux de mesures et les informations sur les stations de mesure ont été regroupés en plusieurs objets Pandas.
+
+              <br>Python et Pandas
+            </dd>
+
+            <dt>Données géographiques</dt>
+            <dd>
+              Les fonds de carte ont été transformer pour avoir la projection Mercator correspondant à leur utilisation dans Leaflet.
+              Les masses d'eau possédant les exacts mêmes codes (CdMasseDEa) ont été regroupées pour optimiser l'affichage.
+              Les fichiers shapefile ont été transformés en fichiers TopoJSON (format créé par M. Bostock) pour un gain de poids considérable.
+              Ces transformations ont étés faite avec GeoPandas et MapShaper (open source).
+              <br>GeoPandas, MapShaper et TopoJSON
+            </dd>
+
+          </dl>
+
+        </div>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#met_adj" aria-expanded="false" aria-controls="met_adj">
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            Adjonction de bases de données supplémentaires <span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="met_adj">
+          <br>
+
+          <dl class="dl-horizontal">
+
+            <dt>Dangerosité des produits</dt>
+            <dd>
+              Base de données TOXNET
+              <br>site
+            </dd>
+
+          </dl>
+
+          <dl class="dl-horizontal">
+
+            <dt>Eaux de surface</dt>
+            <dd>
+              Le fond de carte des eaux de surface provient de la plateforme officielle datagouv.fr.
+              Nous avons choisi d'inclure cette base dans la perspective d'une intégration dans le même outil HydroViz
+              des données de pollution aquatique, qu'elle soit de surface ou souterraine.
+              <br>
+            </dd>
+
+          </dl>
+
+        </div>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#met_select" aria-expanded="false" aria-controls="met_select">
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            Sélection et analyse des données <span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="met_select">
+          <br>
+
+          <dl class="dl-horizontal">
+
+            <dt>Requêtes côté client</dt>
+            <dd>
+              Les requêtes se font de manière asynchrones entre le serveur et le client via SocketIO.
+              Cette solution permet de garder en cache les fonds de carte et un certain nombre de paramètres pour les requêtes et l'affichage des cartes et des tableaux.
+              <br>SocketIO et Javascript
+            </dd>
+
+            <dt>Analyse côté serveur</dt>
+            <dd>
+              Les données sont préchargées une seule fois lors de l'initialisation du serveur (cloud) et gardées en mémoire sous forme d'objets Pandas
+              non altérables. Des fonctions généralistes ont été écrites afin de bénéficier de toute la puissance de Pandas de manière dynamique.
+              <br>Python, Flask et Pandas
+            </dd>
+
+          </dl>
+
+        </div>
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#met_viz" aria-expanded="false" aria-controls="met_viz">
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            Visualisation des données <span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="met_viz">
+          <br>
+
+          <dl class="dl-horizontal">
+
+            <dt>Cartographie</dt>
+            <dd>
+              L'utilisation des calques permet de
+              <br>Leaflet
+            </dd>
+
+            <dt>Treemap</dt>
+            <dd>
+              L'utilisation des calques permet de
+              <br>Leaflet
+            </dd>
+
+          </dl>
+
+        </div>
+
+
 
       </div>
 
