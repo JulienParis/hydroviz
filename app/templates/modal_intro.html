@@ -11,7 +11,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title text-center" id="ModalIntro">
-          Qu'est-ce qu'HydroViz ?
+          Qu'est-ce qu'hydroViz ?
         </h3>
       </div>
 
@@ -24,9 +24,9 @@
           </dt>
           <dd>
             <h4 class="lead">
-              une application interactive por le grand public et les spécialistes
-              permettant de visualiser la pollution aux pesticides
-              des nappes phréatiques en France entre 2007 et 2012.
+              est une application interactive pour le grand public comme pour les spécialistes de l'environnement.
+              HYDROVIZ permet de visualiser globalement et finement l'évolution de la pollution
+              des nappes phréatiques aux pesticides en France entre 2007 et 2012.
             </h4>
           </dd>
         </dl>
@@ -37,7 +37,7 @@
             title="cliquer pour plus d'infos" >
           <a class="a_" role="button" data-toggle="collapse" data-target="#intro_goal" aria-expanded="false" aria-controls="intro_goal">
             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-            pourquoi visualiser la pollution des nappes phréatiques aux pesticides ? <span class="caret"></span>
+            pourquoi est-ce important de visualiser la pollution des nappes phréatiques ? <span class="caret"></span>
           </a>
         </div>
 
@@ -100,9 +100,10 @@
           </div>
 
           <div >
-            <strong class="a_">HYDROVIZ possède un design d'ensemble minimal</strong>
+            <strong class="a_">HYDROVIZ possède un design d'ensemble épuré</strong>
             afin que les données sur la pollution de nos réserves d'eau douce soient accessibles et compréhensibles par tous.
-            Ainsi HYDROVIZ permet de visualiser très simplement <strong class="a_">l'évolution dans le temps </strong>des niveaux de concentrations de pesticides sur la France entière ou votre région :
+            Ainsi HYDROVIZ permet de visualiser très simplement <strong class="a_">l'évolution dans le temps </strong>
+            des niveaux de concentrations de pesticides sur la France entière ou votre département :
             <br><br>
             <ul>
               <li>voir <strong class="a_">combien de pesticides différents</strong> ont été détectés par catégories dans chacune des nappes ;</li>
@@ -148,10 +149,8 @@
 
         <hr>
 
-        <h6 class="indent1">
-          Vous trouverez plus d'informations sur les termes utilisés, la méthodologie, les sources, les licences utilisées
-          ainsi que des ressources supplémentaires en cliquant sur les onglets de la barre de navigation en haut de l'écran.
-        </h6>
+        {% include "_advice.html" %}
+
       </div>
 
       <div class="modal-footer">

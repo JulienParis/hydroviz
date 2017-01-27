@@ -19,35 +19,50 @@
 
         <dl class="dl-horizontal">
           <dt>
-            <img  src="{{ url_for('static', filename='images/logo_hydroviz_.jpg') }}"
+            <img  src="{{ url_for('static', filename='images/logo_hydroviz_solo_.png') }}"
                   class="img-responsive" alt="Responsive image" >
           </dt>
           <dd>
             <h4 class="lead">
-              Notre premier défi était de rendre intelligible au grand public - en un coup d'oeil et avec un minimum d'outils - ces millions de mesures de concentrations.
-              Notre second était de ne faire qu'un minimum de calculs en amont :
-              les données affichées à l'écran sont extraites presque directement des jeux originaux
-              afin de faciliter les mises à jour.
+
+              <i class="fa fa-circle" aria-hidden="true"></i>
+              Notre premier défi était de rendre intelligible au grand public - en un coup d'oeil et avec un minimum d'outils -
+              ces millions de mesures à disposition.
+
+              <br><i class="fa fa-circle" aria-hidden="true"></i>
+              Notre second défi était de n'opérer qu'un nombre minimum de calculs en amont :
+              les données affichées à l'écran sont extraites des données d'origine presque directement
+              afin de faciliter les mises à jour et la navigation.
+
+              <br><i class="fa fa-circle" aria-hidden="true"></i>
+              Le dernier défi consistait à produire une application de qualité
+              professionnelle à l'aide d'outils open source sur l'ensemble du workflow.
+
             </h4>
           </dd>
         </dl>
 
         <hr>
         <br>
-        <h5 role="alert" class="alert alert-info">
-          Plusieurs étapes ont été nécessaires pour aboutir à une data visualisation respectant au maximum l'intégrité des données originales,
-          et très peu de calculs ou d'aggrégations ont été opérés sur les données originales.
-          Cette méthodologie permettra à l'avenir une mise à jour simplifiée des données.
+
+        <h5 class="alert alert-info bstooltip" data-toggle="tooltip" data-placement="top"
+            title="cliquer pour plus d'infos" >
+          <a role="alert" class="a_" role="button" data-toggle="collapse" data-target="#met_intro" aria-expanded="false" aria-controls="met_intro">
+            Plusieurs étapes ont été nécessaires pour aboutir à une data visualisation respectant au maximum l'intégrité des données originales,
+            et très peu de calculs ou d'aggrégations ont été opérés sur les données originales.
+            <br>Cette méthodologie permettra à l'avenir une mise à jour simplifiée des données.<span class="caret"></span>
+          </a>
         </h5>
-        <h5>
+
+        <h5 class="collapse indent1" id="met_intro">
           <ul>
             <li>En amont les jeux de données ont d'abord été formatés et intégrés dans des jeux spécifiques (objets Pandas).
             La technologie offerte par Python et la bibliothèque Pandas permettent de faire des opérations statistiques
-            très rapidement sans altérer la base de données, ou de regrouper les informations dans des tables dédiées.</li>
-            <li>Les données cartographiques ont été optimisées en amont pour une utilisation web (TopoJSON).</li>
-            <li>Le choix a été fait de jouer avec le facteur temps.</li>
+            très rapidement sans altérer la base de données, ou encore de regrouper les informations dans des tables dédiées.</li>
+            <li>Les données cartographiques d'origine ont été optimisées en amont pour une utilisation web (TopoJSON).</li>
+            <li>Le choix a été fait de jouer avec le facteur temps afin de constater dynamiquement l'évolution de la pollution.</li>
             <li>Enfin les systèmes de requêtes client (IO) ont été pensés pour renvoyer à l'utilisateur le plus rapidement possible
-              les données les plus légères et les plus synthétiques.</li>
+              des données les plus légères et les plus synthétiques.</li>
           </ul>
         </h5>
 
@@ -91,7 +106,7 @@
             title="cliquer pour plus d'infos" >
           <a class="a_" role="button" data-toggle="collapse" data-target="#met_adj" aria-expanded="false" aria-controls="met_adj">
             <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-            Adjonction de bases de données supplémentaires <span class="caret"></span>
+            Intégration de bases de données supplémentaires <span class="caret"></span>
           </a>
         </div>
         <div class="collapse indent1" id="met_adj">
@@ -182,6 +197,22 @@
           </dl>
 
         </div>
+
+
+
+        <hr>
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#met_dev_" aria-expanded="true" aria-controls="met_dev_">
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            Le développement d'HYDROVIZ <span class="caret"></span>
+          </a>
+        </div>
+
+        <div class="collapse indent1" id="met_dev_">
+          {% include "_dev_history.html" %}
+        </div>
+
 
 
 
