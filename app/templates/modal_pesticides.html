@@ -21,17 +21,27 @@
 
   <div class="modal-dialog modal-lg" role="document">
 
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content" >
+      <div class="modal-header" id="HeadModalLabelPesticides">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title text-center" id="ModalLabelPesticides">
-          Pesticides - répartition pour :
-          <txt href="#" class="" id="pest_proportions" > - </txt>
-        </h3>
+
+        <div class="row">
+          <div class="col-xs-2">
+            <img  src="{{ url_for('static', filename='images/logo_hydroviz_.jpg') }}"
+                  class="img-responsive" alt="Responsive image" >
+          </div>
+          <div class="col-xs-10">
+            <h3 class="modal-title text-left indent1" id="ModalLabelPesticides">
+              Pesticides - répartition pour :
+              <txt href="#" class="" id="pest_proportions" > - </txt>
+            </h3>
+          </div>
+        </div>
+
       </div>
 
       <div class="modal-body" id="treemap_pest">
-        
+
         <!-- TREEMAP PESTICIDES HERE -->
         {% include "treemap_c.html" %}
 

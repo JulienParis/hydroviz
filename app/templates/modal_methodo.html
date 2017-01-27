@@ -17,18 +17,28 @@
 
       <div class="modal-body">
 
-        <h4 class="lead">
-          Notre premier défi était de rendre intelligible au grand public - en un coup d'oeil et avec un minimum d'outils - ces millions de mesures de concentrations. 
-          Notre second était de ne faire qu'un le minimum de calculs en amont : les données affichées à l'écran sont toutes extraites presque directement des jeux originaux.
-        </h4>
+        <dl class="dl-horizontal">
+          <dt>
+            <img  src="{{ url_for('static', filename='images/logo_hydroviz_.jpg') }}"
+                  class="img-responsive" alt="Responsive image" >
+          </dt>
+          <dd>
+            <h4 class="lead">
+              Notre premier défi était de rendre intelligible au grand public - en un coup d'oeil et avec un minimum d'outils - ces millions de mesures de concentrations.
+              Notre second était de ne faire qu'un minimum de calculs en amont :
+              les données affichées à l'écran sont extraites presque directement des jeux originaux
+              afin de faciliter les mises à jour.
+            </h4>
+          </dd>
+        </dl>
+
         <hr>
         <br>
-        <h5>
+        <h5 role="alert" class="alert alert-info">
           Plusieurs étapes ont été nécessaires pour aboutir à une data visualisation respectant au maximum l'intégrité des données originales,
           et très peu de calculs ou d'aggrégations ont été opérés sur les données originales.
           Cette méthodologie permettra à l'avenir une mise à jour simplifiée des données.
         </h5>
-        <br>
         <h5>
           <ul>
             <li>En amont les jeux de données ont d'abord été formatés et intégrés dans des jeux spécifiques (objets Pandas).
@@ -40,7 +50,6 @@
               les données les plus légères et les plus synthétiques.</li>
           </ul>
         </h5>
-        <br>
 
         <hr>
 

@@ -92,16 +92,11 @@
 
 </style>
 
-<div>
-  <h5 class="text-center">
-    La taille de chaque rectangle est proportionnelle à la concentration mesurée
-  </h5>
-</div>
-<hr>
+
+
 <div class="row">
 
-
-  <div  class="col-xs-7 bstooltip active" data-toggle="tooltip" data-placement="right"
+  <div  class="col-xs-5 bstooltip active col-xs-offset-1" data-toggle="tooltip" data-placement="top"
         title="regrouper par catégories de pesticides" >
     <form>
       <label><input type="radio" class="switchCategTree" name="mode" value="byFunctions" checked > par fonction</label>
@@ -110,7 +105,7 @@
     </form>
   </div>
 
-  <div  class="col-xs-3 bstooltip active" data-toggle="tooltip" data-placement="left"
+  <div  class="col-xs-3 bstooltip active" data-toggle="tooltip" data-placement="top"
         title="changer d'année">
     <div class="input-group">
       <input class="form-control slider_years" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
@@ -118,16 +113,38 @@
 
   </div>
 
-  <div class="col-xs-1 label label-default " id="label_years_nav">
+  <div class="col-xs-1 label label-default bstooltip" id="label_years_nav"
+        data-toggle="tooltip" data-placement="top"
+        title="année sélectionnée">
     <output for="slider_years" id="annee_selected2">
       2007
     </output>
   </div>
 
+  <div class="bstooltip col-xs-1 text-right" data-toggle="tooltip" data-placement="top"
+      title="cliquer pour voir l'aide du treemap" >
+    <a class="a_" role="button" data-toggle="collapse" data-target="#tree_help" aria-expanded="false" aria-controls="tree_help">
+      <span class="badge"><span class="glyphicon glyphicon-triangle-bottom"></span></span>
+    </a>
+  </div>
+
 </div>
 
+<div class="collapse" id="tree_help">
+  <hr>
+  <h5>
+    <ul>
+      <li>Les pesticides peuvent être regroupés selon leur fonction (les herbicides par exemple),
+        <br>leur famille chimique, ou encore leur niveau de dangerosité.</li>
+      <li>La taille de chaque rectangle est proportionnelle à la concentration mesurée.</li>
+      <li>Cliquer sur une sous-catégorie pour voir en détail les pesticides correspondants à la catégorie.</li>
+      <li>Cliquer sur la barre supérieure pour revenir à la vue globale.</li>
+    </ul>
+  </h5>
+</div>
 
-<br>
+<hr>
+
 
 <div id="tooltip_tree" class="hidden">
 
@@ -171,9 +188,7 @@
 <h5>
   * les rectangles en rouge représentent les pesticides dont la mesure dépasse la norme autorisée
   <br>
-  ** cliquer sur une sous-catégorie pour voir en détail / cliquer sur la barre supérieure pour revenir à la vue globale
-  <br>
-  *** survoler un pesticide pour afficher ses infos / cliquer pour plus d'informations sur la base de données
+  ** survoler un pesticide pour afficher ses infos / cliquer pour plus d'informations sur la base de données
   <a class="a_" target="_blank" href="http://www.agritox.anses.fr/php/fiches.php">
     AGRITOX
   </a>
@@ -368,7 +383,7 @@
     console.log(" >>>> makeTreeMap C / variables :");
 
     var margin = {top: 20, right: 0, bottom: 0, left: 0},
-        width  = $('#ModalLabelPesticides').width(),
+        width  = $('#HeadModalLabelPesticides').width(),
         //width  = $('#chart').width(),
         //width  = 868,
 

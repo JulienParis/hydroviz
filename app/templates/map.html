@@ -540,7 +540,7 @@
 
     // display infos on click
     var toggledLast ;
-    
+
     var root_ME_SANDRE = "http://www.sandre.eaufrance.fr/fiche-geo?id=rdytcq/dataset/244/MasseDEauSouterraine/" ;
 
     var ME_infos_dict = {
@@ -602,7 +602,7 @@
 
         d3.select('#MOYPTOT').html( badge + props.MOYPTOT.XXXXXX + " ug/L");
 
-        var pest = " pesticides différents" ;
+        var pest = " pesticides différents détectés" ;
 
         d3.select('#nbr_F').html( badge + props.FUNCTIONS.F + badge_ + pest);
         d3.select('#nbr_I').html( badge + props.FUNCTIONS.I + badge_ + pest);
@@ -652,6 +652,9 @@
 
           d3.select('#FONCTIONS').html( props.FUNCTIONS );
 
+          // d3.select('#pest_proportions').html(props.CdMasseDEa);
+
+
           //$("#collapseInfosNappe").collapse('show');
           $("#collapserInfosNappe").prop("disabled", false);
           $("#collapseInfosNappe").collapse('show');
@@ -670,6 +673,8 @@
           $("#collapserInfosNappe").prop("disabled", true);
 
           $("#collapseInfosPest").collapse('show');
+
+          // d3.select('#pest_proportions').html(props.nom);
 
         };
 
@@ -1049,7 +1054,7 @@
         };
 
         // makeTreeMap (tree_FUNCTIONS);
-        d3.select('#pest_proportions').html(index_geom); // + " (en " + year + ")");
+        d3.select('#pest_proportions').html(index_geom);
         makeTreeMap ( dataset_trees, radio_tree );
 
       }); // <-- end : io_tree_from_server
