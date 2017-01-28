@@ -3,7 +3,7 @@
 import os
 import json
 import pandas as pd
-import geopandas as gp
+#import geopandas as gp
 import numpy as np
 
 from .. import SITE_ROOT, SITE_STATIC, STATIC_DATA, STATIC_DATA_STATS, STATIC_DATA_CARTO
