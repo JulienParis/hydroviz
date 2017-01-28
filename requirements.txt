@@ -1,5 +1,4 @@
 backports-abc==0.5
-bokeh==0.12.3
 certifi==2016.9.26
 click==6.6
 click-plugins==1.0.3
@@ -8,10 +7,8 @@ descartes==1.0.2
 enum-compat==0.0.2
 enum34==1.1.6
 eventlet==0.20.1
-Fiona==1.7.1.post1
 Flask==0.12
 Flask-SocketIO==2.8.2
-folium==0.2.1
 futures==3.0.5
 geopandas==0.2.1
 greenlet==0.4.11
