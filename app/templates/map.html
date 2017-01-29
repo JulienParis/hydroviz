@@ -1054,7 +1054,8 @@
         };
 
         // makeTreeMap (tree_FUNCTIONS);
-        d3.select('#pest_proportions').html(index_geom);
+        // d3.select('#pest_proportions').html(index_geom);
+        d3.select('#pest_proportions').html(function () { return index_geom=="TOT_FRANCE" ? "toute la France" : index_geom } );
         makeTreeMap ( dataset_trees, radio_tree );
 
       }); // <-- end : io_tree_from_server

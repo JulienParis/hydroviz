@@ -29,14 +29,15 @@
               Notre premier défi était de rendre intelligible au grand public - en un coup d'oeil et avec un minimum d'outils -
               ces millions de mesures à disposition.
 
-              <br><i class="fa fa-circle" aria-hidden="true"></i>
-              Notre second défi était de n'opérer qu'un nombre minimum de calculs en amont :
-              les données affichées à l'écran sont extraites des données d'origine presque directement
+              <hr><i class="fa fa-circle" aria-hidden="true"></i>
+              Notre second défi était de respecter les données d'origine en l'état :
+              les données affichées à l'écran sont extraites des données originales presque directement,
               afin de faciliter les mises à jour et la navigation.
 
-              <br><i class="fa fa-circle" aria-hidden="true"></i>
+              <hr><i class="fa fa-circle" aria-hidden="true"></i>
               Le dernier défi consistait à produire une application de qualité
-              professionnelle à l'aide d'outils open source sur l'ensemble du workflow.
+              quasi professionnelle en ne choisissant que des outils open source,
+              depuis la conception jusqu'à la mise en ligne.
 
             </h4>
           </dd>
@@ -56,9 +57,15 @@
 
         <h5 class="collapse indent1" id="met_intro">
           <ul>
-            <li>En amont les jeux de données ont d'abord été formatés et intégrés dans des jeux spécifiques (objets Pandas).
-            La technologie offerte par Python et la bibliothèque Pandas permettent de faire des opérations statistiques
-            très rapidement sans altérer la base de données, ou encore de regrouper les informations dans des tables dédiées.</li>
+            <li>
+              En amont les
+              <a class="a_" target="_blank" href="http://www.donnees.statistiques.developpement-durable.gouv.fr/dataviz_pesticides/BDD%20concours%20Pesticides%20VF.zip">
+              jeux de données originaux
+              </a>
+              ont d'abord été formatés et intégrés dans des jeux spécifiques (objets Pandas).
+              La technologie offerte par Python et la bibliothèque Pandas permettent de faire des opérations statistiques
+              très rapidement sans altérer la base de données, ou encore de regrouper les informations dans des tables dédiées.
+            </li>
             <li>Les données cartographiques d'origine ont été optimisées en amont pour une utilisation web (TopoJSON).</li>
             <li>Le choix a été fait de jouer avec le facteur temps afin de constater dynamiquement l'évolution de la pollution.</li>
             <li>Enfin les systèmes de requêtes client (IO) ont été pensés pour renvoyer à l'utilisateur le plus rapidement possible
@@ -83,17 +90,21 @@
             <dt>Données statistiques</dt>
             <dd>
               Les différents jeux de tableaux de mesures et les informations sur les stations de mesure ont été regroupés en plusieurs objets Pandas.
-
-              <br>Python et Pandas
+              Les données affichées pour les masses d'eau souterraines sont obtenues en faisant la moyenne des mesures des stations
+              qui possèdent des données pour la masse d'eau considérée.
+              <br>
+              Un jeu complémentaire a été créé pour pouvoir afficher les données selon les départements :
+              les données affichées pour les départements sont obtenues en faisant la moyenne des mesures des stations situées au département considéré.
+              <strong>Python et Pandas</strong>
             </dd>
 
             <dt>Données géographiques</dt>
             <dd>
-              Les fonds de carte ont été transformer pour avoir la projection Mercator correspondant à leur utilisation dans Leaflet.
-              Les masses d'eau possédant les exacts mêmes codes (CdMasseDEa) ont été regroupées pour optimiser l'affichage.
-              Les fichiers shapefile ont été transformés en fichiers TopoJSON (format créé par M. Bostock) pour un gain de poids considérable.
-              Ces transformations ont étés faite avec GeoPandas et MapShaper (open source).
-              <br>GeoPandas, MapShaper et TopoJSON
+              Les fonds de carte ont été transformés pour avoir la projection Mercator correspondant à leur utilisation dans Leaflet.
+              Les masses d'eau possédant les exacts mêmes codes ("CdMasseDEa") ont été regroupées pour optimiser l'affichage.
+              Les fichiers shapefile ont été transformés en fichiers TopoJSON (format créé par M. Bostock, créateur de D3.js) pour un gain de poids considérable.
+              Ces transformations ont étés faite avec GeoPandas et MapShaper (tous deux open source).
+              <strong>GeoPandas, MapShaper et TopoJSON</strong>
             </dd>
 
           </dl>
@@ -116,13 +127,12 @@
 
             <dt>Dangerosité des produits</dt>
             <dd>
-              Base de données TOXNET
-              <br>site
+              Nous nous sommes basés sur la base de données américaine TOXNET pour retrouver la niveau de dangerosité des pesticides.
+              Nous avons - pour le moment - fait ce choix faute de trouver une base de données européenne
+              dans un format convenable pour l'analyse, type .csv ou .xls
+              (nous avons seulement trouvé un pdf qui n'était pas exploitable )
+              <stron><a class="a_" target="_blank" href="https://toxnet.nlm.nih.gov">site de TOXNET</a></strong>
             </dd>
-
-          </dl>
-
-          <dl class="dl-horizontal">
 
             <dt>Eaux de surface</dt>
             <dd>
@@ -182,16 +192,29 @@
 
           <dl class="dl-horizontal">
 
+            <dt>"slider" temporel</dt>
+            <dd>
+              Une dimension essentielle de la pollution est son évolution dans le temps.
+              Par un simple glissement sur la barre de défilement - un outil maintenant commun tel que sur les vidéos YouTube -
+              l'utilisateur peut voir par lui-même cette évolution.
+              <strong>Javascript + socketIO</strong>
+            </dd>
+
             <dt>Cartographie</dt>
             <dd>
-              L'utilisation des calques permet de
-              <br>Leaflet
+              La carte est un outil parlant pour le grand public car on peut rapidement se situer et rendre ainsi l'information
+              plus concrète.
+              De plus l'utilisation des calques permet de choisir entre une visualisation des données par masses d'eau (les données d'origine),
+              ou une visualisation par départements ,peut-être plus parlante pour le grand public.
+              <strong>Leaflet</strong>
             </dd>
 
             <dt>Treemap</dt>
             <dd>
-              L'utilisation des calques permet de
-              <br>Leaflet
+              La variété des pesticides détectés et leurs différentes caractéristiques imposaient de trouver
+              une façon de rendre compréhensible toutes ces dimensions. Cet outil s'adresse à des personnes voulant
+              approfondir leur connaissance sur les pesticides détectés et leur action sur l'environnement ou la santé.
+              <strong>D3.js</strong>
             </dd>
 
           </dl>
