@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import app, socketio
 
 if __name__ == "__main__":
-    app.run_pesticides()
+    app.run_pesticides_prod()
 
 ### start gunicorn from terminal :
 ### from : /apps/concours_pesticides/
