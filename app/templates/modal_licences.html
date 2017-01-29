@@ -11,7 +11,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title text-center" id="ModalLicences">
-          Licences utilisées et informations légales
+          Licences utilisées et mentions légales
         </h3>
       </div>
 
@@ -302,6 +302,43 @@
           {% include "_dev_history.html" %}
         </div>
 
+
+        <hr>
+
+        <div class="bstooltip" data-toggle="tooltip" data-placement="left"
+            title="cliquer pour plus d'infos" >
+          <a class="a_" role="button" data-toggle="collapse" data-target="#lic_leg" aria-expanded="false" aria-controls="lic_leg">
+            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
+            Mentions légales<span class="caret"></span>
+          </a>
+        </div>
+        <div class="collapse indent1" id="lic_leg">
+          <br>
+          <div role="alert" class="alert alert-info">
+            <strong>Site non commercial</strong>
+            <hr>
+            Coordonnées du responsable du site :
+            <address>
+              <strong>Julien Paris</strong><br>
+              28 rue de Gigant<br>
+              44100 Nantes<br>
+              <abbr title="Phone">T:</abbr> +33 6.83.65.84.91<br>
+              <abbr title="EMail">E:</abbr> <a class="a_" href="mailto:jparis.py@gmail.com">jparis.py@gmail.com</a><br>
+              <abbr title="Site professionnel">Site:</abbr> <a class="a_" target="_blank" href="http://www.jpylab.fr">jpylab.fr</a><br>
+              <abbr title="Siret">Siret:</abbr> 822 968 699 00014
+            </address>
+            <hr>
+            Coordonnées de l'hébergeur :
+            <address>
+              <strong>DigitalOcean</strong><br>
+              101 Avenue of the Americas 10th Floor<br>
+              New York, NY 10013<br>
+              <abbr title="Phone">P:</abbr> (123) 456-7890<br>
+              <abbr title="EMail">M:</abbr> <a class="a_" href="mailto:legal@digitalocean.com">legal@digitalocean.com</a>
+            </address>
+          </div>
+
+        </div>
 
       </div>
 
