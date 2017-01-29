@@ -439,6 +439,10 @@
           }
           div.innerHTML += '<label>' + unit + '</label>';
 
+          if (selected_layer == df_ME) {
+            div.innerHTML += "<hr><p class='indent2' margin-top='5px'><small>* les nappes d'eau souterraines peuvent parfois se superposer <br> sur la carte si elles sont à des profondeurs différentes</small></p>";
+          };
+
           return div;
       };
 
@@ -974,6 +978,15 @@
       });
 
 
+      // progress bar
+      // function progressBar(state) {
+      //   console.log("progressBar / received",state.reveived);
+      //   console.log("progressBar / received",state.reveived);
+      //   console.log("progressBar / received",state.reveived);
+      //   console.log("progressBar / received",state.reveived);
+      // };
+
+
       // IO - REFRESH DATAS AND MAP WHEN RECEIVING NEW DATA
       socket.on('io_slice_from_server', function( data_slice ) {
 
@@ -1007,6 +1020,8 @@
         var data_FUNCTIONS_json       = JSON.parse(data_FUNCTIONS) ;
         var data_FAMILLES_json        = JSON.parse(data_FAMILLES) ;
         var data_TYPES_json           = JSON.parse(data_TYPES) ;
+
+
 
         var dataset = {
           "MOYPTOT"         : data_MOYPTOT_json,

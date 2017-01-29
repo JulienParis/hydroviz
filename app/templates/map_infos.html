@@ -162,8 +162,10 @@
 
     <div  class="col-sm-12">
 
-      <h4 class="indent1 bstooltip" data-toggle="tooltip" data-placement="left" style="margin-bottom:16px"
-          title="voir la répartition des pesticides pour cette masse d'eau / département et pour l'année sélectionnée (carte hiérarchique)">
+      <h4 class="indent1 bstooltip tooltip_img" data-toggle="tooltip" data-placement="left" style="margin-bottom:16px"
+          title="voir la répartition des pesticides pour cette masse d'eau / département
+                  et pour l'année sélectionnée (carte hiérarchique)<hr>
+                  <img src='{{ url_for('static', filename='images/tooltip_treemap.png') }}'>">
         <a role="button"
             class="switchtree"
             id="reqTree_ME_dpt"
@@ -177,7 +179,7 @@
         </a>
       </h4>
 
-      <hr><hr>
+      <hr>
 
       <h4 class="bstooltip" data-toggle="tooltip" data-placement="left"
           title="concentration moyenne totale, nombre de pesticides détectés..." >
