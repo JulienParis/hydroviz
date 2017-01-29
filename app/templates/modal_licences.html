@@ -232,7 +232,8 @@
           <br>
           <div role="alert" class="alert alert-info">
             Le code source est en open source sur la plateforme GitLab,
-            l'hébergement de l'application est faite grâce au service Digital Ocean
+            l'hébergement de l'application est faite grâce au service Digital Ocean.
+            Les services de proxy et web utilisés sont Nginx et Gunicorn.
           </div>
           <hr>
           <dl class="dl-horizontal">
@@ -244,8 +245,9 @@
               <a class="a_" target="_blank" href="https://gitlab.com/Julien_P/concours_pesticides">
               GitLab
               </a>
-              : code source
+              : plateforme libre de partage du code source
             </dd>
+
             <hr>
 
             <dt>
@@ -255,8 +257,33 @@
               <a class="a_" target="_blank" href="http://digitalocean.com">
               Digital Ocean
               </a>
-              : hébergement cloud
+              : hébergement cloud sur serveur Ubuntu Ubuntu 14.04.5 x64 (2 CPU / 4 Go)
             </dd>
+
+            <hr>
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_nginx.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://nginx.com">
+              Nginx
+              </a>
+              : logiciel libre de serveur Web (ou HTTP) ainsi qu'un proxy inverse écrit par Igor Sysoev
+            </dd>
+
+            <hr>
+
+            <dt>
+              <img src="{{ url_for('static', filename='images/logo_gunicorn.png') }}" class="img-responsive" alt="Responsive image">
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://gunicorn.org">
+              Gunicorn
+              </a>
+              : logiciel libre serveur Python WSGI HTTP pour UNIX
+            </dd>
+
 
           </dl>
 
