@@ -1,7 +1,7 @@
 # ==================== CONCOURS DATAVIZ PESTICIDES ====================
 ============================================================
 
-### 
+###
 
 Licence : ?
 Authors : Julien Paris / Florian Melki
@@ -13,7 +13,7 @@ Authors : Julien Paris / Florian Melki
 	- stats : pesticides concentrations by stations / .xlsx and .csv files
 	- carto : underground waters / .shp files
 
-- _Concours rules_ : 
+- _Concours rules_ :
 	- http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html
 	- http://www.developpement-durable.gouv.fr/IMG/pdf/Reglement_Concours_Datavisualisation_Pesticides_dans_eaux_souterraines_15_12_2016_VF.pdf
 
@@ -21,36 +21,26 @@ Authors : Julien Paris / Florian Melki
 ## Features :
 This app proposes different features :
 - _dynamic data visualisation_ of pesticides concentrations stats by stations
-- _interactive cartography_ of underground waters in France
+- _interactive cartography_ of groundwaters in France
 - ...
 
 -----------------------------------------------------
-## Under the hood : 
+## Under the hood :
 
 _Minimal Flask application_ with the following architecture and libraries
 
-- _panda_       : data analysis, access and query stats datas in Python (licence BSL)
+- _pandas_      : data analysis, access and query stats datas in Python (licence BSL)
 	- includes / dependencies :
 		- numpy (licence ?)
-		- ... 
+		- ...
 - _geopandas_   : access and query geo datas in Python   (licence ?)
-	- includes / dependencies : 
-		- shapely (licence ?) 
-		- ...
-- _topojson.py_ : conversion geojson <--> topojson to reduce size of geodatas
-	- includes / dependencies : 
-		- ...
-- _Folium_    : directly create Leaflet with Python (licence ?)
-	- includes / dependencies : 
-- _Vincent_   :  ( licence )
-	- includes / dependencies : 
+	- includes / dependencies :
+		- shapely (licence ?)
 		- ...
 - _flask_     : web framework in Python (licence ? )
 - _bootstrap_ : (licence)
-    - _D3_.js : 
+    - _D3_.js :
     - _Leaflet_ : (automatic from Folium)
 
 
 # ::::: TO DO : WRITE DOCUMENTATION FOR INSTALLATION AND USE IN A VENV
-
-
