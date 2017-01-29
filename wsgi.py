@@ -11,7 +11,7 @@ CONFIG = {
     # 'python': '/usr/bin/python',
     'args': (
         '--bind=0.0.0.0:5000',
-        '--workers=16',
+        '--workers=3',
         '--timeout=120',
         'app.run_pesticides_prod',
     ),

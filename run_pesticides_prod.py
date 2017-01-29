@@ -16,8 +16,8 @@ import os
 #
 # socketio = SocketIO(app)
 
-port_  = 3000
-debug_ = True
+# port_  = 3000
+# debug_ = True
 
 
 if __name__ == '__main__':
