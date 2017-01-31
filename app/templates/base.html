@@ -6,7 +6,7 @@
 
     <meta charset="utf-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- GOOGLE INDEXING  -->
     <meta name="google-site-verification" content="1AgZtEeVVQGWA4lhM36oI35y6o0a8UAHyIF8gtRBpm0" />
@@ -124,6 +124,7 @@
   <!--  bootstrap callings  -->
   <script type="text/javascript">
 
+
     // activate bootstrap dropdown
     $(document).ready( function(){ $(".dropdown-toggle").dropdown() } ) ;
 
@@ -173,6 +174,29 @@
         html     : true
     });
 
+
+    //change app scale if view on mobile screen :
+    var screen_width = window.innerWidth;
+    console.log("$(document).ready / screen_width : ", screen_width);
+    if (screen_width < 600 ) {
+    // if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
+      console.log("--- !!! --- small screen_width < 600px  ");
+      // var viewportmeta = document.querySelector('meta[name="viewport"]');
+      // if (viewportmeta) {
+      //   viewportmeta.content = 'width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=0.35';
+      //   document.body.addEventListener('gesturestart', function () {
+      //       viewportmeta.content = 'width=device-width, minimum-scale=0.35, maximum-scale=1.0';
+      //   }, false);
+      // }
+      // $("meta[name='viewport']").attr("content", "width=device-width, initial-scale=0.1");
+      $("meta[name='viewport']").attr("content", "width=device-width, initial-scale=0.35");
+    }
+    else if (screen_width < 800 ) {
+      console.log("--- !!! --- small screen_width < 800px  ");
+      $("meta[name='viewport']").attr("content", "width=device-width, initial-scale=0.7");
+
+    }
+    ;
 
   </script>
 

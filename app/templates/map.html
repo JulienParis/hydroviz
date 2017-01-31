@@ -121,9 +121,9 @@
   };
 
 
-
   // CHECK WINDOW SIZE
   $(window).load(function() {
+
 
     var window_w = window.innerWidth;
     var window_h = window.innerHeight;
@@ -1189,6 +1189,10 @@
         EmitRequestTree( selected_layer, area ) //////////////////////////////////////////
 
       });
+
+
+      EmitRequestSlice(df_ME);
+      EmitRequestSlice(df_dpt);
 
 
       // map.on('baselayerchange', function(e) {
