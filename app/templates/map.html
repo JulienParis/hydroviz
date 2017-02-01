@@ -418,7 +418,7 @@
           var div = L.DomUtil.create('div', 'info legend');
           var grades = min_max_array  ;
 
-          if (seq_div_qual == "sequential")  { var label = "moyenne des concentrations totales " + "(" + year + ")", unit = "ug/l" ; }
+          if (seq_div_qual == "sequential")  { var label = "moyenne des concentrations totales " + "(" + year + ")", unit = "&#181g/l" ; }
           else if (seq_div_qual == "counts") { var label = "nombre de pesticides détectés / " + pest_map + " : " + dict_categs_legend[index_map][pest_map] + " (" + year + ")", unit = "pest." ; };
 
           div.innerHTML += '<p>' + label + '</p>';
@@ -604,7 +604,7 @@
         badge  = "<span class='badge'>";
         badge_ = "</span>"
 
-        d3.select('#MOYPTOT').html( badge + props.MOYPTOT.XXXXXX + " ug/L");
+        d3.select('#MOYPTOT').html( badge + props.MOYPTOT.XXXXXX + " &#181g/L");
 
         var pest = " pesticides différents détectés" ;
 

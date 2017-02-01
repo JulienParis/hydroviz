@@ -304,9 +304,9 @@
       d3.select("#tooltip_tree #pest_lib")
          .html( byPest[ Number(d.name) ].LB_PARAMETRE ); //+ " (code " + d.name + ")" ) ;
       d3.select("#tooltip_tree #value")
-            .html(      dt + "valeur mesurée"     + dt_ + dd + d.value + " ug/L"                      + dd_ );
+            .html(      dt + "valeur mesurée"     + dt_ + dd + d.value + " &#181g/L"                      + dd_ );
       d3.select("#tooltip_tree #norme_dce")
-            .html(      dt + "norme autorisée"    + dt_ + dd + byPest[ Number(d.name) ].NORME_DCE + " ug/L" + dd_ ) ;
+            .html(      dt + "norme autorisée"    + dt_ + dd + byPest[ Number(d.name) ].NORME_DCE + " &#181g/L" + dd_ ) ;
 
       d3.select("#tooltip_tree #code_cas")
             .html(      dt + "code CAS"           + dt_ + dd  + byPest[ Number(d.name) ].CODE_CAS     + dd_ ) ;
