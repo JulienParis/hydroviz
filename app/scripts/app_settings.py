@@ -5,15 +5,16 @@
 app_metas = {
     "title"       : u"HydroViz",
     "subtitle"    : u"concentrations de pesticides dans les nappes phréatiques en France",
-    "version"     : u"beta 0.1",
-    "description" : u"cartographie et datavisualisation de la teneur en pesticides des nappes phréatiques de France entre 2007 et 2012",
+    "version"     : u"beta 0.2",
+    "description" : u"cartographie et datavisualisation de la teneur en pesticides des nappes phréatiques de France entre 2007 et 2014",
     "authors"     : u"Julien Paris | Florian Melki",
-    "licence"     : 'by-nc-sa',
+    "licence"     : 'GNU GPL',
     "metas"       : u"""
         dataviz,data visualisation,graph,SIG,
         pesticides,pollution,nappes phréatiques,insecticides,
+        groundwater,water,ecology,
         pandas,geopandas,socketio,
-        Etalab,ecologie,ecology,water,
+        Etalab,ecologie,ecologie,
         opensource,open source,open data,creative commons,github,
         d3,d3.js,javascript,python,flask,HTML,CSS,JSON,bootstrap,Leaflet,socketIO
         """

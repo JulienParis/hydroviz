@@ -120,3 +120,25 @@ a.aFake {
 .tooltip.top .tooltip-arrow {
     border-top-color: {{ app_colors.btn_info }} ;
 }
+
+
+
+.container_logos {
+height: 100px;
+}
+
+.container_logos  .img-responsive {
+    display: block;
+    width: auto;
+    max-height: 100%;
+}
+
+.container_photos {
+height: 120px;
+}
+
+.container_photos  .img-responsive {
+    display: block;
+    width: auto;
+    max-height: 100%;
+}

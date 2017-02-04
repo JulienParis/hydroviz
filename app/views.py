@@ -5,7 +5,7 @@ import time, os
 import datetime
 import json
 
-from app import app, socketio
+from app   import app, socketio
 from flask import Flask, flash, render_template, url_for, request, session, redirect
 
 from flask_socketio import emit #, send
@@ -66,6 +66,7 @@ limit_minus    = - limit_middle
 
 #from scripts.load_data import  df_dict, var_dict
 from scripts.get_data import GetDataSlice, var_dict #, empty_counts
+
 
 
 ### routing #######################

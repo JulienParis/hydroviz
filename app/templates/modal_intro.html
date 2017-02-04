@@ -1,3 +1,4 @@
+
 <div class="modal fade in "
       id="mod_intro"
       tabindex="-1"
@@ -30,7 +31,7 @@
               <hr>
               HYDROVIZ permet de visualiser globalement et finement l'évolution de la
               <strong>pollution des nappes phréatiques aux pesticides </strong>
-              entre 2007 et 2012 en France.
+              entre {{ var_dict['annees'][0] }} et {{ var_dict['annees'][-1] }} en France.
             </h4>
 
             <h5 class="alert  alert-warning">
@@ -177,15 +178,35 @@
 
         <hr>
 
-        {% include "_advice.html" %}
-
-        <hr>
-
-        <h6 class="indent1">
+        <h6 class="text-center">
           Numéro d'enregistrement de l’équipe HydroViz au concours :  DatavizPesticides-1086
+          <br>
+          Partenaires et organisateurs du
+          <a class="a_" target="_blank" href="http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html">
+            concours de data-visualisation sur les pesticides dans les eaux souterraines
+          </a>
         </h6>
+        <div class="row">
+          <div class="col-xs-4 container_logos">
+            <a target="_blank" href="http://www.developpement-durable.gouv.fr/">
+              <img  src="{{ url_for('static', filename='images/logo_MEEM.jpg') }}"
+                    class="img-responsive pull-right" alt="Responsive image" >
+            </a>
+          </div>
+          <div class="col-xs-4 container_logos">
+            <a target="_blank" href="http://www.developpement-durable.gouv.fr/Greentech-verte.html">
+              <img  src="{{ url_for('static', filename='images/logo_greentech.jpg') }}"
+                    class="img-responsive center-block" alt="Responsive image" >
+            </a>
+          </div>
+          <div class="col-xs-4 container_logos">
+            <a target="_blank" href="http://sandre.eaufrance.fr">
+              <img  src="{{ url_for('static', filename='images/logo_sandre_mini2.jpg') }}"
+                    class="img-responsive pull-left" alt="Responsive image">
+            </a>
+          </div>
+        </div>
 
-        <hr>
 
       </div>
 

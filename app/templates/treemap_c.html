@@ -13,10 +13,20 @@
     font-weight: bold;
   }
 
+  /*svg.patterns {
+    width: 10px;
+    height: 10px;
+  }*/
+
   rect {
     fill: none;
     stroke: #fff;
 
+  }
+
+  /* for hatching but not working yet */
+  rect.hbar {
+    mask : url(#mask-stripe)
   }
 
   rect.parent,
@@ -35,7 +45,6 @@
   .grandparent:hover rect {
     fill: #ee9700;
   }
-
 
 
   .children rect.parent,
@@ -119,7 +128,9 @@
   <div  class="col-xs-3 bstooltip active" data-toggle="tooltip" data-placement="top"
         title="changer d'année">
     <div class="input-group">
-      <input class="form-control slider_years" type="range" min="2007" max="2012" value="2007" step="1" id="slider_years">
+      <input  class="form-control slider_years" type="range"
+              min="{{ var_dict['annees'][0] }}" max="{{ var_dict['annees'][-1] }}" value="{{ var_dict['annees'][0] }}"
+              step="1" id="slider_years">
     </div>
 
   </div>
@@ -128,7 +139,7 @@
         data-toggle="tooltip" data-placement="top"
         title="année sélectionnée">
     <output for="slider_years" id="annee_selected2">
-      2007
+      {{ var_dict['annees'][0] }}
     </output>
   </div>
 
@@ -189,7 +200,27 @@
 </div>
 
 
-<p id="chart">
+<p>
+  <div>
+    <!-- <?xml version="1.0" standalone="no"?> -->
+    <svg id="chart"  xmlns="http://www.w3.org/2000/svg" version="1.1" >
+
+      <!-- HATCHING PATTERNS NOT WORKING YET -->
+      <defs>
+        <pattern id="pattern-stripe"
+          width="4" height="4"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(45)">
+          <rect width="2" height="4" transform="translate(0,0)" fill="red" />
+        </pattern>
+        <mask id="mask-stripe">
+          <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-stripe)" />
+        </mask>
+      </defs>
+
+    </svg>
+  </div>
+</p>
 
 <!-- <form>
   <label><input type="radio" name="mode" value="sumByValue" checked> Valeur </label>
@@ -215,7 +246,7 @@
   var root_agritox = "http://www.agritox.anses.fr/php/sa.php?sa=" ;
 
   var is_link     = '<span class="glyphicon glyphicon-new-window"></span> cliquer pour voir la référence dans AGRITOX' ;
-  var no_link     = '<span class="glyphicon glyphicon-new-window"></span> pas de référence trouvée dans AGRITOX' ;
+  var no_link     = '<span class="glyphicon glyphicon-new-window" style="color:red"></span> pas de référence trouvée dans AGRITOX' ;
 
   var dict_categs = {
     "byFunctions" : { "H"   : "herbicides",
@@ -302,7 +333,7 @@
 
       //code_cas   code_famille  formule fonctions
       d3.select("#tooltip_tree #pest_lib")
-         .html( byPest[ Number(d.name) ].LB_PARAMETRE ); //+ " (code " + d.name + ")" ) ;
+            .html( byPest[ Number(d.name) ].LB_PARAMETRE ); //+ " (code " + d.name + ")" ) ;
       d3.select("#tooltip_tree #value")
             .html(      dt + "valeur mesurée"     + dt_ + dd + d.value + " &#181g/L"                      + dd_ );
       d3.select("#tooltip_tree #norme_dce")
@@ -419,12 +450,18 @@
         .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
         .round(false);
 
-    var svg = d3.select("#chart").append("svg")
-        .attr("class", "svg_treemap")
+    d3.select("#chart")
         .attr("width" , width  + margin.left + margin.right)
         .attr("height", height + margin.bottom + margin.top)
         .style("margin-left" , -margin.left  + "px")
-        .style("margin.right", -margin.right + "px")
+        .style("margin.right", -margin.right + "px");
+
+    var svg = d3.select("#chart").append("g")//.append("svg")
+        .attr("class", "svg_treemap")
+        // .attr("width" , width  + margin.left + margin.right)
+        // .attr("height", height + margin.bottom + margin.top)
+        // .style("margin-left" , -margin.left  + "px")
+        // .style("margin.right", -margin.right + "px")
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .style("shape-rendering", "crispEdges");
@@ -549,7 +586,9 @@
       // colors rect
       g.selectAll("rect")
           // .style("fill", function(d) { return color(d.parent.name); });
-          .style("fill", overNormColor );
+          .style("fill", overNormColor )
+          //.attr("class", "hbar")
+          ;
 
       function overNormColor(d) {
         if (byPest[Number(d.name)]) {

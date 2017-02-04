@@ -225,7 +225,7 @@ print
 
 ### lists vars for automatic dropdowns
 var_dict = {
-    "annees"           : [ 2007, 2008, 2009, 2010, 2011, 2012 ],
+    "annees"           : [ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 ],
     #"regions"          : [],
     "departements"     : dict_dpt_com,
     #"communes"         : [],
