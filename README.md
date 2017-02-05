@@ -166,8 +166,12 @@ $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class even
 
 - add the new dataset as .xls file in `./statics/data/stats`
 - run `pesticides_analysis_03.ipynb` in jupyter
-	+ within `pesticides_analysis_03.ipynb` change var `copies_done` to `False`
-	+ (it updates files in `./app/static/data/stats_web`)
+	+ within `pesticides_analysis_03.ipynb`
+		* change var `copies_done` to `False`
+		* add new year to years list
+		* add file name in corresponding lists
+		* run script
+	+ (--> it updates files in `./app/static/data/stats_web`)
 
 - restart gunicorn :
 	+ `$ pkill gunicorn`
