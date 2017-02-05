@@ -65,7 +65,7 @@ This app proposes different features :
 - server side : ubuntu 14.04 x64 | 4 Go RAM minimum
 
 
-### Installation :
+### Installation on Ubuntu server :
 
 - update ubuntu : `$ sudo apt-get update`
 
@@ -77,14 +77,14 @@ This app proposes different features :
 >
 ```
 $ mkdir apps
-$ cd app_colors
+$ cd app
 $ git config --list
 $ git init
 $ git clone git@gitlab.com:Julien_P/concours_pesticides.git
 ```
 
 
-- configure firewall for socketIO, NGINX and Gunicorn :
+- configure server firewall for socketIO, NGINX and Gunicorn :
 >
 ```
 $ sudo ufw allow www
@@ -122,6 +122,7 @@ copy file `hydroviz` (from `./nginx_config/sites-enabled`) there
 >
 go to same level than `wsgi.py` and start app by :
 ```
+$ cd apps/concours_pesticides
 $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class eventlet wsgi:app &
 ```
 
@@ -129,8 +130,13 @@ $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class even
 - ( if needed / stop unicorn server ) : `$ pkill gunicorn`
 
 
-### Import new dataset :
+### Import a new dataset :
 
 - add the new dataset as .xls file in `./statics/data/stats`
 - run `pesticides_analysis_03.ipynb` in jupyter
 	+ within `pesticides_analysis_03.ipynb` change var `copies_done` to `False`
+	+ (it updates files in `./app/static/data/stats_web`)
+
+- restart gunicorn :
+	+ `$ pkill gunicorn`
+	+ `$ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class eventlet wsgi:app &``
