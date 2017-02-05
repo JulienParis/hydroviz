@@ -4,19 +4,19 @@
 ### vars for name application / metas
 app_metas = {
     "title"       : u"HydroViz",
-    "subtitle"    : u"concentrations de pesticides dans les nappes phréatiques en France",
+    "subtitle"    : u"concentrations des pesticides dans les nappes phréatiques en France (2007-2014)",
     "version"     : u"beta 0.2",
     "description" : u"cartographie et datavisualisation de la teneur en pesticides des nappes phréatiques de France entre 2007 et 2014",
-    "authors"     : u"Julien Paris | Florian Melki",
+    "authors"     : u"Julien Paris, with the help of Florian Melki",
     "licence"     : 'GNU GPL',
     "metas"       : u"""
-        dataviz,data visualisation,graph,SIG,
-        pesticides,pollution,nappes phréatiques,insecticides,
-        groundwater,water,ecology,
+        dataviz,data visualisation,data visualization,graph,SIG,France,
+        pesticides,pollution,nappes phréatiques,insecticides,eaux souterraines,
+        groundwater,water,ecology,pollutants,
         pandas,geopandas,socketio,
-        Etalab,ecologie,ecologie,
-        opensource,open source,open data,creative commons,github,
-        d3,d3.js,javascript,python,flask,HTML,CSS,JSON,bootstrap,Leaflet,socketIO
+        Etalab,ecologie,SANDRE,ANSES,AGRITOX,
+        opensource,open source,open data,creative commons,github,GNU,GPL,
+        d3,d3.js,JS,javascript,python,flask,HTML,CSS,JSON,bootstrap,Leaflet,socketIO
         """
     }
 
