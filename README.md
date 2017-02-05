@@ -74,65 +74,65 @@ This app proposes different features :
 - update ubuntu :
 
 
-'$ sudo apt-get update'
+`$ sudo apt-get update`
 
 
 - install GIT on the server :
 
 
-'$ sudo apt-get install git'
+`$ sudo apt-get install git`
 
 
 - clone hydroviz project :
 
 
-'''
+```
 $ mkdir apps
 $ cd app_colors
 $ git config --list
 $ git init
 $ git clone git@gitlab.com:Julien_P/concours_pesticides.git
-'''
+```
 
 
 - configure firewall for socketIO, NGINX and Gunicorn :
 
 
-'''
+```
 $ sudo ufw allow www
 $ sudo ufw allow 8000
 $ sudo ufw allow 3000
 $ sudo ufw allow 5000
 $ sudo ufw enable (+ Y)
-'''
+```
 
 
 - install NGINX on the server :
 
 
-'''
+```
 $ sudo apt-get install nginx
 $ service nginx restart
-'''
+```
 
 
 - install Python and dependencies :
 
 
-'''
+```
 $ sudo apt-get install python-pip python-dev (+ Y)
 $ pip install -r requirements.txt
 $ pip install gunicorn
 $ pip install eventlet
-'''
+```
 
 
 - configure NGINX :
 
 
-'$ cd ~/etc/nginx/sites-enabled'
+`$ cd ~/etc/nginx/sites-enabled`
 
-copy file 'hydroviz' (from ./nginx_config/sites-enabled) there
+copy file `hydroviz` (from ./nginx_config/sites-enabled) there
 
 
 - run application :
@@ -141,16 +141,16 @@ copy file 'hydroviz' (from ./nginx_config/sites-enabled) there
 go to same level than wsgi.py and start app by :
 
 
-'''
+```
 $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class eventlet wsgi:app &
-'''
+```
 
 
-- ( if needed / stop unicorn server ) : '$ pkill gunicorn'
+- ( if needed / stop unicorn server ) : `$ pkill gunicorn`
 
 
 ### Import new dataset :
 
 - add the new dataset as .xls file in ./statics/data/stats
-- run 'pesticides_analysis_03.ipynb' in jupyter
-	- within 'pesticides_analysis_03.ipynb' change var 'copies_done' to 'False'
+- run `pesticides_analysis_03.ipynb` in jupyter
+	- within `pesticides_analysis_03.ipynb` change var `copies_done` to `False`
