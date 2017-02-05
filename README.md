@@ -119,28 +119,26 @@ ESC + i
 ```
 copy/paste
 ```
-# configuration containing list of application servers
-upstream app_server {
-  server 0.0.0.0:5000 fail_timeout=0;
-}
+	# configuration containing list of application servers
+	upstream app_server {
+	  server 0.0.0.0:5000 fail_timeout=0;
+	}
+	# configuration for Nginx
+	server {
+	  # running port
+	  listen 80 default_server ;
+	  server_name yourdomain.com ;
 
-# configuration for Nginx
-server {
-  # running port
-  listen 80 default_server ;
-  server_name yourdomain.com ;
-
-  # Proxy connection to the application servers
-  location / {
-    proxy_pass http://app_server ;
-    proxy_redirect off ;
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Host $server_name;
-  }
-
-}
+	  # Proxy connection to the application servers
+	  location / {
+	    proxy_pass http://app_server ;
+	    proxy_redirect off ;
+	    proxy_set_header Host $http_host;
+	    proxy_set_header X-Real-IP $remote_addr;
+	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	    proxy_set_header X-Forwarded-Host $server_name;
+	  }
+	}
 ```
 save `hydroviz`config file
 ```
