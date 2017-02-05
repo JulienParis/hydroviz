@@ -613,8 +613,6 @@
 
         <div class="collapse" id="collapseDangers">
 
-          <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="II" > II - Toxiques </a>
-          <hr>
 
           {% for danger in var_dict.pest_danger_types_|sort %}
             <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="{{ danger }}" > {{ danger }} - {{ var_dict.pest_danger_types_[danger]|safe }} </a>
