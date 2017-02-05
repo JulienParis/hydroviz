@@ -115,12 +115,11 @@ $ pip install eventlet
 
 - configure NGINX : `$ cd ~/etc/nginx/sites-enabled`
 >
-copy file `hydroviz` (from `./nginx_config/sites-enabled`) there
+copy or create file `hydroviz` (copy from `./nginx_config/sites-enabled`) there
 
 
-- run application :
+- run application : go to same level than `wsgi.py` and start app
 >
-go to same level than `wsgi.py` and start app by :
 ```
 $ cd apps/concours_pesticides
 $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class eventlet wsgi:app &
