@@ -5,7 +5,7 @@
 ## **HydroViz** is a web application based on [Flask](http://flask.pocoo.org/) Python microframework providing a full-featured data vizualisation of groundwater pollutants in France between 2007 and 2014.
 ## The web application is available online : **[hydroviz.fr](https://www.hydroviz.fr)**.
 
-#### **HydroViz** has been created in response to a [contest](http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html) launched by the [French ministry of ecology, energy and sea](http://www.developpement-durable.gouv.fr/).
+#### **HydroViz** has been created in response to a [contest](http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html) proposed by the [French ministry of ecology, energy and sea](http://www.developpement-durable.gouv.fr/).
 
 ---
 
@@ -40,12 +40,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 >
 Also add information on how to contact you by electronic and paper mail.
 
------------------------------------------------------
-## Context :
-
-- **_Contest rules_** :
-	- http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html
-	- http://www.developpement-durable.gouv.fr/IMG/pdf/Reglement_Concours_Datavisualisation_Pesticides_dans_eaux_souterraines_15_12_2016_VF.pdf
 
 -----------------------------------------------------
 ## Features :
