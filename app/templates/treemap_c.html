@@ -161,6 +161,7 @@
       <li>La taille de chaque rectangle est proportionnelle à la concentration mesurée.</li>
       <li>Cliquer sur une sous-catégorie pour voir en détail les pesticides correspondants à la catégorie.</li>
       <li>Cliquer sur la barre supérieure pour revenir à la vue globale.</li>
+      <li>les rectangles en <span style="color:red">rouge</span> indiquent les pesticides dont la mesure dépasse la norme autorisée</li>
     </ul>
   </h5>
 </div>
@@ -228,7 +229,7 @@
 </form> -->
 
 <h5>
-  * les rectangles en <span style="color:red">rouge</span> représentent les pesticides dont la mesure dépasse la norme autorisée
+  * les rectangles en <span style="color:red">rouge</span> indiquent les pesticides dont la mesure dépasse la norme autorisée
   <br>
   ** survoler un pesticide pour afficher ses infos / cliquer pour plus d'informations sur la base de données
   <a class="a_" target="_blank" href="http://www.agritox.anses.fr/php/fiches.php">
@@ -245,7 +246,7 @@
 
   var root_agritox = "http://www.agritox.anses.fr/php/sa.php?sa=" ;
 
-  var is_link     = '<span class="glyphicon glyphicon-new-window"></span> cliquer pour voir la référence dans AGRITOX' ;
+  var is_link     = '<span class="glyphicon glyphicon-new-window" style="color:green"></span> <strong>cliquer</strong> pour voir la référence dans AGRITOX' ;
   var no_link     = '<span class="glyphicon glyphicon-new-window" style="color:red"></span> pas de référence trouvée dans AGRITOX' ;
 
   var dict_categs = {
@@ -269,8 +270,8 @@
                       "Ib"    : "très toxique",
                       "II"    : "modérément toxique",
                       "III"   : "légèrement toxique",
-                      "U"     : "",
-                      "O"     : "",
+                      "U"     : "peu de probabilités de constituer un risque",
+                      "O"     : "dangerosité non identifiée",
                       "no ref": "dangerosité non identifiée"
                     }
   };

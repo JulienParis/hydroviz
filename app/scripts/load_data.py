@@ -49,6 +49,17 @@ src_stat_files = {
 #     _missing : _missing
 # }
 
+
+tox_bis = { "Ia"    : u"extrêmement toxique",
+            "Ib"    : u"très toxique",
+            "II"    : u"modérément toxique",
+            "III"   : u"légèrement toxique",
+            "U"     : u"peu de probabilités de constituer un risque",
+            "O"     : u"dangerosité non identifiée",
+            "no ref": u"dangerosité non identifiée"
+            }
+
+
 functions_full = {
     "A"       : u"Acaricide",
     "B"       : u"Biocide",
@@ -225,18 +236,19 @@ print
 
 ### lists vars for automatic dropdowns
 var_dict = {
-    "annees"           : [ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 ],
+    "annees"             : [ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 ],
     #"regions"          : [],
-    "departements"     : dict_dpt_com,
+    "departements"       : dict_dpt_com,
     #"communes"         : [],
     #"stations"         : dict_INDEX_CD,
     #"masses_d_eau"     : [],
     #"bassins"          : [],
-    "pest_CD_infos"    : dict_CD_INFOS, #dict_FONCTION_LIBELLE,
-    "pest_fonc_lib"    : functions_full,
-    "pest_familles"    : dict_FAMILLE_CAS,
-    "pest_fonctions"   : dict_FONCTION_CAS,
-    "pest_danger_types": dict_TYPE_CAS
+    "pest_CD_infos"      : dict_CD_INFOS, #dict_FONCTION_LIBELLE,
+    "pest_fonc_lib"      : functions_full,
+    "pest_familles"      : dict_FAMILLE_CAS,
+    "pest_fonctions"     : dict_FONCTION_CAS,
+    "pest_danger_types"  : dict_TYPE_CAS,
+    "pest_danger_types_" : tox_bis
 }
 
 # empty_counts = {

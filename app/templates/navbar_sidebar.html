@@ -615,10 +615,11 @@
 
           <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="II" > II - Toxiques </a>
           <hr>
-          {% for danger in var_dict.pest_danger_types|sort %}
-            <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="{{ danger }}" > {{ danger }} - </a>
+
+          {% for danger in var_dict.pest_danger_types_|sort %}
+            <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="{{ danger }}" > {{ danger }} - {{ var_dict.pest_danger_types_[danger]|safe }} </a>
           {% endfor %}
-          <a href="#" class="switchmap indent1" reqtype="TYPES" reqvalue="no ref" > no ref - </a>
+
 
         </div>
 
