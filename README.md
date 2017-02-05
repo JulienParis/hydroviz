@@ -53,9 +53,9 @@ This application proposes several features :
 - **_treemap of pollutants_** for every groundwater layer
 
 -----------------------------------------------------
-## Installation documentation :
+# Installation documentation :
 
-### Application requirements :
+## Application requirements :
 
 - Python 2.7
 - Python libraries : Pandas, geoPandas, flask-socketio, eventlet
@@ -66,7 +66,7 @@ This application proposes several features :
 
 ---
 
-### option A / Installation on a local machine :
+## _A._ | Installation on a local machine :
 
 - clone hydroviz project from gitlab :
 >
@@ -98,7 +98,7 @@ $ source venv/bin/activate
 
 ---
 
-### option B / Installation on Ubuntu server (after SSH access):
+## _B._ | Installation on Ubuntu server (after SSH access):
 
 - update ubuntu : `$ sudo apt-get update`
 
@@ -199,7 +199,7 @@ $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class even
 
 ---
 
-### Import a new dataset :
+## Import a new dataset :
 
 - add the new dataset as .xls file in `./statics/data/stats`
 - run `pesticides_analysis_03.ipynb` in jupyter
