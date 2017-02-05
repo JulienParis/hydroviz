@@ -3,7 +3,9 @@
 
 
 ## **HydroViz** is a web application based on [Flask](http://flask.pocoo.org/) Python microframework providing a full-featured data vizualisation of groundwater pollutants in France between 2007 and 2014.
-## The web application is available online : **[hydroviz.fr](https://www.hydroviz.fr)**.
+## **HydroViz** is available online : **[hydroviz.fr](https://www.hydroviz.fr)**.
+
+---
 
 #### **HydroViz** has been created in response to a [contest](http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html) proposed by the [French ministry of ecology, energy and sea](http://www.developpement-durable.gouv.fr/).
 
@@ -17,7 +19,7 @@
 
 - **Licence** : [GNU GPL](https://gitlab.com/Julien_P/concours_pesticides/blob/master/LICENSE)
 
-- **Authors** : Copyright (C) 2017 [Julien Paris](http://jpylab.com/)
+- **Author** : Copyright (C) 2017 [Julien Paris](http://jpylab.com/)
 
 - **Contact** : hydroviz.fr@gmail.com
 
@@ -60,7 +62,7 @@ This app proposes different features :
 - NGINX
 - Gunicorn
 - Jupyter (optionnal)
-- server side : ubuntu 14.04 x64 | 2 CPU 4 Go
+- server side : ubuntu 14.04 x64 | 4 Go RAM minimum
 
 
 ### Installation :
@@ -101,7 +103,7 @@ $ service nginx restart
 ```
 
 
-- install Python and dependencies :
+- install Python, PIP, and dependencies :
 >
 ```
 $ sudo apt-get install python-pip python-dev (+ Y)
@@ -113,12 +115,12 @@ $ pip install eventlet
 
 - configure NGINX : `$ cd ~/etc/nginx/sites-enabled`
 >
-copy file `hydroviz` (from ./nginx_config/sites-enabled) there
+copy file `hydroviz` (from `./nginx_config/sites-enabled`) there
 
 
 - run application :
 >
-go to same level than wsgi.py and start app by :
+go to same level than `wsgi.py` and start app by :
 ```
 $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class eventlet wsgi:app &
 ```
@@ -129,6 +131,6 @@ $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class even
 
 ### Import new dataset :
 
-- add the new dataset as .xls file in ./statics/data/stats
+- add the new dataset as .xls file in `./statics/data/stats`
 - run `pesticides_analysis_03.ipynb` in jupyter
 	+ within `pesticides_analysis_03.ipynb` change var `copies_done` to `False`
