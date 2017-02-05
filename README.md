@@ -69,9 +69,7 @@ This app proposes different features :
 
 - update ubuntu : `$ sudo apt-get update`
 
-
 - install GIT on the server : `$ sudo apt-get install git`
-
 
 - clone hydroviz project :
 >
@@ -83,8 +81,7 @@ $ git init
 $ git clone git@gitlab.com:Julien_P/concours_pesticides.git
 ```
 
-
-- configure server firewall for socketIO, NGINX and Gunicorn :
+- configure server firewall for socketIO(port 5000), NGINX (port 8000, www) and Gunicorn (port 3000) :
 >
 ```
 $ sudo ufw allow www
@@ -94,14 +91,12 @@ $ sudo ufw allow 5000
 $ sudo ufw enable (+ Y)
 ```
 
-
 - install NGINX on the server :
 >
 ```
 $ sudo apt-get install nginx
 $ service nginx restart
 ```
-
 
 - install Python, PIP, and dependencies :
 >
@@ -112,19 +107,60 @@ $ pip install gunicorn
 $ pip install eventlet
 ```
 
-
-- configure NGINX : `$ cd ~/etc/nginx/sites-enabled`
+- configure NGINX (reroute port 5000 to root) :
 >
-copy or create file `hydroviz` (copy from `./nginx_config/sites-enabled`) there
+```
+$ cd ~/etc/nginx/sites-enabled`
+```
+create nginx con file for hydroviz
+```
+$ sudo vi hydroviz
+ESC + i
+```
+copy/paste
+```
+# configuration containing list of application servers
+upstream app_server {
+  server 0.0.0.0:5000 fail_timeout=0;
+}
 
+# configuration for Nginx
+server {
+  # running port
+  listen 80 default_server ;
+  server_name yourdomain.com ;
 
-- run application : go to same level than `wsgi.py` and start app
+  # Proxy connection to the application servers
+  location / {
+    proxy_pass http://app_server ;
+    proxy_redirect off ;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Host $server_name;
+  }
+
+}
+```
+save `hydroviz`config file
+```
+ESC + :wq + ENTER
+```
+test for syntax errors by typing:
+```
+$ sudo nginx -t
+```
+restart the Nginx process to read the our new config:
+```
+$ sudo service nginx restart
+```
+
+- run application : go to same level than `wsgi.py` and start app with Gunicorn
 >
 ```
 $ cd apps/concours_pesticides
 $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class eventlet wsgi:app &
 ```
-
 
 - ( if needed / stop unicorn server ) : `$ pkill gunicorn`
 
