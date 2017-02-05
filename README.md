@@ -7,7 +7,7 @@
 
 ---
 
-#### **HydroViz** has been created in response to a [contest](http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html) proposed by the [French ministry of ecology, energy and sea](http://www.developpement-durable.gouv.fr/).
+#### **HydroViz** has been created in response to a [contest](http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html) proposed by the [French ministry of environment, energy and sea](http://www.developpement-durable.gouv.fr/).
 
 ---
 
