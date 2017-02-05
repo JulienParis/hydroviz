@@ -1,11 +1,10 @@
-# ==================== HYDROVIZ : groundwater pollution  ====================
-
-
-HydroViz is a web application based on [Flask](http://flask.pocoo.org/) Python microframework providing a full-featured data vizualisation of groundwater pollutants in France between 2007 and 2014.
-
-The web application is available online : [hydroviz.fr](https://www.hydroviz.fr).
 
 ![alt text](app/static/images/logo_hydroviz_bis_margin.jpg)
+
+
+**HydroViz** is a web application based on [Flask](http://flask.pocoo.org/) Python microframework providing a full-featured data vizualisation of groundwater pollutants in France between 2007 and 2014.
+
+The web application is available online : **[hydroviz.fr](https://www.hydroviz.fr)**.
 
 
 HydroViz has been created in response to a [contest](http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html) launched by the [French ministry of ecology, energy and sea](http://www.developpement-durable.gouv.fr/).
@@ -14,17 +13,15 @@ HydroViz has been created in response to a [contest](http://www.developpement-du
 ![alt text](app/static/images/elements/hydroviz_v01.gif)
 
 
------------------------------------------------------
+----------------------------------------------------
 ## Licence & copyrights :
 
-- Licence : [GNU GPL](https://gitlab.com/Julien_P/concours_pesticides/blob/master/LICENSE)
+- **Licence** : [GNU GPL](https://gitlab.com/Julien_P/concours_pesticides/blob/master/LICENSE)
 
-- Authors : Copyright (C) 2017 [Julien Paris](http://jpylab.com/)
+- **Authors** : Copyright (C) 2017 [Julien Paris](http://jpylab.com/)
 
-- Contact : hydroviz.fr@gmail.com
+- **Contact** : hydroviz.fr@gmail.com
 
-HYDROVIZ is a web application for data visualization of groundwater pollutants
-in France
 
 Copyright (C) 2017  Julien PARIS
 
@@ -53,8 +50,9 @@ Also add information on how to contact you by electronic and paper mail.
 -----------------------------------------------------
 ## Features :
 This app proposes different features :
-- _dynamic data visualization_ of pesticides concentrations
+- _time slider_ to dynamically change years
 - _interactive cartography_ of groundwaters in France
+- _treemap of pollutants_ for every groundwater layer
 
 -----------------------------------------------------
 ## Installation documentation :
@@ -71,20 +69,13 @@ This app proposes different features :
 
 ### Installation :
 
-- update ubuntu :
+- update ubuntu : `$ sudo apt-get update`
 
 
-`$ sudo apt-get update`
-
-
-- install GIT on the server :
-
-
-`$ sudo apt-get install git`
+- install GIT on the server : `$ sudo apt-get install git`
 
 
 - clone hydroviz project :
-
 
 ```
 $ mkdir apps
@@ -97,7 +88,6 @@ $ git clone git@gitlab.com:Julien_P/concours_pesticides.git
 
 - configure firewall for socketIO, NGINX and Gunicorn :
 
-
 ```
 $ sudo ufw allow www
 $ sudo ufw allow 8000
@@ -109,7 +99,6 @@ $ sudo ufw enable (+ Y)
 
 - install NGINX on the server :
 
-
 ```
 $ sudo apt-get install nginx
 $ service nginx restart
@@ -117,7 +106,6 @@ $ service nginx restart
 
 
 - install Python and dependencies :
-
 
 ```
 $ sudo apt-get install python-pip python-dev (+ Y)
@@ -127,19 +115,14 @@ $ pip install eventlet
 ```
 
 
-- configure NGINX :
-
-
-`$ cd ~/etc/nginx/sites-enabled`
+- configure NGINX : `$ cd ~/etc/nginx/sites-enabled`
 
 copy file `hydroviz` (from ./nginx_config/sites-enabled) there
 
 
 - run application :
 
-
 go to same level than wsgi.py and start app by :
-
 
 ```
 $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class eventlet wsgi:app &
