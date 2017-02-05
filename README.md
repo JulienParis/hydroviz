@@ -46,7 +46,7 @@ Also add information on how to contact you by electronic and paper mail.
 -----------------------------------------------------
 ## Features :
 
-This app proposes different features :
+This application proposes several features :
 
 - **_time slider_** to dynamically change years
 - **_interactive cartography_** of groundwaters in France
@@ -64,14 +64,47 @@ This app proposes different features :
 - Jupyter (optionnal)
 - server side : ubuntu 14.04 x64 | 4 Go RAM minimum
 
+---
 
-### Installation on Ubuntu server (after SSH access):
+### option A / Installation on a local machine :
+
+- clone hydroviz project from gitlab :
+>
+```
+$ git clone git@gitlab.com:Julien_P/concours_pesticides.git
+```
+
+- install, create and activate a virtual environment :
+>
+```
+$ pip install virtualenv
+$ sudo virtualenv venv
+$ source venv/bin/activate
+```
+
+- install Python dependencies (Flask, pandas, etc...) within the virtual environment:
+>
+```
+(venv)$ pip install -r requirements.txt
+```
+
+- run hydroviz in debugging mode :
+>
+```
+(venv)$ python run_pesticides.py
+```
+
+- in browser open the following address : `http://127.0.0.1:3000`
+
+---
+
+### option B / Installation on Ubuntu server (after SSH access):
 
 - update ubuntu : `$ sudo apt-get update`
 
 - install GIT on the server : `$ sudo apt-get install git`
 
-- clone hydroviz project :
+- clone hydroviz project from gitlab :
 >
 ```
 $ mkdir apps
