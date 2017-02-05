@@ -1,5 +1,5 @@
 
-![alt text](app/static/images/logo_hydroviz_bis_margin.jpg)
+[![alt text](app/static/images/logo_hydroviz_bis_margin.jpg)](https://www.hydroviz.fr)
 
 
 **HydroViz** is a web application based on [Flask](http://flask.pocoo.org/) Python microframework providing a full-featured data vizualisation of groundwater pollutants in France between 2007 and 2014.
@@ -9,6 +9,7 @@ The web application is available online : **[hydroviz.fr](https://www.hydroviz.f
 
 HydroViz has been created in response to a [contest](http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html) launched by the [French ministry of ecology, energy and sea](http://www.developpement-durable.gouv.fr/).
 
+---
 
 ![alt text](app/static/images/elements/hydroviz_v01.gif)
 
@@ -43,16 +44,18 @@ Also add information on how to contact you by electronic and paper mail.
 -----------------------------------------------------
 ## Context :
 
-- _Contest rules_ :
+- **_Contest rules_** :
 	- http://www.developpement-durable.gouv.fr/Concours-de-data-visualisation-sur.html
 	- http://www.developpement-durable.gouv.fr/IMG/pdf/Reglement_Concours_Datavisualisation_Pesticides_dans_eaux_souterraines_15_12_2016_VF.pdf
 
 -----------------------------------------------------
 ## Features :
+
 This app proposes different features :
-- _time slider_ to dynamically change years
-- _interactive cartography_ of groundwaters in France
-- _treemap of pollutants_ for every groundwater layer
+
+- **_time slider_** to dynamically change years
+- **_interactive cartography_** of groundwaters in France
+- **_treemap of pollutants_** for every groundwater layer
 
 -----------------------------------------------------
 ## Installation documentation :
@@ -76,7 +79,7 @@ This app proposes different features :
 
 
 - clone hydroviz project :
-
+>>
 ```
 $ mkdir apps
 $ cd app_colors
@@ -87,7 +90,7 @@ $ git clone git@gitlab.com:Julien_P/concours_pesticides.git
 
 
 - configure firewall for socketIO, NGINX and Gunicorn :
-
+>>
 ```
 $ sudo ufw allow www
 $ sudo ufw allow 8000
@@ -98,7 +101,7 @@ $ sudo ufw enable (+ Y)
 
 
 - install NGINX on the server :
-
+>>
 ```
 $ sudo apt-get install nginx
 $ service nginx restart
@@ -106,7 +109,7 @@ $ service nginx restart
 
 
 - install Python and dependencies :
-
+>>
 ```
 $ sudo apt-get install python-pip python-dev (+ Y)
 $ pip install -r requirements.txt
@@ -116,14 +119,13 @@ $ pip install eventlet
 
 
 - configure NGINX : `$ cd ~/etc/nginx/sites-enabled`
-
+>>
 copy file `hydroviz` (from ./nginx_config/sites-enabled) there
 
 
 - run application :
-
+>>
 go to same level than wsgi.py and start app by :
-
 ```
 $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class eventlet wsgi:app &
 ```
@@ -136,4 +138,4 @@ $ gunicorn --bind 0.0.0.0:5000 —-timeout=120 --workers=1 —-worker-class even
 
 - add the new dataset as .xls file in ./statics/data/stats
 - run `pesticides_analysis_03.ipynb` in jupyter
-	- within `pesticides_analysis_03.ipynb` change var `copies_done` to `False`
+	>> within `pesticides_analysis_03.ipynb` change var `copies_done` to `False`
