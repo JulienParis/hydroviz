@@ -65,7 +65,7 @@ This app proposes different features :
 - server side : ubuntu 14.04 x64 | 4 Go RAM minimum
 
 
-### Installation on Ubuntu server :
+### Installation on Ubuntu server (after SSH access):
 
 - update ubuntu : `$ sudo apt-get update`
 
@@ -81,14 +81,17 @@ $ git init
 $ git clone git@gitlab.com:Julien_P/concours_pesticides.git
 ```
 
-- configure server firewall for socketIO(port 5000), NGINX (port 8000, www) and Gunicorn (port 3000) :
+- configure your server SSH...
+
+- configure server firewall for socketIO (port 5000), NGINX/Gunicorn (port 8000, www) :
 >
 ```
 $ sudo ufw allow www
 $ sudo ufw allow 8000
-$ sudo ufw allow 3000
 $ sudo ufw allow 5000
-$ sudo ufw enable (+ Y)
+$ sudo ufw enable
+$ sudo apt-get update
+$ sudo apt-get install ntp
 ```
 
 - install NGINX on the server :
@@ -101,7 +104,7 @@ $ service nginx restart
 - install Python, PIP, and dependencies :
 >
 ```
-$ sudo apt-get install python-pip python-dev (+ Y)
+$ sudo apt-get install python-pip python-dev
 $ pip install -r requirements.txt
 $ pip install gunicorn
 $ pip install eventlet
@@ -112,12 +115,12 @@ $ pip install eventlet
 ```
 $ cd ~/etc/nginx/sites-enabled`
 ```
-create nginx con file for hydroviz
+create NGINX configuration file for hydroviz
 ```
 $ sudo vi hydroviz
 ESC + i
 ```
-copy/paste
+copy/paste NGINX configuration settings
 ```
 	# configuration containing list of application servers
 	upstream app_server {
@@ -139,7 +142,7 @@ copy/paste
 	  }
 	}
 ```
-save `hydroviz`config file
+save `hydroviz` NGINx config file
 ```
 ESC + :wq + ENTER
 ```
