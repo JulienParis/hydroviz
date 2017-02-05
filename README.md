@@ -128,7 +128,6 @@ copy/paste
 	  # running port
 	  listen 80 default_server ;
 	  server_name yourdomain.com ;
-
 	  # Proxy connection to the application servers
 	  location / {
 	    proxy_pass http://app_server ;
