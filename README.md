@@ -11,7 +11,7 @@
 
 ---
 
-![alt text](app/static/images/elements/hydroviz_v01.gif)
+[![alt text](app/static/images/elements/hydroviz_v01.gif)](https://www.hydroviz.fr)
 
 
 ----------------------------------------------------
@@ -21,7 +21,7 @@
 
 - **Author** : Copyright (C) 2017 [Julien Paris](http://jpylab.com/)
 
-- **Contact** : hydroviz.fr@gmail.com
+- **Contact** : [hydroviz.fr@gmail.com](mailto:hydroviz.fr@gmail.com)
 
 
 >
