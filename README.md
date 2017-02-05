@@ -61,7 +61,7 @@ This application proposes several features :
 - Python libraries : Pandas, geoPandas, flask-socketio, eventlet
 - NGINX
 - Gunicorn
-- Jupyter (optionnal)
+- [Jupyter](http://jupyter.org/install.html) (optionnal)
 - server side : ubuntu 14.04 x64 | 4 Go RAM minimum
 
 ---

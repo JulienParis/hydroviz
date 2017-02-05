@@ -183,7 +183,7 @@
               Leaflet
               </a>
               : bibliothèque de cartographie en javascript (Copyright (c) 2010-2016, Vladimir Agafonkin / Copyright (c) 2010-2011, CloudMade
-              All rights reserved, , avec autorisation de modifications et de redistribution)
+              All rights reserved, avec autorisation de modifications et de redistribution)
             </dd>
             <hr>
             <dt>
@@ -226,8 +226,9 @@
           <br>
           <div role="alert" class="alert alert-info">
             Les données servant à la datavisualisation ont comme sources principales :
-            <br>Etalab (portail open data national),
-            Open Street Map
+            Etalab (portail open data national), Open Street Map
+            <br> Les données ont été préparées en amont pour une consommation web avec les bibliothèques Python Pandas, geoPandas citées plus haut
+            en utilisant l'outil Jupyter lors de la préparation des scripts
           </div>
           <hr>
           <dl class="dl-horizontal">
@@ -243,6 +244,7 @@
               </a>
               : portail opendata
             </dd>
+
             <hr>
 
             <dt>
@@ -254,7 +256,21 @@
               <a class="a_" target="_blank" href="https://www.openstreetmap.org">
               Open Street Map
               </a>
-              : fonds de cartes (ODbl)
+              : fonds de cartes (license ODbl)
+            </dd>
+
+            <hr>
+
+            <dt>
+              <a target="_blank" href="http://jupyter.org/index.html">
+                <img src="{{ url_for('static', filename='images/logo_jupyter.svg') }}" class="img-responsive" alt="Responsive image">
+              </a>
+            </dt>
+            <dd>
+              <a class="a_" target="_blank" href="http://jupyter.org/index.html">
+              Jupyter (optionnel)
+              </a>
+              : outil notebook Python (Copyright (c) 2015, Project Jupyter, avec autorisation de modifications et de redistribution)
             </dd>
 
           </dl>
