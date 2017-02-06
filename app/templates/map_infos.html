@@ -1,5 +1,11 @@
 <style>
 
+  .jumbotron .p_ {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 0px;
+  }
+
   /* SIDEBAR & JUMBOTRON */
   .container-fluid .jumbotron{
       /*color: grey;*/
@@ -172,41 +178,41 @@
 
           <dt><a  class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="MOYPTOT" reqvalue="XXXXXX"
-                  title="moyenne relevée pour une masse d'eau spécifique, ou moyenne des concentrations des différentes masses d'eau attenantes à un département
+                  title="moyenne des concentrations moyennes relevées par les stations de mesure prélevant dans une masse d'eau spécifique, ou moyenne des concentrations des différentes masses d'eau attenantes à un département
                   / cliquer pour voir sur la carte" >
               Concentration moyenne totale
             </a></dt>
           <dd>
-            <a target="_blank" id="MOYPTOT" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="MOYPTOT" class="p_" > - </p>
           </dd>
 
           <hr>
 
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FUNCTIONS" reqvalue="H"
-                  title="cliquer pour voir cette fonction sur la carte" >
+                  title="cliquer pour voir cette fonction sur la carte (nombre de pesticides différents détectés)" >
               herbicides
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_H" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_H" class="p_" > - </p>
           </dd>
 
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FUNCTIONS" reqvalue="F"
-                  title="cliquer pour voir cette fonction sur la carte" >
+                  title="cliquer pour voir cette fonction sur la carte (nombre de pesticides différents détectés)" >
               fongicides
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_F" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_F" class="p_" > - </p>
           </dd>
 
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FUNCTIONS" reqvalue="I"
-                  title="cliquer pour voir cette fonction sur la carte" >
+                  title="cliquer pour voir cette fonction sur la carte (nombre de pesticides différents détectés)" >
               insecticides
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_I" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_I" class="p_" > - </p>
           </dd>
 
 
@@ -215,74 +221,74 @@
 
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FAMILLES" reqvalue="Divers (organiques)"
-                  title="cliquer pour voir cette famille sur la carte" >
+                  title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
             divers organiques
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_divorg" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_divorg" class="p_" > - </p>
           </dd>
 
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FAMILLES" reqvalue="Urées"
-                  title="cliquer pour voir cette famille sur la carte" >
+                  title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
             urées
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_urees" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_urees" class="p_" > - </p>
           </dd>
 
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FAMILLES" reqvalue="Azoles"
-                  title="cliquer pour voir cette famille sur la carte" >
+                  title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
             azoles
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_azo" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_azo" class="p_" > - </p>
           </dd>
 
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FAMILLES" reqvalue="Organochlorés"
-                  title="cliquer pour voir cette famille sur la carte" >
+                  title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
             organochlorés
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_orgchl" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_orgchl" class="p_" > - </p>
           </dd>
 
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FAMILLES" reqvalue="Triazines et métabolites"
-                  title="cliquer pour voir cette famille sur la carte" >
+                  title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
              triazines et métabolites
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_triaz" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_triaz" class="p_" > - </p>
           </dd>
 
 
           <hr>
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="TYPES" reqvalue="Ia"
-                  title="extrêmement toxique / cliquer pour voir cette catégorie sur la carte" >
+                  title="extrêmement toxique / cliquer pour voir cette catégorie sur la carte (nombre de pesticides différents détectés)" >
               toxicité classe Ia
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_tIa" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_tIa" class="p_" > - </p>
           </dd>
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="TYPES" reqvalue="Ib"
-                  title="très toxique / cliquer pour voir cette catégorie sur la carte" >
+                  title="très toxique / cliquer pour voir cette catégorie sur la carte (nombre de pesticides différents détectés)" >
               toxicité classe Ib
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_tIb" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_tIb" class="p_" > - </p>
           </dd>
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="TYPES" reqvalue="II"
-                  title="modérément toxique / cliquer pour voir cette catégorie sur la carte" >
+                  title="modérément toxique / cliquer pour voir cette catégorie sur la carte (nombre de pesticides différents détectés)" >
               toxicité classe II
             </a></dt>
           <dd>
-            <a target="_blank" id="nbr_tII" class="bstooltip" data-toggle="tooltip" data-placement="top" title="" > - </a>
+            <p id="nbr_tII" class="p_" > - </p>
           </dd>
 
         </dl>

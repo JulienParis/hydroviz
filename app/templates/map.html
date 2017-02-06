@@ -113,7 +113,8 @@
                     "no ref": "fonction non identifiée"
                     },
     "FAMILLES"  : {},
-    "TYPES"     : { "I"     : "toxique",
+    "TYPES"     : { "Ia"    : "extrêment toxique",
+                    "Ib"    : "très toxique",
                     "II"    : "modérément toxique",
                     "III"   : "légèrement toxique",
                     "no ref": "dangerosité non identifiée"
@@ -418,8 +419,18 @@
           var div = L.DomUtil.create('div', 'info legend');
           var grades = min_max_array  ;
 
-          if (seq_div_qual == "sequential")  { var label = "moyenne des concentrations totales " + "(" + year + ")", unit = "&#181g/l" ; }
-          else if (seq_div_qual == "counts") { var label = "nombre de pesticides détectés / " + pest_map + " : " + dict_categs_legend[index_map][pest_map] + " (" + year + ")", unit = "pest." ; };
+
+          if (seq_div_qual == "sequential")  {
+            var label = "moyenne des concentrations totales " + "(" + year + ")", unit = "&#181g/L" ;
+          }
+          else if (seq_div_qual == "counts") {
+            if (dict_categs_legend[index_map][pest_map] == undefined){
+              var lab_pest = " - " ;
+            } else {
+              var lab_pest = " : " + dict_categs_legend[index_map][pest_map] ;
+            }
+            var label = "nombre de pesticides détectés / " + pest_map + lab_pest + " (" + year + ")", unit = "pest." ;
+          };
 
           div.innerHTML += '<p>' + label + '</p>';
 
@@ -440,7 +451,7 @@
           div.innerHTML += '<label>' + unit + '</label>';
 
           if (selected_layer == df_ME) {
-            div.innerHTML += "<hr><p class='indent2' margin-top='5px'><small>* les nappes d'eau souterraines peuvent parfois se superposer <br> sur la carte si elles sont à des profondeurs (niveaux) différentes</small></p>";
+            div.innerHTML += "<br><hr><h6 class='' margin-top='5px'><small>* les nappes d'eau souterraines sont représentées avec un degré de transparence <br> et peuvent parfois se superposer sur la carte si elles sont à des profondeurs (niveaux) différentes</small></h6>";
           };
 
           return div;
