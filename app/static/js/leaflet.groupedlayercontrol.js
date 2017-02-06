@@ -38,7 +38,7 @@ L.Control.GroupedLayers = L.Control.extend({
     this._update();
 
     map
-        .on('layeradd', this._onLayerChange, this)
+        .on('layeradd',    this._onLayerChange, this)
         .on('layerremove', this._onLayerChange, this);
 
     return this._container;
@@ -46,7 +46,7 @@ L.Control.GroupedLayers = L.Control.extend({
 
   onRemove: function (map) {
     map
-        .off('layeradd', this._onLayerChange)
+        .off('layeradd',    this._onLayerChange)
         .off('layerremove', this._onLayerChange);
   },
 
@@ -219,6 +219,8 @@ L.Control.GroupedLayers = L.Control.extend({
       if (obj.group.exclusive) {
         groupRadioName = 'leaflet-exclusive-group-layer-' + obj.group.id;
         input = this._createRadioElement(groupRadioName, checked, obj);
+
+
       } else {
         input = document.createElement('input');
         input.type = 'checkbox';
@@ -244,8 +246,13 @@ L.Control.GroupedLayers = L.Control.extend({
 
       var groupContainer = this._domGroups[obj.group.id];
 
+      // custom separator hydroviz
+      separator = document.createElement('div');
+      separator.className = 'leaflet-control-layers-separator';
+
       // Create the group container if it doesn't exist
       if (!groupContainer) {
+
         groupContainer = document.createElement('div');
         groupContainer.className = 'leaflet-control-layers-group';
         groupContainer.id = 'leaflet-control-layers-group-' + obj.group.id;
@@ -272,7 +279,12 @@ L.Control.GroupedLayers = L.Control.extend({
         groupLabel.appendChild(groupName);
 
         groupContainer.appendChild(groupLabel);
+
+        // custom separator for hydroviz
+        container.appendChild(separator);
+
         container.appendChild(groupContainer);
+
 
         this._domGroups[obj.group.id] = groupContainer;
       }

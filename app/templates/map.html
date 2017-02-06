@@ -165,8 +165,8 @@
 
     // CREATE CONTROLS
     var baseLayers = {
-      "Fond gris": grayscale,
-      "Fond OSM" : streets
+      "Fond de carte gris": grayscale,
+      "Fond de carte OSM" : streets
     };
 
     var active_overlay   = "<span class='lay_ME  lay_radio'> nappes phréatiques</span>" ;
@@ -285,25 +285,25 @@
     // var df_rivers_name = "eaux de surface";
 
     var dict_overlays = {
-      "nappes phréatiques" : df_ME,
-      "départements"       : df_dpt,
-      "eaux de surface"    : df_rivers
+      "Nappes phréatiques" : df_ME,
+      "Départements"       : df_dpt,
+      "Eaux de surface"    : df_rivers
     };
 
     // Overlay layers are grouped
     // cf : https://github.com/ismyrnow/Leaflet.groupedlayercontrol
     var groupedOverlays = {
-      "pesticides": {
-        "nappes phréatiques" : ME_layer,
-        "départements"       : admin_layer
+      "Pesticides par :": {
+        "Nappes phréatiques" : ME_layer,
+        "Départements"       : admin_layer
       },
-      "autres données": {
-        "eaux de surface"    : rivers_layer,
+      "Autres données :": {
+        "Eaux de surface"    : rivers_layer,
       }
     };
     var options = {
       // Make the "pesticides" group exclusive (use radio inputs)
-      exclusiveGroups: ["pesticides"],
+      exclusiveGroups: ["Pesticides par :"],
       // Show a checkbox next to non-exclusive group labels for toggling all
       groupCheckboxes: false,
       position       : "bottomleft",

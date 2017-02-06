@@ -175,7 +175,7 @@ copy/paste NGINX configuration settings
 	  }
 	}
 ```
-save `hydroviz` NGINx config file
+save `hydroviz` NGINX config file
 ```
 ESC + :wq + ENTER
 ```
@@ -183,7 +183,7 @@ test for syntax errors by typing:
 ```
 $ sudo nginx -t
 ```
-restart the Nginx process to read the our new config:
+restart the NGINX process to read the our new config:
 ```
 $ sudo service nginx restart
 ```
