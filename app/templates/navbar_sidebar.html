@@ -420,6 +420,17 @@
 
     <ul class="nav navbar-nav navbar-right">
 
+      <!-- <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
+          title="exporter la carte" >
+        <a  role="button"
+            onclick="exportMap()"
+            >
+          <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+        </a>
+      </li>
+
+      <li class="divider-vertical"></li> -->
+
 
       <li class="bstooltip" data-toggle="tooltip" data-placement="bottom"
           title="Méthodologie" >
@@ -721,5 +732,38 @@
   // }
 
   //$(document).ready(function() {initMenu();});
+
+  // EXPORT SVG file /// STILL A LOT TO DO HERE //////////////////////////////////
+  // function exportMap() {
+
+
+    // var container = document.getElementById('map');
+    //
+    // var images = container.getElementsByTagName('img');
+    // for (var i = 0; i < images.length; i++) {
+    //     images[i].setAttribute('crossOrigin', 'anonymous');
+    //     images[i].src = images[i].src;
+    // }
+    //
+    // var canvas  = document.getElementById('dumb');
+    // var context = canvas.getContext('2d');
+    //
+    // canvas.width  = document.documentElement.clientWidth;
+    // canvas.height = document.documentElement.clientHeight;
+    //
+    // for (i = 0; i < images.length; i++) {
+    //     if (typeof images[i] != 'undefined') {
+    //         context.drawImage(images[i],
+    //             images[i].style.left.slice(0, -2), // slice off 'px' from end of str
+    //             images[i].style.top.slice(0, -2),
+    //             images[i].clientWidth,
+    //             images[i].clientHeight
+    //         );
+    //     }
+    // }
+    //
+    // window.open(canvas.toDataURL());
+
+  // }
 
 </script>

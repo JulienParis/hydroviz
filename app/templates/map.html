@@ -16,6 +16,9 @@
     top: 20px;
   }
 
+  div .leaflet-top.leaflet-right{
+    display: inline-flex;
+  }
 
   div .leaflet-control-zoom {
     display: inline-flex;
@@ -92,6 +95,10 @@
 <!-- GROUPED LAYERS -->
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/leaflet.groupedlayercontrol.css') }}" />
 <script type="text/javascript"         src="{{  url_for('static', filename='js/leaflet.groupedlayercontrol.js') }}"></script>
+
+<!-- PRINT MAP  -->
+<script type="text/javascript"         src="{{  url_for('static', filename='js/leaflet.easyPrint.js') }}"></script>
+
 
 
 <script>
@@ -199,6 +206,12 @@
 
 
 
+    // print control
+    L.easyPrint({
+        title: 'print map',
+        position: 'topright',
+        elementsToHide: ''
+    }).addTo(map);
 
 
     // map.on('overlayadd', onOverlayAdd);
@@ -339,6 +352,10 @@
     var dft_stroke_color  = "white"   ;
     var dft_rivers_color  = "#081d58" ;
     var z_index_dft       = 3 ;
+
+
+
+
 
 
 
@@ -1233,6 +1250,7 @@
 
     // change control layer to radio buttons
     // $('.lay_radio').parent().parent().input.attr("type", "radio");
+
 
 
   }); //<-- end : $(document).ready
