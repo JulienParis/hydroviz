@@ -227,6 +227,47 @@ dict_TYPE_CAS           = { k: { "CAS" : g["CAS"].tolist() }                 for
 print "**** load_data.py / dict_FONCTION_LIBELLE : "
 print dict_FONCTION_LIBELLE
 
+print "**** load_data.py / dict_FAMILLE_CAS : "
+# for k,v in dict_FAMILLE_CAS.iteritems():
+#     print k
+
+
+dict_FAMILLES_SANDRE = {
+    u"Hydrocarbures et indices liés" : 63 ,
+    u"Aldéhydes et cétones" : 52 ,
+    u"Chloroacétamide" : None ,
+    u"Fongicides" : 97 ,
+    u"Triazoles" : 120 ,
+    u"Carbamates" : 57 ,
+    u"Benzène et dérivés" : 56 ,
+    u"Urées" : 72 ,
+    u"Diazines" : None ,
+    u"Triazolopyrimidines sulfonamides" : None ,
+    u"Chloroalcanes" : 58 ,
+    u"Divers (organiques)" : 61 ,
+    u"Amides" : 116 ,
+    u"Pyréthrinoïdes" : 119 ,
+    u"Azoles" : 120 ,
+    u"Organométalliques" : 45 ,
+    u"Organophosphorés" : 65 ,
+    u"Inconnu" : None ,
+    u"Chloroacetamide" : None ,
+    u"Quinazolinones" : None ,
+    u"Pyridines" : None ,
+    u"Indices" : None ,
+    u"Carbamates et thiocarbamates" : 57 ,
+    u"Amines" : 107 ,
+    u"Composés phénoliques" : 55 ,
+    u"Organochlorés" : 64 ,
+    u"Metaux et métalloïdes" : 44 ,
+    u"Autres éléments minéraux" : 46 ,
+    u"COHV, solvants chlorés, fréons" : 60 ,
+    u"Triazines et métabolites" : 71 ,
+    u"Carbamate" : 57
+}
+
+
+
 print "**** load_data.py / dummies counts : "
 # print dummy_FONCTION_CAS, " ..."
 # print dummy_FAMILLE_CAS, " ..."
@@ -236,19 +277,20 @@ print
 
 ### lists vars for automatic dropdowns
 var_dict = {
-    "annees"             : [ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 ],
+    "annees"               : [ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 ],
     #"regions"          : [],
-    "departements"       : dict_dpt_com,
+    "departements"         : dict_dpt_com,
     #"communes"         : [],
     #"stations"         : dict_INDEX_CD,
     #"masses_d_eau"     : [],
     #"bassins"          : [],
-    "pest_CD_infos"      : dict_CD_INFOS, #dict_FONCTION_LIBELLE,
-    "pest_fonc_lib"      : functions_full,
-    "pest_familles"      : dict_FAMILLE_CAS,
-    "pest_fonctions"     : dict_FONCTION_CAS,
-    "pest_danger_types"  : dict_TYPE_CAS,
-    "pest_danger_types_" : tox_bis
+    "pest_CD_infos"        : dict_CD_INFOS, #dict_FONCTION_LIBELLE,
+    "pest_fonc_lib"        : functions_full,
+    "pest_familles"        : dict_FAMILLE_CAS,
+    "pest_familles_sandre" : dict_FAMILLES_SANDRE,
+    "pest_fonctions"       : dict_FONCTION_CAS,
+    "pest_danger_types"    : dict_TYPE_CAS,
+    "pest_danger_types_"   : tox_bis
 }
 
 # empty_counts = {

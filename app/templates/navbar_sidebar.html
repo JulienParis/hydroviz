@@ -37,7 +37,7 @@
     position: absolute;
     left    : 300px;
     width   : 0;
-    height  : 56%;
+    height  : 50%;
     margin-top :  5%;
     margin-left: -290px;
     overflow-y: auto;
@@ -575,13 +575,18 @@
         </a>
 
         <div class="collapse" id="collapseFonctions">
-          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="H" > H - Herbicides</a>
-          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="F" > F - Fongicides</a>
-          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="I" > I - Insecticides</a>
+          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="H" > H - Herbicides
+          </a>
+          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="F" > F - Fongicides
+          </a>
+          <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="I" > I - Insecticides
+          </a>
           <hr>
 
           {% for fonction in var_dict.pest_fonctions|sort %}
-            <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="{{ fonction }}" > {{ fonction }} - {{ var_dict.pest_fonc_lib[fonction]|safe }}</a>
+            <a href="#" class="switchmap indent1" reqtype="FUNCTIONS" reqvalue="{{ fonction }}" > {{ fonction }} - {{ var_dict.pest_fonc_lib[fonction]|safe }}
+
+            </a>
           {% endfor %}
         </div>
 
@@ -600,11 +605,42 @@
         </a>
 
         <div class="collapse" id="collapseFamilles">
-          <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="Divers (organiques)" > Divers (organiques) </a>
-          <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="Urées" > Urées </a>
+          <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="Divers (organiques)" > Divers (organiques)
+            <button
+                type="button" class="btn btn-link bstooltip" data-toggle="tooltip" data-placement="top"
+                title="plus d'infos sur cette famille sur le site SANDRE"
+                onclick="window.open('http://www.sandre.eaufrance.fr/urn.php?urn=urn:sandre:donnees:GPR:FRA:code:61:::referentiel:3.1:html'
+                         , '_blank') "
+                 >
+              <span class="glyphicon glyphicon-question-sign" style="color:white"></span>
+            </button>
+          </a>
+
+          <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="Urées" > Urées
+            <button
+                type="button" class="btn btn-link bstooltip" data-toggle="tooltip" data-placement="top"
+                title="plus d'infos sur cette famille sur le site SANDRE"
+                onclick="window.open('http://www.sandre.eaufrance.fr/urn.php?urn=urn:sandre:donnees:GPR:FRA:code:72:::referentiel:3.1:html'
+                         , '_blank') "
+                 >
+              <span class="glyphicon glyphicon-question-sign" style="color:white"></span>
+            </button>
+          </a>
+
           <hr>
+
           {% for famille in var_dict.pest_familles|sort %}
-            <a href="#" class="switchmap indent1" reqtype="FAMILLES" reqvalue="{{ famille }}" > {{ famille }} </a>
+            <a  class="indent1 switchmap" reqtype="FAMILLES" reqvalue="{{ famille }}" > {{ famille }}
+              <button
+                  type="button" class="btn btn-link bstooltip" data-toggle="tooltip" data-placement="top"
+                  title="plus d'infos sur cette famille sur le site SANDRE"
+                  onclick="window.open('http://www.sandre.eaufrance.fr/urn.php?urn=urn:sandre:donnees:GPR:FRA:code:{{ var_dict.pest_familles_sandre[famille] }}:::referentiel:3.1:html'
+                           , '_blank') "
+                   >
+                <span class="glyphicon glyphicon-question-sign" style="color:white"></span>
+              </button>
+            </a>
+
           {% endfor %}
         </div>
 

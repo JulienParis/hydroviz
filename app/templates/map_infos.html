@@ -6,6 +6,13 @@
     margin-bottom: 0px;
   }
 
+  button.bt {
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-left: 2px;
+    padding-right: 0px;
+  }
+
   /* SIDEBAR & JUMBOTRON */
   .container-fluid .jumbotron{
       /*color: grey;*/
@@ -222,7 +229,15 @@
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FAMILLES" reqvalue="Divers (organiques)"
                   title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
-            divers organiques
+            div. organiques
+            <button
+                type="button" class="btn btn-link bstooltip bt" data-toggle="tooltip" data-placement="top"
+                title="plus d'infos sur cette famille sur le site SANDRE"
+                onclick="window.open('http://www.sandre.eaufrance.fr/urn.php?urn=urn:sandre:donnees:GPR:FRA:code:61:::referentiel:3.1:html'
+                         , '_blank') "
+                 >
+              <span class="glyphicon glyphicon-question-sign"></span>
+            </button>
             </a></dt>
           <dd>
             <p id="nbr_divorg" class="p_" > - </p>
@@ -232,6 +247,14 @@
                   reqtype="FAMILLES" reqvalue="Urées"
                   title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
             urées
+            <button
+                type="button" class="btn btn-link bstooltip bt" data-toggle="tooltip" data-placement="top"
+                title="plus d'infos sur cette famille sur le site SANDRE"
+                onclick="window.open('http://www.sandre.eaufrance.fr/urn.php?urn=urn:sandre:donnees:GPR:FRA:code:72:::referentiel:3.1:html'
+                         , '_blank') "
+                 >
+              <span class="glyphicon glyphicon-question-sign"></span>
+            </button>
             </a></dt>
           <dd>
             <p id="nbr_urees" class="p_" > - </p>
@@ -241,6 +264,14 @@
                   reqtype="FAMILLES" reqvalue="Azoles"
                   title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
             azoles
+            <button
+                type="button" class="btn btn-link bstooltip bt" data-toggle="tooltip" data-placement="top"
+                title="plus d'infos sur cette famille sur le site SANDRE"
+                onclick="window.open('http://www.sandre.eaufrance.fr/urn.php?urn=urn:sandre:donnees:GPR:FRA:code:120:::referentiel:3.1:html'
+                         , '_blank') "
+                 >
+              <span class="glyphicon glyphicon-question-sign"></span>
+            </button>
             </a></dt>
           <dd>
             <p id="nbr_azo" class="p_" > - </p>
@@ -250,6 +281,14 @@
                   reqtype="FAMILLES" reqvalue="Organochlorés"
                   title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
             organochlorés
+            <button
+                type="button" class="btn btn-link bstooltip bt" data-toggle="tooltip" data-placement="top"
+                title="plus d'infos sur cette famille sur le site SANDRE"
+                onclick="window.open('http://www.sandre.eaufrance.fr/urn.php?urn=urn:sandre:donnees:GPR:FRA:code:64:::referentiel:3.1:html'
+                         , '_blank') "
+                 >
+              <span class="glyphicon glyphicon-question-sign"></span>
+            </button>
             </a></dt>
           <dd>
             <p id="nbr_orgchl" class="p_" > - </p>
@@ -258,7 +297,15 @@
           <dt><a class="bstooltip aFake switchmap" data-toggle="tooltip" data-placement="left"
                   reqtype="FAMILLES" reqvalue="Triazines et métabolites"
                   title="cliquer pour voir cette famille sur la carte (nombre de pesticides différents détectés)" >
-             triazines et métabolites
+             triazines
+             <button
+                 type="button" class="btn btn-link bstooltip bt" data-toggle="tooltip" data-placement="top"
+                 title="plus d'infos sur cette famille sur le site SANDRE"
+                 onclick="window.open('http://www.sandre.eaufrance.fr/urn.php?urn=urn:sandre:donnees:GPR:FRA:code:71:::referentiel:3.1:html'
+                          , '_blank') "
+                  >
+               <span class="glyphicon glyphicon-question-sign"></span>
+             </button>
             </a></dt>
           <dd>
             <p id="nbr_triaz" class="p_" > - </p>
