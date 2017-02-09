@@ -190,8 +190,13 @@ class GetDataSlice :
             fields_to_drop_list = list( set( func_fam_type_list + fields_to_drop ) - set([func_fam_type]) )
             AV_reset_ = AV_reset.drop( fields_to_drop_list, axis=1 )
 
-            # count number of pest by func_fam_type (rows) and by ME|dpt (columns)
-            AV_func_fam_type = AV_reset_.groupby( func_fam_type ).count().T    #['CD_PARAMETRE'].nunique()
+            # count number of pest by func_fam_type (rows) and by ME|dpt (columns) : ignore Nan and 0.0 values
+            # AV_func_fam_type = AV_reset_.groupby( func_fam_type ).count().T    #['CD_PARAMETRE'].nunique()
+            AV_func_fam_type_raw = AV_reset_[AV_reset_[func_fam_type]!=0.0].groupby( func_fam_type )
+            print "-----> GetDataSlice / AV_counts_by_func_fam_type / AV_func_fam_type_raw ... for : ", func_fam_type
+            print AV_func_fam_type_raw
+            print
+            AV_func_fam_type = AV_func_fam_type_raw.count().T
 
             # save dataframes in count_pests_dict
             count_pests_dict[ func_fam_type ] = { "counts_df" : AV_func_fam_type }
