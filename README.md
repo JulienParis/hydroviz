@@ -19,7 +19,9 @@
 
 - **Licence** : [GNU GPL](https://gitlab.com/Julien_P/concours_pesticides/blob/master/LICENSE)
 
-- **Author** : Copyright (C) 2017 [Julien Paris](http://jpylab.com/)
+- **Project by** : [Julien Paris](http://jpylab.com/) | [Florian Melki](https://www.linkedin.com/in/florian-melki-26842718)
+
+- **Author code** : Copyright (C) 2017 [Julien Paris](http://jpylab.com/)
 
 - **Contact** : [hydroviz.fr@gmail.com](mailto:hydroviz.fr@gmail.com)
 
