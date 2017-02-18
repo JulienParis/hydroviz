@@ -160,21 +160,35 @@
       'Imagery <a href="http://mapbox.com">Mapbox</a>';
     var mbUrl  = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
 
-    var OSM_BW_Url = 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png';
+    var OSM_BW_Url  = 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png';
     var OSM_BW_Attr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
-    var OSM_Colors_Url = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+    var OSM_Colors_Url  = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
     var OSM_Colors_Attr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>';
 
-    var ESRI_Colors_Url = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+    var ESRI_Colors_Url  = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
     var ESRI_Colors_Attr = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
+    var CARTODB_Black_Url  = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
+    var CARTODB_Black_Attr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+
+    var NASA_Night_Url  = 'http://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}';
+    var NASA_Night_Attr = { attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
+                          	bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
+                          	minZoom: 1,
+                          	maxZoom: 8,
+                          	format: 'jpg',
+                          	time: '',
+                          	tilematrixset: 'GoogleMapsCompatible_Level'
+                          };
 
     // var grayscale  = L.tileLayer(mbUrl, {id: 'mapbox.light'  , attribution: mbAttr});
     // var streets    = L.tileLayer(mbUrl, {id: 'mapbox.streets', attribution: mbAttr});
     var grayscale  = L.tileLayer(OSM_BW_Url, { attribution: OSM_BW_Attr });
     var streets    = L.tileLayer(OSM_Colors_Url, { attribution: OSM_Colors_Attr });
     var physical   = L.tileLayer(ESRI_Colors_Url, { attribution: ESRI_Colors_Attr });
+    var black      = L.tileLayer(CARTODB_Black_Url, { attribution: CARTODB_Black_Attr, subdomains: 'abcd' });
+    var night      = L.tileLayer(NASA_Night_Url, NASA_Night_Attr );
 
     // LEAFLET MAP OBJECT
     var map = L.map('map', {
@@ -186,9 +200,11 @@
 
     // CREATE CONTROLS
     var baseLayers = {
-      "Fond de carte gris": grayscale,
-      "Fond de carte OSM"  : streets,
-      "Fond de carte ESRI" : physical
+      "Fond de carte gris"         : grayscale,
+      // "Fond de carte couleurs"     : streets,
+      "Fond de carte terrain seul" : physical,
+      "Fond de carte noire"        : black,
+      "Fond de carte nuit"         : night
     };
 
     var active_overlay   = "<span class='lay_ME  lay_radio'> nappes phréatiques</span>" ;
@@ -359,7 +375,7 @@
     // var min_max_array_dpt = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 2, 3.5, 5]  ; /////////////////////////////////////////////////
 
 
-    var dft_opacity       = 0.4;
+    var dft_opacity       = 0.5;
     var dft_weight        = 0.5;
     var dft_rivers_weight = 0.2;
     var dft_null_color    = "#f0f0f0" ;
