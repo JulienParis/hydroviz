@@ -163,14 +163,18 @@
     var OSM_BW_Url = 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png';
     var OSM_BW_Attr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
-    var OSM_Colors_Url = 'http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png';
-    var OSM_Colors_Attr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+    var OSM_Colors_Url = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+    var OSM_Colors_Attr = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>';
+
+    var ESRI_Colors_Url = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+    var ESRI_Colors_Attr = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
 
     // var grayscale  = L.tileLayer(mbUrl, {id: 'mapbox.light'  , attribution: mbAttr});
     // var streets    = L.tileLayer(mbUrl, {id: 'mapbox.streets', attribution: mbAttr});
     var grayscale  = L.tileLayer(OSM_BW_Url, { attribution: OSM_BW_Attr });
     var streets    = L.tileLayer(OSM_Colors_Url, { attribution: OSM_Colors_Attr });
+    var physical   = L.tileLayer(ESRI_Colors_Url, { attribution: ESRI_Colors_Attr });
 
     // LEAFLET MAP OBJECT
     var map = L.map('map', {
@@ -183,7 +187,8 @@
     // CREATE CONTROLS
     var baseLayers = {
       "Fond de carte gris": grayscale,
-      "Fond de carte OSM" : streets
+      "Fond de carte OSM"  : streets,
+      "Fond de carte ESRI" : physical
     };
 
     var active_overlay   = "<span class='lay_ME  lay_radio'> nappes phréatiques</span>" ;
