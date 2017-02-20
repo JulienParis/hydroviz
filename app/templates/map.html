@@ -1007,7 +1007,12 @@
 
       // EMIT REQUEST SLICE TO SERVER
       function EmitRequestSlice(df_name) {
+
         console.log(" *** EmitRequestSlice / df_name : ", df_name);
+
+        //$('#mod_loader').modal('show');
+        $(".progress").removeClass("nobar");
+
         socket.emit(
           'io_request_slice', {
             msg                 : req_client ,
@@ -1034,6 +1039,8 @@
       // INITIATE MAP DATAS ON CONNECTION
       socket.on('connect', function() {
         // socket.emit('connection start', {data: '--> client connected from : ' + document.domain + ':' + location.port });
+
+        //$('#mod_loader').modal('show');
 
         EmitRequestSlice(df_ME);
         EmitRequestSlice(df_dpt);
@@ -1109,6 +1116,9 @@
         refreshTopoLayer(       req_df_, dataset );
         // refreshMap (            req_df_, "MOYPTOT_all_CAS", req_query, seq_div_qual );
         refreshMap (            req_df_, index_map, pest_map, categ_map );
+
+        $('#mod_loader').modal('hide');
+        $(".progress").addClass("nobar");
 
         console.log("");
 
@@ -1274,7 +1284,7 @@
   $(document).ready(function() { // <-- place at top to run stuff in order
 
 
-    $('#mod_intro').modal('toggle');
+    //$('#mod_intro').modal('toggle');
 
     //InitMap().then(ConnectSocketIO); // <-- with defer
     //ConnectSocketIO();

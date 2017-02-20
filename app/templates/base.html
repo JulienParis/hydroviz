@@ -58,6 +58,8 @@
 
   </head>
 
+  {% include "modal_loader.html" %}
+
 
   <header>
 
@@ -125,14 +127,24 @@
   <!--  bootstrap callings  -->
   <script type="text/javascript">
 
+    // loader
+    $('#mod_loader').modal('show');
+    $(window).load(function() {
+      //$('#mod_loader').modal('hide');
+    });
 
     // activate bootstrap dropdown
-    $(document).ready( function(){ $(".dropdown-toggle").dropdown() } ) ;
+    $(document).ready( function(){
+      //$('#mod_loader').modal('hide');
+      $('#mod_intro').modal('show');
+      $(".dropdown-toggle").dropdown() ;
+      $('.carousel').carousel(
+        {interval: 5000}
+      );
+    });
 
     // activate carousel
-    $(document).ready(function() { $('.carousel').carousel(
-      {interval: 5000} 
-    ); });
+    //$(document).ready(function() {  });
 
     // activate bootstrap tooltips with custom caller (data-tooltip instead of data-toggle)
     $(function () {
