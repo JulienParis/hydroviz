@@ -183,6 +183,7 @@ height: 120px;
 /* PROGRESS BAR */
 .progress{
   height: 3px;
+  z-index: 20;
 }
 .nobar {
   opacity: 0;
