@@ -1300,6 +1300,14 @@
 
   }); //<-- end : $(document).ready
 
+  $(window).resize(function(){
+
+    var window_h = window.innerHeight;
+    var navbar_h = $('header').outerHeight();
+    var map_h    = window_h - navbar_h ;
+    $('#map').css({"height": map_h});
+
+  });
 
 
 }); // <-- end : $(window).load
