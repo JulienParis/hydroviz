@@ -9,6 +9,8 @@ bower_components
 .AppleDouble
 .LSOverride
 
+config.py
+
 # Icon must end with two \r
 Icon
 
