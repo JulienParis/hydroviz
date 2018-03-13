@@ -1,5 +1,6 @@
 # Created by https://www.gitignore.io/api/osx,python,komodoedit
 
+# check also : https://stackoverflow.com/questions/19573031/cant-push-to-github-because-of-large-file-which-i-already-deleted
 
 ### BOWER
 bower_components
@@ -13,7 +14,7 @@ PolygMasseDEauSouterraine.shp
 *.shp
 MA_web.csv
 
-# Icon must end with two \r
+# Icon must end with two \r 
 Icon
 
 # Emacs
