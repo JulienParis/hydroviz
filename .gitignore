@@ -10,7 +10,8 @@ bower_components
 .LSOverride
 
 */PolygMasseDEauSouterraine.shp
-*/MA_web.csv
+*/*.shp
+MA_web.csv
 
 # Icon must end with two \r
 Icon
