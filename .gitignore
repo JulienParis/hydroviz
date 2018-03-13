@@ -2,6 +2,10 @@
 
 # check also : https://stackoverflow.com/questions/19573031/cant-push-to-github-because-of-large-file-which-i-already-deleted
 
+# _jupyter_notebook/carto/PolygMasseDEauSouterraine.shp
+# git filter-branch --force --index-filter "git rm --cached --ignore-unmatch <path/filename>" --prune-empty --tag-name-filter cat -- --all
+# git filter-branch --force --index-filter "git rm --cached --ignore-unmatch _jupyter_notebook/carto/PolygMasseDEauSouterraine.shp" --prune-empty --tag-name-filter cat -- --all
+
 ### BOWER
 bower_components
 
