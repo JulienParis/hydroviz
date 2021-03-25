@@ -24,7 +24,7 @@ python-dateutil==2.6.0
 python-engineio==1.1.0
 python-socketio==1.6.2
 pytz==2016.10
-PyYAML==3.12
+PyYAML==5.4
 requests==2.12.4
 Shapely==1.5.17.post1
 singledispatch==3.4.0.3
