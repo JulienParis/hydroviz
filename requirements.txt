@@ -1,5 +1,5 @@
 backports-abc==0.5
-certifi==2016.9.26
+certifi==2022.12.7
 click==6.6
 click-plugins==1.0.3
 cligj==0.4.0
